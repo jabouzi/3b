@@ -1,0 +1,68 @@
+.textbox340 {
+	background:#FAFAFA none repeat scroll 0 0;
+	border:1px solid #c1b7b7;
+	font-size:18px;
+	line-height:20px;
+	margin:15px 50px;
+	padding:3px;
+	width:440px;
+
+}
+
+p.lostpassword{
+	margin:0;
+	position:relative;
+	top:50px;
+	left:45px;
+	width:260px;
+}
+
+p.lostpassword a{color:#016AD5;}
+
+#btnLogin{
+	float:right;
+	margin:40px 60px 50px 100px;
+	background-color:#e1dbdb;
+    border:1px solid #c1b7b7;
+    color:#333333;
+    width:80px;
+    height:30px;
+    font-weight:bold;
+    font-size:17px;
+}
+
+#branding img {
+	display:block;
+	margin:30px 30px 10px 40px;
+}
+
+label {
+	color:#333333;
+	font-weight:normal;
+	margin:30px 50px;
+	padding-bottom:18px;
+	width:456px;
+}
+
+.login {
+	background:#fff none repeat scroll 0 0;
+	color:#333333;
+	font-family:"Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+	font-size:12px;
+	font-size-adjust:none;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
+	line-height:18px;
+	width: 558px ;
+  	margin: auto ;
+  	margin-top: 200px
+}
+
+#login{
+	background-image:url('images/login_.png');
+	background-repeat:no-repeat;
+	width:558px;
+	height:337px;
+	background-position:center; 
+}
