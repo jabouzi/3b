@@ -1,0 +1,22 @@
+.label{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#4D4D4D;
+}
+.tableBorder{
+    border:solid 1px #1A1A1A;
+    margin-top:100px;
+}
+.message{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:20px;
+    font-weight:bold;
+    color:#1A1A1A;
+}
+
+#human {
+	visibility:hidden;
+	display:none;
+}
+
+
