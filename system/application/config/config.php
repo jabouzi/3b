@@ -11,7 +11,7 @@
 |
 */
 
-	$config['base_url']	= "http://".$_SERVER['HTTP_HOST']."/3B/";
+	$config['base_url']	= "http://".$_SERVER['HTTP_HOST'];
 
 /*
 |--------------------------------------------------------------------------
