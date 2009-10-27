@@ -7,7 +7,7 @@ function init() {
 
 function get_familles()
 {
-    YAHOO.util.Connect.asyncRequest('POST', '/3B/index.php/admin/get_familles', callback3);
+    YAHOO.util.Connect.asyncRequest('POST', '/index.php/admin/get_familles', callback3);
     //return obj.conn[responseText];
     //alert(text.conn['responseText']);
     //alert(familles.conn.responseText);
@@ -49,7 +49,7 @@ function change_data(type)
     {
         var postData = "id="+id+"&nom="+nom+"&email="+email+"&prenom="+prenom+"&active="+active+"&permissions="+permissions;
     }
-    YAHOO.util.Connect.asyncRequest('POST', '/3B/index.php/admin/change_data/'+type, callback4, postData);
+    YAHOO.util.Connect.asyncRequest('POST', '/index.php/admin/change_data/'+type, callback4, postData);
 }
 
 function change_notes()
@@ -58,7 +58,7 @@ function change_notes()
     var nom = document.getElementById('nom').value;
     var notes = document.getElementById('notes').value;
     var postData = "id="+id+"&nom="+nom+"&notes="+notes;
-    YAHOO.util.Connect.asyncRequest('POST', '/3B/index.php/admin/change_notes_data', callback4, postData);
+    YAHOO.util.Connect.asyncRequest('POST', '/index.php/admin/change_notes_data', callback4, postData);
 }
 
 function get_data(type)
@@ -77,9 +77,9 @@ function get_data(type)
     }
     if (res != 0)
     {
-        YAHOO.util.Connect.asyncRequest('POST', '/3B/index.php/admin/get_data/'+res+'/'+type, callback); 
-        YAHOO.util.Connect.asyncRequest('POST', '/3B/index.php/admin/get_right_data/'+res, callback2);  
-        YAHOO.util.Connect.asyncRequest('POST', '/3B/index.php/admin/get_familles', callback3);
+        YAHOO.util.Connect.asyncRequest('POST', '/index.php/admin/get_data/'+res+'/'+type, callback); 
+        YAHOO.util.Connect.asyncRequest('POST', '/index.php/admin/get_right_data/'+res, callback2);  
+        YAHOO.util.Connect.asyncRequest('POST', '/index.php/admin/get_familles', callback3);
         document.getElementById('applyclient').disabled = false; 
     }
     else{

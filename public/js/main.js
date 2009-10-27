@@ -96,9 +96,9 @@ function filter(flag)
  * */
 var getFiltredContent = function(postData,type,flag){
     if (flag == 1)
-        YAHOO.util.Connect.asyncRequest('POST', '/3B/index.php/main/filter/'+type, callback, postData); 
+        YAHOO.util.Connect.asyncRequest('POST', '/index.php/main/filter/'+type, callback, postData); 
     else   
-        YAHOO.util.Connect.asyncRequest('POST', '/3B/index.php/main/filter/'+type, callback3, postData);    
+        YAHOO.util.Connect.asyncRequest('POST', '/index.php/main/filter/'+type, callback3, postData);    
 };
 
 /*
@@ -107,7 +107,7 @@ var getFiltredContent = function(postData,type,flag){
  * */
 var cancel = function(){ 
     document.getElementById('right').innerHTML = ""; 	
-    YAHOO.util.Connect.asyncRequest('POST', '/3B/index.php/main/refresh', callback2);    
+    YAHOO.util.Connect.asyncRequest('POST', '/index.php/main/refresh', callback2);    
 };
 
 /*
