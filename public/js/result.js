@@ -1,21 +1,21 @@
 function graphes()
 {   
-    window.location = "http://"+ getHost()+"/index.php/main/afficher_graphes";
+    window.location = "http://"+ getHost()+"/main/afficher_graphes";
 }
 
 function pige()
 {
-    window.location = "http://"+ getHost()+"/index.php/main/afficher";
+    window.location = "http://"+ getHost()+"/main/afficher";
 }
 
 function pdf()
 {
-    window.location = "http://"+ getHost()+"/index.php/main/rapport";
+    window.location = "http://"+ getHost()+"/main/rapport";
 }
 
 function carte()
 {
-    window.location = "http://"+ getHost()+"/index.php/main/afficher_carte";
+    window.location = "http://"+ getHost()+"/main/afficher_carte";
 }
 
 function getHost() 
