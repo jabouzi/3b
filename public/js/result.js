@@ -21,7 +21,7 @@ function carte()
 
 function getHost() 
 {
-    var url = window.location;
+    var url = window.location.href;
     var urlparts = url.split("/");
     var host = urlparts[2];
     return host;
