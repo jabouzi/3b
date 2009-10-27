@@ -1,4 +1,4 @@
-<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAADK2Z-2Uhvnv0BtjasvfxpBQ9r-JX5Ew3YiWGH5u4o4FZAQdnQRRB9I6-zAG7Un8nsXxMTDtquMbY2A"></script>
+<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAADK2Z-2Uhvnv0BtjasvfxpBQFvZdgKRPIgaJRXB6kUsLd8Cj1dxTUxJdZZE2drj3OvirRkEPXxJ8K_w"></script>
 
 <table style="border-style: solid;border-color: rgb( 100, 100, 255);">
       <tr>
