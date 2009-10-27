@@ -1,22 +1,21 @@
 function graphes()
-{
-    alert(getHost());
-    window.location = "http://dev.media3b.com/index.php/main/afficher_graphes";
+{   
+    window.location = "http://"+ getHost()+"/index.php/main/afficher_graphes";
 }
 
 function pige()
 {
-    window.location = "http://dev.media3b.com/index.php/main/afficher";
+    window.location = "http://"+ getHost()+"/index.php/main/afficher";
 }
 
 function pdf()
 {
-    window.location = "http://dev.media3b.com/index.php/main/rapport";
+    window.location = "http://"+ getHost()+"/index.php/main/rapport";
 }
 
 function carte()
 {
-    window.location = "http://dev.media3b.com/index.php/main/afficher_carte";
+    window.location = "http://"+ getHost()+"/index.php/main/afficher_carte";
 }
 
 function getHost() 
