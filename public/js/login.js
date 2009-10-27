@@ -34,12 +34,12 @@ var validate = function() {
  };
  
 var checkLogin = function(username,password){
-    YAHOO.util.Connect.asyncRequest('POST', '/index.php/login/check_login/'+username+'/'+password, callback);    
+    YAHOO.util.Connect.asyncRequest('POST', '/login/check_login/'+username+'/'+password, callback);    
 };
 
 var submit = function(data){
 	var postData = "name="+data[0]+"&email="+data[2]+"&type="+data[3]+"&permissions="+data[5];	
-    YAHOO.util.Connect.asyncRequest('POST', '/index.php/main/do_submit', callbackSubmit, postData);    
+    YAHOO.util.Connect.asyncRequest('POST', '/main/do_submit', callbackSubmit, postData);    
 };
 
 var handleSuccess = function(o) {	
@@ -51,11 +51,11 @@ var handleSuccess = function(o) {
 	}
 	else if (1 == result[4] && 2 == result[3])
 	{
-		window.location = "http://localhost/index.php/main/do_submit";
+		window.location = "http://"+getHost()+"/main/do_submit";
 	}
 	else if (1 == result[4] && 1 == result[3])
 	{
-		window.location = "http://localhost/index.php/admin";
+		window.location = "http://"+getHost()+"/admin";
 	}
 	else alert("Votre compte n'est pas actif");
  	//document.getElementById('content').innerHTML = o.responseText;
@@ -84,6 +84,15 @@ var handleFailure = function(o) {
  
 	YAHOO.util.Event.addListener("loginButton", "click", handleSubmit);
 }
+
+function getHost() 
+{
+    var url = window.location.href;
+    var urlparts = url.split("/");
+    var host = urlparts[2];
+    return host;
+}
+
 
 
 //BrowserDetect.init();
