@@ -36,20 +36,20 @@ class Login extends Controller{
             $login = $this->check_login($this->input->post('username'),$this->input->post('password'));
             if ($this->form_validation->run() == FALSE)
             {
-                $this->load->view('header',$data);
+                //$this->load->view('header',$data);
                 $this->load->view('login');
             }            
             else if(count($login) == 0) // compte admin
             {
                 $data['message'] = "Le nom d'usager et/ou le mot de passe n'est valide.";
-                $this->load->view('header',$data);
-                $this->load->view('login');
+                //$this->load->view('header',$data);
+                $this->load->view('login',$data);
             }
             else if($login[0]->active == 0)
             {
                 $data['message'] = "Votre compte n'est pas actif. Contacter 3B.";
-                $this->load->view('header',$data);
-                $this->load->view('login');
+                //$this->load->view('header',$data);
+                $this->load->view('login',$data);
             }
             else if($login[0]->type == 1) // compte employé
             {
@@ -62,9 +62,9 @@ class Login extends Controller{
                 $selected['2'] = 'notselected';
                 $selected['3'] = 'notselected';
                 $selected['4'] = 'selected';
-                $data['selected'] = $selected; 
+                $data_['selected'] = $selected; 
                 $this->load->view('header_admin',$data);
-                $this->load->view('menu_admin');
+                $this->load->view('menu_admin',$data_);
                 $this->load->view('change_password');
             }
             else if($login[0]->type == 2) // compte client
