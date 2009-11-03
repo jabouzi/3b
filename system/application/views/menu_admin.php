@@ -3,16 +3,16 @@
 <div id="small">
 <?php if(in_array('0',$permissions)):?>
 <a class="<?php echo $selected['0'];?>" href="/admin/manage_clients">Gestion des clients</a> | 
-<?endif?>
+<?php endif?>
 <?php if(in_array('1',$permissions)):?>
 <a class="<?php echo $selected['1'];?>" href="/admin/manage_users">Gestion des usagers</a> | 
-<?endif?>
+<?php endif?>
 <?php if(in_array('2',$permissions)):?>
 <a class="<?php echo $selected['2'];?>" href="/admin/add_user">Ajouter un usager</a> | 
-<?endif?>
+<?php endif?>
 <?php if(in_array('3',$permissions)):?>
 <a class="<?php echo $selected['3'];?>" href="/admin/upload_file">Ajouter des donn&eacute;es</a> | 
-<?endif?>
+<?php endif?>
 <a class="<?php echo $selected['4'];?>" href="/admin/change_password">Changer mot passe</a>
  <a class="logout2" href="/login/logout">Quitter</a>
 </div>

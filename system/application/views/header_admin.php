@@ -24,3 +24,4 @@
 <div id="blogtitle">
 		<div id="small"><a class="selected" href="#"><img src="<?=base_url();?>public/css/images/logo3b_small.png" /></a> Administration </div>		
 </div>	
+

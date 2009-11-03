@@ -26,9 +26,9 @@ class Admin extends Controller{
             $selected['3'] = 'selected';
             $selected['4'] = 'notselected';
             $data['stylesheet'] = $css;
-            $data['selected'] = $selected;
+            $data_['selected'] = $selected;
             $this->load->view('header_admin',$data);	
-            $this->load->view('menu_admin');	
+            $this->load->view('menu_admin',$data_);	
             $this->load->view('change_password');
         }
         else
