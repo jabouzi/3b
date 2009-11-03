@@ -1,0 +1,266 @@
+/**************************background**********************/
+
+body{
+background-color:#ececec;
+margin:0;
+padding:0;
+}
+#cadre0{
+background:url(../images/bg.gif) repeat-x center;
+height:646px;
+}
+#cadre1{
+width:1024px;
+margin:auto;
+}
+/************************** titres *******************/
+H1{
+font-family:Verdana;
+font-size:12px;
+margin-top:10px;
+color:#000000;
+font-weight:bold;
+text-transform:uppercase;
+padding:0;
+margin-left:20px;
+width:750px;
+border-bottom:1px solid #000000;
+}
+H2{
+font-family:Verdana;
+font-size:11px;
+margin-top:10px;
+color:#FF0000;
+font-weight:normal;
+padding:0;
+margin-left:30px;
+width:750px;
+}
+.titre_puce {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(../images/puce.gif) no-repeat scroll 0 5px;
+font-family:Verdana;
+font-size:12px;
+font-weight:normal;
+margin:0;
+padding:0 0 0 15px;
+}
+
+
+/***************************lien*************************/
+
+a{
+font-family:Verdana;
+font-size:12px;
+color:#000000;
+text-decoration:none;
+}
+a:hover{
+text-decoration:underline;
+}
+
+/*********************** formulaire *********************/
+
+form{
+padding-top:30px;
+padding-bottom:30px;
+margin:auto;
+width:380px;
+margin-left:75px;
+}
+label{
+width:140px;
+display:inline-block;
+}
+input{
+width:190px;
+border:1px solid #000000;
+}
+#btn{
+background:url(../images/btn_valider.gif);
+background-repeat:no-repeat;
+border:medium none;
+cursor:pointer;
+display:block;
+height:21px;
+margin-left:2px;
+margin-top:2px;
+width:80px;
+outline:none;
+}
+#btn b{
+font-family:Verdana;
+font-size:11px;
+font-weight:normal;
+color:#ffffff;
+}
+
+/************************menu***************************/
+#menu{
+height:50px;
+width:100%;
+margin:0;
+padding:0;
+}
+#menu a{
+font-family:Verdana;
+font-size:12px;
+color:#ffffff;
+height:30px;
+text-decoration:none;
+}
+#menu a:hover{
+text-decoration:none;
+color:#000000;
+}
+
+#menu .lien{
+background:url(../images/menu.gif);
+background-repeat:no-repeat;
+cursor:pointer;
+width:117px;
+height:30px;
+float:left;
+}
+#menu .lien_first{
+background:url(../images/deb_menu.gif);
+background-repeat:no-repeat;
+cursor:pointer;
+width:116px;
+float:left;
+height:30px;
+}
+#menu .lien_last{
+background:url(../images/fin_menu.gif);
+background-repeat:no-repeat;
+cursor:pointer;
+width:140px;
+float:left;
+height:30px;
+}
+#menu span{
+margin-left:15px;
+line-height:30px;
+}
+
+/************************* tableau ****************/
+table {
+width:85%;
+margin-top:15px;
+margin-bottom:15px;
+}
+tr.first td{
+border-bottom:1px dashed #000000;
+
+}
+tr{
+height:30px;
+}
+td{
+border-right:1px dashed #999999;
+}
+td.last{
+border:none;
+}
+td.first{
+width:100px;
+}
+/************************* entete **************************/
+
+#header{
+width:500px;
+margin:auto;
+}
+#header .logo{
+margin:auto;
+width:157px;
+height:157px;
+padding-top:50px;
+}
+#header .logo2{
+margin:auto;
+width:157px;
+height:157px;
+padding-bottom:10px;
+}
+#header .slogan{
+margin:auto;
+width:428px;
+height:31px;
+margin-top:20px;
+margin-bottom:50px;
+}
+
+/******************** page_connexion ******************/
+
+#conteneur{
+width:500px;
+margin-top:20px;
+margin:auto;
+}
+#conteneur .deb{
+background:url(../images/deb_con.gif) no-repeat;
+width:500px;
+height:47px;
+}
+#conteneur .connexion{
+background:url(../images/connexion.gif) repeat-y;
+width:500px;
+}
+#conteneur .connexion span{
+font-family:Verdana;
+font-size:10px;
+color:#FF0000;
+margin-left:145px;
+}
+#conteneur .connexion button{
+margin-top:25px;
+margin-left:255px;
+}
+#conteneur .connexion .parametre{
+position:absolute;
+margin-top:-55px;
+}
+#conteneur .connexion .parametre span{
+margin-left:75px;
+}
+
+#conteneur .fin{
+background:url(../images/fin_con.gif) no-repeat;
+width:500px;
+height:10px;
+}
+
+/*************************page_accueil******************************/
+
+.alerte1 p, .alerte2 p, .detail p{
+font-family:Verdana;
+font-size:11px;
+margin-top:10px;
+color:#333333;
+margin-left:20px;
+}
+#alerte1, #alerte2, #detail{
+width:800px;
+margin-left:50px;
+}
+#alerte1, #alerte2{
+height:150px;
+}
+#alerte2, #detail{
+margin-top:25px;
+}
+#detail{
+height:500px;
+}
+
+.error_message{
+color:#FF0000;
+font-size:15px;
+font-weight:bold;
+width:500px;
+align:center;
+}
+
