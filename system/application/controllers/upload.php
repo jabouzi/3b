@@ -52,9 +52,9 @@ class Upload extends Controller {
 			//$liste = array($excel->sheets[0]['numRows'],2);
 			$array = $excel->sheets[0]['cells'];
 			$temp = array_shift($array);
-			//var_dump($array);
+			var_dump($array);
 			
-			$this->data_model->insert_entry($array);	
+			//$this->data_model->insert_entry($array);	
 	
 			$this->load->view('upload_success', $data);
 
