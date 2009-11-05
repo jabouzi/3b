@@ -235,6 +235,8 @@ class Main extends Controller{
     
     function afficher_carte()
     {
+        $res = $this->data_model->get_panneaux_list();
+        //var_dump($res);
         if (isset($this->session->userdata['nom']))
         {
             $data = array();
@@ -250,7 +252,8 @@ class Main extends Controller{
             $checked['1'] = '';
             $checked['2'] = '';
             $checked['3'] = 'checked=ckecked';
-            $data_result['checked'] = $checked;       
+            $data_result['checked'] = $checked;   
+            $data['panneaux'] = $res;
             $this->load->view('header',$data_header);
             $this->load->view('menu_content',$data_menu);
             $this->load->view('result_menu',$data_result);
