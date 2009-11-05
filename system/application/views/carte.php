@@ -1,4 +1,21 @@
-<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAADK2Z-2Uhvnv0BtjasvfxpBQFvZdgKRPIgaJRXB6kUsLd8Cj1dxTUxJdZZE2drj3OvirRkEPXxJ8K_w"></script>
+<?
+
+$myFile = "/var/www/3b/httpdocs/system/xml/panneaux.xml";
+$fh = fopen($myFile, 'w');
+$stringData = "<markers>\n";
+fwrite($fh, $stringData);
+foreach ($panneaux as $panneau)
+{
+    $stringData = '<marker lat="' . $panneau->y/110846 . '" lng="' . $panneau->x/59570 . '" html="' . $panneau->rue . '" label="' .  $panneau->rue. '"/>'."\n";
+    fwrite($fh, $stringData);
+}
+$stringData = "</markers>\n";
+fwrite($fh, $stringData);
+fclose($fh);
+
+?>
+
+<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAADK2Z-2Uhvnv0BtjasvfxpBSNJ1y2eHRySvVhP67t6CiMNJhwBRTB2so0vyy6KfasHgt7xNHSCYrZNQ"></script>
 
 <table style="border-style: solid;border-color: rgb( 100, 100, 255);">
       <tr>
@@ -6,7 +23,7 @@
            <div id="map" style="width: 550px; height: 600px"></div>
         </td>
         <td width = 250 valign="top" style="text-decoration: underline; color: #4444ff;">
-           <div id="side_bar"  style="overflow:auto; height:450px;"></div>
+           <div id="side_bar"  style="overflow:auto; height:600px;"></div>
         </td>
       </tr>
 
@@ -72,24 +89,29 @@
       map.addControl(new GMapTypeControl());
       map.setCenter(new GLatLng( 34.75966612466248,9.7119140625), 7);
 
-      // add the points    
-      var point = new GLatLng(36.80928470205937,10.1953125);
-      var marker = createMarker(point,"Panneau 1","Information pour le :<br>Panneau 1");
-      map.addOverlay(marker);
 
-      var point = new GLatLng(35.764343479667176,10.821533203125);
-      var marker = createMarker(point,"Panneau 2","Information pour le :<br>Panneau 2");
-      map.addOverlay(marker);
-
-      var point = new GLatLng(34.7506398050501,10.74462890625);
-      var marker = createMarker(point,"Panneau 3","Information pour le :<br>Panneau 3");
-      map.addOverlay(marker);
-                       
-                       
-      // put the assembled side_bar_html contents into the side_bar div
-      document.getElementById("side_bar").innerHTML = side_bar_html;
-      
+      // Read the data from example.xml
+      GDownloadUrl("/system/xml/panneaux.xml", function(doc) {
+        var xmlDoc = GXml.parse(doc);
+        var markers = xmlDoc.documentElement.getElementsByTagName("marker");
+          
+        for (var i = 0; i < markers.length; i++) {
+          // obtain the attribues of each marker
+          var lat = parseFloat(markers[i].getAttribute("lat"));
+          var lng = parseFloat(markers[i].getAttribute("lng"));
+          var point = new GLatLng(lat,lng);
+          var html = markers[i].getAttribute("html");
+          var label = markers[i].getAttribute("label");
+          // create the marker
+          var marker = createMarker(point,label,html);
+          map.addOverlay(marker);
+        }
+        // put the assembled side_bar_html contents into the side_bar div
+        document.getElementById("side_bar").innerHTML = side_bar_html;
+      });
     }
+
+
 
     else {
       alert("Sorry, the Google Maps API is not compatible with this browser");

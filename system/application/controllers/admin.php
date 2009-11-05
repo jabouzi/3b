@@ -99,8 +99,8 @@ class Admin extends Controller{
 	{	
         if (isset($this->session->userdata['nom']))
 		{
-            ini_set('memory_limit','300M');
-            ini_set('max_execution_time','36000');
+            //ini_set('memory_limit','300M');
+            //ini_set('max_execution_time','36000');
             $config['upload_path'] = './upload/';
 		    $config['allowed_types'] = 'php|txt|xls|xml';
 		    $config['max_size']	= '0';		

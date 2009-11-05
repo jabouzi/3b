@@ -343,6 +343,14 @@ class data_model extends Model {
 		return $query->result();
 	}
 	
+	function get_panneaux_list()
+	{  
+	    $this->db->distinct();
+	    $this->db->select('rue, x, y');
+	    $query = $this->db->get("filtres_" . $this->session->userdata['user_key']);
+	    return $query->result();
+	}
+	
    /*
  	* Deteruire la vue
  	* */
