@@ -1,4 +1,4 @@
-<?php
+<?
 
 /**
  * Skander Jabouzi 2009 main.php
@@ -473,7 +473,9 @@ class Main extends Controller{
     function generate_images($x,$y,$count)
     {
         $data = $this->session->userdata['data'][$x];
-        require_once 'libchart/libchart.php';               
+        //require_once '/var/www/vhosts/media3b.com/subdomains/dev/httpdocs/system/application/controllers/libchart/libchart.php';             
+        $this->load->helper('libchart');
+  
         $chart = new VerticalChart();
         for ($indice = 0; $indice < count($data); $indice++)
         { 
