@@ -35,7 +35,7 @@
     		* @param	integer		height of the image
 		*/
 		
-		function PieChart($width = 600, $height = 250)
+		function PieChart($width = 600, $height = 300)
 		{
 			parent::Chart($width, $height);
 

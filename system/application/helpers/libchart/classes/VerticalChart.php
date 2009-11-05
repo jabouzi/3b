@@ -35,7 +35,7 @@
     		* @param	integer		height of the image
 		*/
 		
-		function VerticalChart($width = 600, $height = 250)
+		function VerticalChart($width = 600, $height = 300)
 		{
 			parent::BarChart($width, $height);
 

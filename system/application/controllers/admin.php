@@ -139,8 +139,8 @@ class Admin extends Controller{
 
 			    $array = $excel->sheets[0]['cells'];
 			    $temp = array_shift($array);
-			
-			    $this->data_model->insert_entry($array);
+			    var_dump($array);
+			    //$this->data_model->insert_entry($array);
                 
 			    $this->load->view('header_admin');	
                 $selected['0'] = 'notselected';
