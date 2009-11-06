@@ -24,7 +24,10 @@ $fp = fopen($cachefile, 'w');
     $nbre = 0;
     $index = 0;
 ?>
+<?var_dump($rowspan);?>
+<?var_dump($panneaux);?>
 <?php  foreach($arr as $item0):?>
+<?var_dump($panneaux[$nbre]['nbre']);?>
     <br><table border=1 class="table" >
     <tr>
     <?php for($key = 0; $key < count($keys); $key++):?>
@@ -92,6 +95,7 @@ $fp = fopen($cachefile, 'w');
     </tr>
     </table><br>
 <?php endforeach;?>
+
 <?php echo '</div';?>
 <?php
 // save the contents of output buffer to the file

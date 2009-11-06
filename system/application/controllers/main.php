@@ -507,7 +507,7 @@ class Main extends Controller{
         //$fp = fopen($cachefile, 'w');     
         $count = count($keys);
         $result = array();        
-        $result['count'] = $count;
+        //$result['count'] = $count;
         if (1 == $count){
             for($i = 0; $i < count($data[$keys[0]]); $i++)
             {
@@ -523,7 +523,7 @@ class Main extends Controller{
                 $count = count($res);
                 if ($count > 0)
                 {  
-                    $result[$i] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]), 'grp' => $sum, 'nbre' => $count);
+                    $result[$i] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]));
                 }
             }
         }            
@@ -545,7 +545,7 @@ class Main extends Controller{
                     $count = count($res);
                     if ($count > 0)
                     { 
-                        $result[$i][$j] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]), $keys[1]  =>  $this->skip_caracters2($data[$keys[1]][$j]) , 'grp' => $sum, 'nbre' => $count);
+                        $result[$i][$j] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]), $keys[1]  =>  $this->skip_caracters2($data[$keys[1]][$j]));
                     }
                 }
             }
@@ -572,7 +572,7 @@ class Main extends Controller{
                         if ($count > 0) 
                         {       
                             //var_dump("OK");                      
-                            $result[$i][$j][$k] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , 'grp' => $sum, 'nbre' => $count);
+                            $result[$i][$j][$k] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]));
                         }
                         
                     }                   
@@ -600,7 +600,7 @@ class Main extends Controller{
                             $count = count($res);
                             if ($count > 0) 
                             { 
-                                $result[$j][$k][$l] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , $keys[3] => $this->skip_caracters2($data[$keys[3]][$l]) , 'grp' => $sum, 'nbre' => $count);
+                                $result[$j][$k][$l] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , $keys[3] => $this->skip_caracters2($data[$keys[3]][$l]));
                             }                                            
                         }
                     }
@@ -630,7 +630,7 @@ class Main extends Controller{
                                 $count = count($res);
                                 if ($count > 0) 
                                 { 
-                                    $result[] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , $keys[3] => $this->skip_caracters2($data[$keys[3]][$l]) , $keys[4] => $this->skip_caracters2($data[$keys[4]][$m]) , 'grp' => $sum, 'nbre' => $count);
+                                    $result[] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , $keys[3] => $this->skip_caracters2($data[$keys[3]][$l]) , $keys[4] => $this->skip_caracters2($data[$keys[4]][$m]));
                                 }
                             }
                                             
@@ -667,7 +667,7 @@ class Main extends Controller{
                                     $count = count($res);
                                     if ($count > 0) 
                                     { 
-                                        $result[] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , $keys[3] => $this->skip_caracters2($data[$keys[3]][$l]) , $keys[4] => $this->skip_caracters2($data[$keys[4]][$m]) , $keys[5] => $this->skip_caracters2($data[$keys[5]][$n]), 'grp' => $sum, 'nbre' => $count);
+                                        $result[] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , $keys[3] => $this->skip_caracters2($data[$keys[3]][$l]) , $keys[4] => $this->skip_caracters2($data[$keys[4]][$m]) , $keys[5] => $this->skip_caracters2($data[$keys[5]][$n]));
                                     }
                                 }
                             }
