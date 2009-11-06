@@ -15,7 +15,10 @@ fclose($fh);
 
 ?>
 
-<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAADK2Z-2Uhvnv0BtjasvfxpBRbAO6zYxs1_Jl0WZMeQTtKB0rqbhRx55X8dUDKTq33UfpBmtjKpdJzGg"></script>
+
+<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAADK2Z-2Uhvnv0BtjasvfxpBSNJ1y2eHRySvVhP67t6CiMNJhwBRTB2so0vyy6KfasHgt7xNHSCYrZNQ"></script>
+<!--<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAADK2Z-2Uhvnv0BtjasvfxpBRbAO6zYxs1_Jl0WZMeQTtKB0rqbhRx55X8dUDKTq33UfpBmtjKpdJzGg"></script>-->
+
 
 <table style="border-style: solid;border-color: rgb( 100, 100, 255);">
       <tr>
