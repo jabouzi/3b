@@ -132,13 +132,14 @@ class Main extends Controller{
                 
                 $post_data['data'] = $_POST;
                 $this->session->set_userdata($post_data);
-                $data['data'] = $_POST;                
+                $data['data'] = $_POST;     
+                //var_dump($data['data']);           
                 $keys = array('annonceur','campagne','format','marque','regie','rue');
                 for ($type = 0; $type < count($keys); $type++)
                 {
                     if ($_POST['o_'.$keys[$type]] != "") $data['keys'][$_POST['o_'.$keys[$type]] - 1] = $keys[$type];
                 }                
-
+                //var_dump($data['keys']);    
                 $selected['0'] = 'selected';
                 $selected['1'] = 'notselected';
                 $selected['2'] = 'notselected';
@@ -158,7 +159,7 @@ class Main extends Controller{
                 $this->load->view('header',$data_header);    
                 $this->load->view('menu_content',$data_menu);
                 $this->load->view('result_menu',$data_result);        
-                $this->load->view('result',$data);
+                $this->load->view('test',$data);
                 
             }
             else{
@@ -502,25 +503,28 @@ class Main extends Controller{
     
     function get_panneaux_count($data,$keys)
     {
-        $cachefile  = "./system/application/views/log.log";  
-        $fp = fopen($cachefile, 'w');     
+        //$cachefile  = "./system/application/views/log.log";  
+        //$fp = fopen($cachefile, 'w');     
         $count = count($keys);
         $result = array();        
+        $result['count'] = $count;
         if (1 == $count){
             for($i = 0; $i < count($data[$keys[0]]); $i++)
             {
-                $str = $data[$keys[0]][$i];
+                //$str = $data[$keys[0]][$i];
                 $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "'";
                 $res = $this->data_model->get_panneaux($where);
+                //var_dump($res);
                 $sum = 0;
                 for ($l =0; $l < count($res); $l++)
                 {
                     $sum += $res[$l]->grp;
                 }
                 $count = count($res);
-                if ($count == 0) $grp = 0;
-                else $grp = $sum / $count;
-                $result[] = array( 'grp' => $grp, 'nbre' => $count);
+                if ($count > 0)
+                {  
+                    $result[$i] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]), 'grp' => $sum, 'nbre' => $count);
+                }
             }
         }            
         else if (2 == $count)
@@ -529,18 +533,20 @@ class Main extends Controller{
             {
                 for($j = 0; $j < count($data[$keys[1]]); $j++)
                 {
-                    $str = $data[$keys[0]][$i] . ' - ' . $data[$keys[1]][$j];
+                    //$str = $data[$keys[0]][$i] . ' - ' . $data[$keys[1]][$j];
                     $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "'";
-                    $res = $this->data_model->get_panneaux($where);                    
+                    $res = $this->data_model->get_panneaux($where);    
+                    //var_dump($res);                
                     $sum = 0;
                     for ($z =0; $z < count($res); $z++)
                     {
                         $sum += $res[$z]->grp;
                     }
                     $count = count($res);
-                    if ($count == 0) $grp = 0;
-                    else $grp = $sum / $count;
-                    $result[] = array( 'grp' => $grp, 'nbre' => $count);
+                    if ($count > 0)
+                    { 
+                        $result[$i][$j] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]), $keys[1]  =>  $this->skip_caracters2($data[$keys[1]][$j]) , 'grp' => $sum, 'nbre' => $count);
+                    }
                 }
             }
         }
@@ -553,18 +559,23 @@ class Main extends Controller{
                     for($k = 0; $k < count($data[$keys[2]]); $k++)
                     {
                         $str = $data[$keys[0]][$i] . ' - ' . $data[$keys[1]][$j] . ' - ' . $data[$keys[2]][$k];
+                        //var_dump($str);
                         $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "' AND `" . $keys[2] . "` = '" .  $this->skip_caracters2($data[$keys[2]][$k]) . "'";
                         $res = $this->data_model->get_panneaux($where);   
+                        //var_dump($res);
                         $sum = 0;
                         for ($z =0; $z < count($res); $z++)
                         {
                             $sum += $res[$z]->grp;
                         }
                         $count = count($res);
-                        if ($count == 0) $grp = 0;
-                        else $grp = $sum / $count;
-                        $result[] = array( 'grp' => $grp, 'nbre' => $count);
-                    }
+                        if ($count > 0) 
+                        {       
+                            //var_dump("OK");                      
+                            $result[$i][$j][$k] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , 'grp' => $sum, 'nbre' => $count);
+                        }
+                        
+                    }                   
                 }
             }
         }
@@ -578,7 +589,7 @@ class Main extends Controller{
                     {
                         for($l = 0; $l < count($data[$keys[3]]); $l++)
                         {
-                            $str = $data[$keys[0]][$i] . ' - ' .  $data[$keys[1]][$j] . ' - ' .  $data[$keys[2]][$k] . ' - ' . $data[$keys[3]][$l];
+                            //$str = $data[$keys[0]][$i] . ' - ' .  $data[$keys[1]][$j] . ' - ' .  $data[$keys[2]][$k] . ' - ' . $data[$keys[3]][$l];
                             $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "' AND `" . $keys[2] . "` = '" .  $this->skip_caracters2($data[$keys[2]][$k]) . "' AND `" . $keys[3] . "` = '" . $this->skip_caracters2($data[$keys[3]][$l]) . "'";
                             $res = $this->data_model->get_panneaux($where); 
                             $sum = 0;
@@ -587,10 +598,10 @@ class Main extends Controller{
                                 $sum += $res[$z]->grp;
                             }
                             $count = count($res);
-                            if ($count == 0) $grp = 0;
-                            else $grp = $sum / $count;
-                            $result[] = array( 'grp' => $grp, 'nbre' => $count);
-                                            
+                            if ($count > 0) 
+                            { 
+                                $result[$j][$k][$l] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , $keys[3] => $this->skip_caracters2($data[$keys[3]][$l]) , 'grp' => $sum, 'nbre' => $count);
+                            }                                            
                         }
                     }
                 }
@@ -608,7 +619,7 @@ class Main extends Controller{
                         {
                             for($m = 0; $m < count($data[$keys[4]]); $m++)
                             {
-                                $str = $data[$keys[0]][$i] . ' - ' .  $data[$keys[1]][$j] . ' - ' .  $data[$keys[2]][$k] . ' - ' . $data[$keys[3]][$l] . ' - ' . $data[$keys[4]][$m];
+                                //$str = $data[$keys[0]][$i] . ' - ' .  $data[$keys[1]][$j] . ' - ' .  $data[$keys[2]][$k] . ' - ' . $data[$keys[3]][$l] . ' - ' . $data[$keys[4]][$m];
                                 $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "' AND `" . $keys[2] . "` = '" .  $this->skip_caracters2($data[$keys[2]][$k]) . "' AND `" . $keys[3] . "` = '" . $this->skip_caracters2($data[$keys[3]][$l]) . "' AND `" . $keys[4] . "` = '" . $this->skip_caracters2($data[$keys[4]][$m]) . "'";
                                 $res = $this->data_model->get_panneaux($where); 
                                 $sum = 0;
@@ -617,9 +628,10 @@ class Main extends Controller{
                                     $sum += $res[$z]->grp;
                                 }
                                 $count = count($res);
-                                if ($count == 0) $grp = 0;
-                                else $grp = $sum / $count;
-                                $result[] = array( 'grp' => $grp, 'nbre' => $count);
+                                if ($count > 0) 
+                                { 
+                                    $result[] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , $keys[3] => $this->skip_caracters2($data[$keys[3]][$l]) , $keys[4] => $this->skip_caracters2($data[$keys[4]][$m]) , 'grp' => $sum, 'nbre' => $count);
+                                }
                             }
                                             
                         }
@@ -641,9 +653,9 @@ class Main extends Controller{
                             {
                                 for($n = 0; $n < count($data[$keys[5]]); $n++)
                                 {
-                                    $str = $data[$keys[0]][$i] . ' - ' .  $data[$keys[1]][$j] . ' - ' .  $data[$keys[2]][$k] . ' - ' . $data[$keys[3]][$l] . ' - ' . $data[$keys[4]][$m] . ' - ' . $data[$keys[5]][$n];
+                                    //$str = $data[$keys[0]][$i] . ' - ' .  $data[$keys[1]][$j] . ' - ' .  $data[$keys[2]][$k] . ' - ' . $data[$keys[3]][$l] . ' - ' . $data[$keys[4]][$m] . ' - ' . $data[$keys[5]][$n];
                                     $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "' AND `" . $keys[2] . "` = '" .  $this->skip_caracters2($data[$keys[2]][$k]) . "' AND `" . $keys[3] . "` = '" . $this->skip_caracters2($data[$keys[3]][$l]) .  "' AND `" . $keys[4] . "` = '" . $this->skip_caracters2($data[$keys[4]][$m]) . "' AND `" . $keys[5] . "` = '" . $this->skip_caracters2($data[$keys[5]][$n]) . "'";
-                                    fwrite($fp, $where." \n");
+                                    //fwrite($fp, $where." \n");
 
 
                                     $res = $this->data_model->get_panneaux($where); 
@@ -653,9 +665,10 @@ class Main extends Controller{
                                         $sum += $res[$z]->grp;
                                     }
                                     $count = count($res);
-                                    if ($count == 0) $grp = 0;
-                                    else $grp = $sum / $count;
-                                    $result[] = array( 'grp' => $grp, 'nbre' => $count);
+                                    if ($count > 0) 
+                                    { 
+                                        $result[] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , $keys[3] => $this->skip_caracters2($data[$keys[3]][$l]) , $keys[4] => $this->skip_caracters2($data[$keys[4]][$m]) , $keys[5] => $this->skip_caracters2($data[$keys[5]][$n]), 'grp' => $sum, 'nbre' => $count);
+                                    }
                                 }
                             }
                                             
@@ -664,7 +677,7 @@ class Main extends Controller{
                 }
             }
         }  
-        fclose($fp);
+        //fclose($fp);
         return $result;
     }
     
