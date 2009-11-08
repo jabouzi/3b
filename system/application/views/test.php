@@ -1,7 +1,25 @@
 <?
 
+$temp = 0;
+$raw = array();
+for ($i = 1; $i < count($panneaux); $i++)
+{
+    if ($panneaux[$temp]['annonceur'] == $panneaux[$i]['annonceur'])
+    {
+        if ($panneaux[$temp]['compagne'] == $panneaux[$i]['compagne'])
+        $raw[$temp] == $raw[$temp] + 1;
+    }
+    else
+    {
+        $temp = $i;
+    }
+}
+
+
+
+
 //$indice = $panneaux['count'];
-$raw1 = array();
+//$raw1 = array();
 /*for ($i = 0; $i < count($panneaux); $i++)
 {
     $raw[$i] = count($panneaux[$i]);
@@ -10,7 +28,7 @@ $raw1 = array();
         $raw[$i][$j] = count($panneaux[$j]);          
     }    
 }*/
-$i = 0;
+/*$i = 0;
 $j = 0;
 foreach ($panneaux as $panneau)
 {   
@@ -28,12 +46,12 @@ foreach ($panneaux as $panneau)
     }
     $i++;
 }
-//var_dump($raw1);
+var_dump($raw1);*/
 //var_dump($raw2);
 //print_r($panneaux);
-//var_dump($panneaux);
+var_dump($panneaux);
 
-
+/*
 $i = 0;
 $j = 0;
 ?>
@@ -46,11 +64,15 @@ $j = 0;
     <th style="background-color:red;" class="thres">Nbre Panneaux</th>
     <th style="background-color:red;" class="thres">GRP</th>
     </tr>
-    <tr>
-    <?//(foreach $panneau as $p):?>
-    <td rowspan="<?php echo count($panneau);?>"><?php echo $panneau[$i++]['annonceur'];?></td>    
+    <?foreach ($panneau as $pnn):?>
+    <?foreach ($pann as $p):?>
+    <tr>    
+    <td rowspan="<?php echo $raw1[$i];?>"><?php echo $p['annonceur'];?></td>        
     </tr>
+    <?php endforeach;?>
+    <?php endforeach;?>
     </table><br>
+    <?$i++;?>
 <?php endforeach;?>
 
-<?php echo '</div';?>
+<?php echo '</div';?>*/
