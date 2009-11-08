@@ -478,7 +478,8 @@ class Main extends Controller{
     {
         $data = $this->session->userdata['data'][$x];
         //require_once '/var/www/vhosts/media3b.com/subdomains/dev/httpdocs/system/application/controllers/libchart/libchart.php';             
-        $this->load->helper('libchart');
+        //$this->load->helper('libchart');
+        $this->load->library('libchart');
   
         $chart = new VerticalChart();
         for ($indice = 0; $indice < count($data); $indice++)
@@ -523,12 +524,13 @@ class Main extends Controller{
                 $count = count($res);
                 if ($count > 0)
                 {  
-                    $result[$i] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]));
+                    $result[] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]));
                 }
             }
         }            
         else if (2 == $count)
         {
+            $indice = 0;
             for($i = 0; $i < count($data[$keys[0]]); $i++)
             {
                 for($j = 0; $j < count($data[$keys[1]]); $j++)
@@ -545,13 +547,19 @@ class Main extends Controller{
                     $count = count($res);
                     if ($count > 0)
                     { 
-                        $result[$i][$j] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]), $keys[1]  =>  $this->skip_caracters2($data[$keys[1]][$j]));
+                        /*$resutl[$indice][$keys[0]] =  $this->skip_caracters2($data[$keys[0]][$i]);
+                        $resutl[$indice][$keys[1]] =  $this->skip_caracters2($data[$keys[1]][$j]);
+                        //$resutl[$indice][$keys[2]] =  $this->skip_caracters2($data[$keys[2]][$k]);   
+                        $indice++;  */   
+                        //$result[$i][$j] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]), $keys[1]  =>  $this->skip_caracters2($data[$keys[1]][$j]));
+                        $result[] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]), $keys[1]  =>  $this->skip_caracters2($data[$keys[1]][$j]));
                     }
                 }
             }
         }
         else if (3 == $count)
         {
+            $indice = 0;
             for($i = 0; $i < count($data[$keys[0]]); $i++)
             {
                 for($j = 0; $j < count($data[$keys[1]]); $j++)
@@ -571,8 +579,14 @@ class Main extends Controller{
                         $count = count($res);
                         if ($count > 0) 
                         {       
-                            //var_dump("OK");                      
-                            $result[$i][$j][$k] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]));
+                            //var_dump("OK");   
+                            /*$resutl[$indice][$keys[0]] =  $this->skip_caracters2($data[$keys[0]][$i]);
+                            $resutl[$indice][$keys[1]] =  $this->skip_caracters2($data[$keys[1]][$j]);
+                            $resutl[$indice][$keys[2]] =  $this->skip_caracters2($data[$keys[2]][$k]);   
+                            $indice++;   */                                       
+                            //$result[$i][$j][$k] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]));
+                            $result[] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]));
+                            //$indice++;
                         }
                         
                     }                   
@@ -600,7 +614,8 @@ class Main extends Controller{
                             $count = count($res);
                             if ($count > 0) 
                             { 
-                                $result[$j][$k][$l] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , $keys[3] => $this->skip_caracters2($data[$keys[3]][$l]));
+                                //$result[$j][$k][$l] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , $keys[3] => $this->skip_caracters2($data[$keys[3]][$l]));
+                                $result[] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , $keys[3] => $this->skip_caracters2($data[$keys[3]][$l]));
                             }                                            
                         }
                     }
@@ -758,7 +773,7 @@ class Main extends Controller{
     {
         if (isset($this->session->userdata['nom']))
         {
-              $data['annonceur'] = $this->format_data($this->data_model->init_data('annonceur'),'annonceur');
+            $data['annonceur'] = $this->format_data($this->data_model->init_data('annonceur'),'annonceur');
             $data['campagne'] = $this->format_data($this->data_model->init_data('campagne'),'campagne');
             $data['marque'] = $this->format_data($this->data_model->init_data('marque'),'marque');
             $data['regie'] = $this->format_data($this->data_model->init_data('regie'),'regie');
