@@ -65,22 +65,20 @@ class TreeStructure
         }
     }
     
-    function findChild($data,$type)
+    function findChild($data,$type,$node)
     {
-        for ($i = 0; $i < $this->depth; $i++)
+        $childFound = false;
+        foreach ($node->getChildren() as $child)
         {
-            if ($type == $this->root->children[0]->type)
+            if (!$child->getChild($data,$type))
             {
-                for ($j = 0; $j < count($this->root->children); $j++)
-                {
-                    if ($data == $this->root->children[$j]->data)
-                    {
-                        $nodeFound = &$this->root->children[$j];
-                        break 2;                        
-                    }
-                }
+                $this->findChild($data,$type,$child);
+            }
+            else
+            {
+                $childFound =  &$child;
             }
         }
-        return $nodeFound;
+        return $childFound;
     }
 }
