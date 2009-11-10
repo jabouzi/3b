@@ -56,8 +56,23 @@ class TreeNode
                 $childFound = $childIndex;
                 break;
             }
+            else
+            {
+                $childIndex++;
+            }
         }
         return $childFound;
+    }
+    
+    function hasChildren()
+    {
+        return count($this->getChildren()) > 0;
+    }
+    
+    function getChildAt($position)
+    {
+        $children = $this->getChildren();
+        return $children[$position];
     }
 }
  
