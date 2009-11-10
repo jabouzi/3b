@@ -1,11 +1,15 @@
+<?
+
+require_once("node.php");
+
 class TreeStructure
 {
     
-    private $root
+    private $root;
  
     private $count;
     
-    private $depth
+    private $depth;
  
     function __construct()
     {
@@ -17,21 +21,48 @@ class TreeStructure
     public function isEmpty()
     {
         return (NULL == $this->root);
-    }
- 
+    } 
     
     function addRoot($type,$data)
     {
-        $node = new $treeNode($type,$data);
+        $node = new TreeNode($type,$data);
         $this->root = $node;
-        $this->count = $this->count + 1;
+        $this->incrementCount();
     }    
+    
+    function getRoot()
+    {
+        return $this->root;
+    }
+    
+    function incrementCount()
+    {
+        $this->count = $this->count + 1;
+    }
+    
+    function incrementDepth()
+    {
+        $this->depth = $this->depth + 1;
+    }
+    
+    function getCount()
+    {
+        return $this->count;
+    }
+    
+    function getDepth()
+    {
+        return $this->depth;
+    }
     
     function insertRootChild($type,$data)
     {
-        $node = new $treeNode($type,$data);
-        $this->root->children[] = $node;
-        $this->depth = $this->depth  + 1;
+        $node = new TreeNode($type,$data);
+        $this->root->addChild($node);
+        if (1 != $this->getDepth())
+        {
+            $this->incrementDepth();
+        }
     }
     
     function findChild($data,$type)
@@ -52,3 +83,4 @@ class TreeStructure
         }
         return $nodeFound;
     }
+}
