@@ -9,11 +9,11 @@
  
 class TreeNode
 {
-    public $type;
+    private $type;
     
-    public $data;
+    private $data;
 
-    public $children; 
+    private $children; 
 
     function __construct($type,$data)
     {
@@ -30,11 +30,34 @@ class TreeNode
     function getData()
     {
         return $this->data;
-    }    
+    }  
+    
+    function addChild($child)
+    {
+        if (!$this->getChild($child->getType(),$child->getData()))
+        {
+            $this->children[] = $child;
+        }
+    }  
     
     function getChildren()
     {
         return $this->children;
+    }
+    
+    function getChild($type,$data)
+    {
+        $childFound = false;
+        $childIndex = 0;
+        foreach($this->children as $child)
+        {
+            if ($type == $child->type && $data == $child->data)
+            {
+                $childFound = $childIndex;
+                break;
+            }
+        }
+        return $childFound;
     }
 }
  
