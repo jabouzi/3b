@@ -14,3 +14,5 @@ var_dump($tree->getRoot()->getChild("child","secondChild"));
 
 var_dump($tree->getRoot()->hasChildren());
 var_dump($tree->getRoot()->getChildAt(0)->hasChildren());
+
+var_dump($tree->findChild("child","secondChild",$tree->getRoot()));
