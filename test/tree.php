@@ -10,12 +10,18 @@ class TreeStructure
     private $count;
     
     private $depth;
+    
+    private $childFound;
+    
+    private $childsByDepth;
  
     function __construct()
     {
         $this->root = NULL;
         $this->count = 0;
         $this->setDepth(0);
+        $this->childFound = false;
+        $this->childsByDepth = array();
     }
  
     public function isEmpty()
@@ -44,6 +50,16 @@ class TreeStructure
     {
         return $this->depth;
     }
+    
+    function getChildFound()
+    {
+        return $this->childFound;
+    }    
+    
+    function getChildsByDepth()
+    {
+        return $this->childsByDepth;
+    }    
     
     function incrementCount()
     {
@@ -77,57 +93,34 @@ class TreeStructure
     
     function getNodesByDepth($depth,$node)
     {
-        if (0 == $depth)
+        if ($depth == $node->getDepth())
         {
-            $nodes[] = $this->getRoot();
-            $count = 1;
+            $this->childsByDepth[] = $node;
+            $count = $count + 1;
         }
         else
         {
             foreach($node->getChildren() as $child)
             {
-                if ($depth == $child->getDepth())
-                {
-                    var_dump($child->getData());
-                    $nodes[] = $child;
-                    $count = $count + 1;
-                }
-                else
-                {
-                    $this->getNodesByDepth($depth,$child);
-                }
-                
+                $this->getNodesByDepth($depth,$child); 
             }
         }
-        return $count;
     }
     
     function findChild($data,$type,$node)
     {
-        //$childFound = false;
         if ($node->getChild($data,$type))
         {
-            return  $child->getChild($data,$type);
+            $this->childFound = $node->getChild($data,$type);
         }
         else
         {
-            if ($node->hasChildren())
+            foreach ($node->getChildren() as $child)
             {
-                foreach ($node->getChildren() as $child)
-                {
-                    var_dump($child->getData());
-                    if ($child->getChild($data,$type))
-                    {
-                        var_dump("ok");
-                        return  $child->getChild($data,$type);
-                    }
-                    else
-                    {
-                        $this->findChild($data,$type,$child);                
-                    }
-                }
+                $this->findChild($data,$type,$child);
             }
+
         }
-        //return $childFound;
+
     }
 }
