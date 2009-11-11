@@ -1,8 +1,8 @@
 <?php
  
 /** 
-* Title: N-Tree Structure
-* Description: Create multi-level tree strcuture in PHP 
+* Title: Tree Node Structure
+* Description: a tree node strcuture in PHP 
 * @author Skander Jabouzi www.skanderjabouzi.com
 * @version 0.1 November 2009
 */
