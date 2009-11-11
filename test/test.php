@@ -21,6 +21,8 @@ var_dump($tree->getRoot()->hasChildren());
 var_dump($tree->getRoot()->getChildAt(0)->getChildAt(1)->getChildren());
 //var_dump($tree->getRoot()->getChildAt(1)->hasChildren());
 echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
-var_dump($tree->findChild("child3","xFirstGrandChild",$tree->getRoot()));
+$tree->findChild("child3","xFirstGrandChild",$tree->getRoot());
+var_dump($tree->getChildFound());
 
-//var_dump($tree->getNodesByDepth(2,$tree->getRoot()));
+$tree->getNodesByDepth(3,$tree->getRoot());
+var_dump($tree->getChildsByDepth());
