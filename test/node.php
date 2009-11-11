@@ -11,14 +11,18 @@ class TreeNode
 {
     private $type;
     
-    private $data;
+    private $data;    
+        
+    private $depth; 
 
     private $children; 
+   
 
-    function __construct($type,$data)
+    function __construct($type,$data,$depth)
     {
         $this->type = $type;
         $this->data = $data;
+        $this->depth = $depth;
         $this->children = array();
     }   
     
@@ -32,6 +36,16 @@ class TreeNode
         return $this->data;
     }  
     
+    function getDepth()
+    {
+        return $this->depth;
+    }
+    
+    function getChildren()
+    {
+        return $this->children;
+    }
+    
     function addChild($child)
     {
         if (!$this->getChild($child->getType(),$child->getData()))
@@ -40,26 +54,16 @@ class TreeNode
         }
     }  
     
-    function getChildren()
-    {
-        return $this->children;
-    }
-    
     function getChild($type,$data)
     {
         $childFound = false;
-        $childIndex = 0;
         foreach($this->children as $child)
         {
             if ($type == $child->type && $data == $child->data)
             {
-                $childFound = $childIndex;
+                $childFound = $child;
                 break;
-            }
-            else
-            {
-                $childIndex++;
-            }
+            }            
         }
         return $childFound;
     }
