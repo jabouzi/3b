@@ -104,10 +104,10 @@ class TreeStructure
     
     function findChild($data,$type,$node)
     {
-        $childFound = false;
+        //$childFound = false;
         if ($node->getChild($data,$type))
         {
-            $childFound =  $node->getChild($data,$type); 
+            return  $child->getChild($data,$type);
         }
         else
         {
@@ -119,8 +119,7 @@ class TreeStructure
                     if ($child->getChild($data,$type))
                     {
                         var_dump("ok");
-                        $childFound =  $child->getChild($data,$type); 
-                        var_dump($childFound);
+                        return  $child->getChild($data,$type);
                     }
                     else
                     {
@@ -129,7 +128,6 @@ class TreeStructure
                 }
             }
         }
-        var_dump($childFound);
-        return $childFound;
+        //return $childFound;
     }
 }
