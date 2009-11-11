@@ -9,6 +9,8 @@ $tree->insertRootChild("child","secondChild");
 $tree->insertChild("child2","firstGrandChild",$tree->getRoot()->getChildAt(0));
 $tree->insertChild("child2","secondGrandChild",$tree->getRoot()->getChildAt(0));
 $tree->insertChild("child3","xFirstGrandChild",$tree->getRoot()->getChildAt(0)->getChildAt(1));
+$tree->insertChild("child4","xxFirstGrandChild",$tree->getRoot()->getChildAt(0)->getChildAt(1)->getChildAt(0));
+$tree->insertChild("child4","xxSecondGrandChild",$tree->getRoot()->getChildAt(0)->getChildAt(1)->getChildAt(0));
 
 
 var_dump($tree);
@@ -24,5 +26,5 @@ echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 $tree->findChild("child3","xFirstGrandChild",$tree->getRoot());
 var_dump($tree->getChildFound());
 
-$tree->getNodesByDepth(3,$tree->getRoot());
+$tree->getNodesByDepth(4,$tree->getRoot());
 var_dump($tree->getChildsByDepth());

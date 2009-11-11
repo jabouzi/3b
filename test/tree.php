@@ -1,5 +1,12 @@
 <?
 
+/** 
+* Title: N-Tree Structure
+* Description: Create multi-level tree strcuture in PHP 
+* @author Skander Jabouzi www.skanderjabouzi.com
+* @version 0.1 November 2009
+*/
+
 require_once("node.php");
 
 class TreeStructure
@@ -96,7 +103,6 @@ class TreeStructure
         if ($depth == $node->getDepth())
         {
             $this->childsByDepth[] = $node;
-            $count = $count + 1;
         }
         else
         {
