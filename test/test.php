@@ -25,6 +25,7 @@ var_dump($tree->getRoot()->getChildAt(0)->getChildAt(1)->getChildren());
 echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 $tree->findChild("child3","xFirstGrandChild",$tree->getRoot());
 var_dump($tree->getChildFound());
+$tree->insertChild("child4","xyfirstGrandChild",$tree->getChildFound());
 
 $tree->getNodesByDepth(4,$tree->getRoot());
 var_dump($tree->getChildsByDepth());
