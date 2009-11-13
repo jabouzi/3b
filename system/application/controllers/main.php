@@ -507,7 +507,7 @@ class Main extends Controller{
         //$cachefile  = "./system/application/views/log.log";  
         //$fp = fopen($cachefile, 'w');     
         $this->load->library('tree');
-        $tree = new Tree();
+        
         $count = count($keys);
         $result = array();        
         //$result['count'] = $count;
@@ -526,6 +526,7 @@ class Main extends Controller{
                 $count = count($res);
                 if ($count > 0)
                 {  
+                    $tree = new Tree();
                     $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
                     $result[] = $tree;
                 }
@@ -550,6 +551,7 @@ class Main extends Controller{
                     $count = count($res);
                     if ($count > 0)
                     {                         
+                        $tree = new Tree();
                         $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
                         $tree->insertRootChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]));
                         $result[] = $tree;
@@ -580,13 +582,12 @@ class Main extends Controller{
                         $count = count($res);
                         if ($count > 0) 
                         {
+                            $tree = new Tree();
                             $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
-                            $tree->insertRootChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]));
-                            $tree->findChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]),$tree->getRoot());
-                            $tree->insertChild($keys[2],$this->skip_caracters2($data[$keys[2]][$k]),$tree->getChildFound());
-                            $result[] = $tree;//array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]));
-                        }
-                        
+                            $index = $tree->insertRootChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]));
+                            $tree->insertChild($keys[2],$this->skip_caracters2($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index));
+                            $result[] = $tree;
+                        }                        
                     }                   
                 }
             }
@@ -612,8 +613,12 @@ class Main extends Controller{
                             $count = count($res);
                             if ($count > 0) 
                             { 
-                                //$result[$j][$k][$l] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , $keys[3] => $this->skip_caracters2($data[$keys[3]][$l]));
-                                $result[] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , $keys[3] => $this->skip_caracters2($data[$keys[3]][$l]));
+                                $tree = new Tree();
+                                $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
+                                $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]));
+                                $index2 = $tree->insertChild($keys[2],$this->skip_caracters2($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));
+                                $tree->insertChild($keys[3],$this->skip_caracters2($data[$keys[3]][$l]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2));
+                                $result[] = $tree;
                             }                                            
                         }
                     }

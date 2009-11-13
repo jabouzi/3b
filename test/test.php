@@ -4,13 +4,13 @@ require_once("tree.php");
 
 $tree = new TreeStructure();
 $tree->addRoot("root","testRoot");
-$tree->insertRootChild("child","firstChild");
-$tree->insertRootChild("child","secondChild");
-$tree->insertChild("child2","firstGrandChild",$tree->getRoot()->getChildAt(0));
-$tree->insertChild("child2","secondGrandChild",$tree->getRoot()->getChildAt(0));
-$tree->insertChild("child3","xFirstGrandChild",$tree->getRoot()->getChildAt(0)->getChildAt(1));
-$tree->insertChild("child4","xxFirstGrandChild",$tree->getRoot()->getChildAt(0)->getChildAt(1)->getChildAt(0));
-$tree->insertChild("child4","xxSecondGrandChild",$tree->getRoot()->getChildAt(0)->getChildAt(1)->getChildAt(0));
+var_dump($tree->insertRootChild("child","firstChild"));
+var_dump($tree->insertRootChild("child","secondChild"));
+var_dump($tree->insertChild("child2","firstGrandChild",$tree->getRoot()->getChildAt(0)));
+var_dump($tree->insertChild("child2","secondGrandChild",$tree->getRoot()->getChildAt(0)));
+var_dump($tree->insertChild("child3","xFirstGrandChild",$tree->getRoot()->getChildAt(0)->getChildAt(1)));
+var_dump($tree->insertChild("child4","xxFirstGrandChild",$tree->getRoot()->getChildAt(0)->getChildAt(1)->getChildAt(0)));
+var_dump($tree->insertChild("child4","xxSecondGrandChild",$tree->getRoot()->getChildAt(0)->getChildAt(1)->getChildAt(0)));
 
 
 var_dump($tree);
