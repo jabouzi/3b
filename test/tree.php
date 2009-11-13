@@ -81,21 +81,21 @@ class TreeStructure
     
     function insertRootChild($type,$data)
     {
-        $node = new TreeNode($type,$data,1);
-        $this->root->addChild($node);    
+        $node = new TreeNode($type,$data,1);         
         $this->incrementCount();    
+        return $this->root->addChild($node);   
     }
     
     function insertChild($type,$data,$node)
     {
         $childDepth = $node->getDepth() + 1;
-        $child = new TreeNode($type,$data,$childDepth);
-        $node->addChild($child);   
+        $child = new TreeNode($type,$data,$childDepth);          
         $this->incrementCount();     
         if ($childDepth > $this->getDepth())
         {
             $this->setDepth($childDepth);
         }
+        return $node->addChild($child); 
     }    
     
     function getNodesByDepth($depth,$node)

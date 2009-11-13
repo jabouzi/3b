@@ -52,6 +52,7 @@ class TreeNode
         {
             $this->children[] = $child;
         }
+        return count($this->children) - 1;
     }  
     
     function getChild($type,$data)
