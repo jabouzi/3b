@@ -159,7 +159,8 @@ class Main extends Controller{
                 $this->load->view('header',$data_header);    
                 $this->load->view('menu_content',$data_menu);
                 $this->load->view('result_menu',$data_result);        
-                $this->load->view('test',$data);
+                $this->load->view('result_'.count($data['keys']),$data);
+                //$this->load->view('test',$data);
                 
             }
             else{
@@ -477,8 +478,6 @@ class Main extends Controller{
     function generate_images($x,$y,$count)
     {
         $data = $this->session->userdata['data'][$x];
-        //require_once '/var/www/vhosts/media3b.com/subdomains/dev/httpdocs/system/application/controllers/libchart/libchart.php';             
-        //$this->load->helper('libchart');
         $this->load->library('libchart');
   
         $chart = new VerticalChart();
@@ -503,199 +502,32 @@ class Main extends Controller{
     }
     
     function get_panneaux_count($data,$keys)
-    {
-        //$cachefile  = "./system/application/views/log.log";  
-        //$fp = fopen($cachefile, 'w');     
-        $this->load->library('tree');
-        
+    {  
         $count = count($keys);
-        $result = array();        
-        //$result['count'] = $count;
-        if (1 == $count){
-            for($i = 0; $i < count($data[$keys[0]]); $i++)
-            {
-                //$str = $data[$keys[0]][$i];
-                $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "'";
-                $res = $this->data_model->get_panneaux($where);
-                //var_dump($res);
-                $sum = 0;
-                for ($l =0; $l < count($res); $l++)
-                {
-                    $sum += $res[$l]->grp;
-                }
-                $count = count($res);
-                if ($count > 0)
-                {  
-                    $tree = new Tree();
-                    $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
-                    $result[] = $tree;
-                }
-            }
+        if (1 == $count)
+        {
+            $result = $this->get_panneaux_count_1($data,$keys);
         }            
         else if (2 == $count)
         {
-            $indice = 0;
-            for($i = 0; $i < count($data[$keys[0]]); $i++)
-            {
-                for($j = 0; $j < count($data[$keys[1]]); $j++)
-                {
-                    //$str = $data[$keys[0]][$i] . ' - ' . $data[$keys[1]][$j];
-                    $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "'";
-                    $res = $this->data_model->get_panneaux($where);    
-                    //var_dump($res);                
-                    $sum = 0;
-                    for ($z =0; $z < count($res); $z++)
-                    {
-                        $sum += $res[$z]->grp;
-                    }
-                    $count = count($res);
-                    if ($count > 0)
-                    {                         
-                        $tree = new Tree();
-                        $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
-                        $tree->insertRootChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]));
-                        $result[] = $tree;
-                        //$result[] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]), $keys[1]  =>  $this->skip_caracters2($data[$keys[1]][$j]));
-                    }
-                }
-            }
+            $result = $this->get_panneaux_count_2($data,$keys);
         }
         else if (3 == $count)
         {
-            $indice = 0;
-            for($i = 0; $i < count($data[$keys[0]]); $i++)
-            {
-                for($j = 0; $j < count($data[$keys[1]]); $j++)
-                {
-                    for($k = 0; $k < count($data[$keys[2]]); $k++)
-                    {
-                        $str = $data[$keys[0]][$i] . ' - ' . $data[$keys[1]][$j] . ' - ' . $data[$keys[2]][$k];
-                        //var_dump($str);
-                        $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "' AND `" . $keys[2] . "` = '" .  $this->skip_caracters2($data[$keys[2]][$k]) . "'";
-                        $res = $this->data_model->get_panneaux($where);   
-                        //var_dump($res);
-                        $sum = 0;
-                        for ($z =0; $z < count($res); $z++)
-                        {
-                            $sum += $res[$z]->grp;
-                        }
-                        $count = count($res);
-                        if ($count > 0) 
-                        {
-                            $tree = new Tree();
-                            $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
-                            $index = $tree->insertRootChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]));
-                            $tree->insertChild($keys[2],$this->skip_caracters2($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index));
-                            $result[] = $tree;
-                        }                        
-                    }                   
-                }
-            }
+            $result = $this->get_panneaux_count_3($data,$keys);
         }
         else if (4 == $count)
         {
-            for($i = 0; $i < count($data[$keys[0]]); $i++)
-            {
-                for($j = 0; $j < count($data[$keys[1]]); $j++)
-                {
-                    for($k = 0; $k < count($data[$keys[2]]); $k++)
-                    {
-                        for($l = 0; $l < count($data[$keys[3]]); $l++)
-                        {
-                            //$str = $data[$keys[0]][$i] . ' - ' .  $data[$keys[1]][$j] . ' - ' .  $data[$keys[2]][$k] . ' - ' . $data[$keys[3]][$l];
-                            $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "' AND `" . $keys[2] . "` = '" .  $this->skip_caracters2($data[$keys[2]][$k]) . "' AND `" . $keys[3] . "` = '" . $this->skip_caracters2($data[$keys[3]][$l]) . "'";
-                            $res = $this->data_model->get_panneaux($where); 
-                            $sum = 0;
-                            for ($z =0; $z < count($res); $z++)
-                            {
-                                $sum += $res[$z]->grp;
-                            }
-                            $count = count($res);
-                            if ($count > 0) 
-                            { 
-                                $tree = new Tree();
-                                $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
-                                $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]));
-                                $index2 = $tree->insertChild($keys[2],$this->skip_caracters2($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));
-                                $tree->insertChild($keys[3],$this->skip_caracters2($data[$keys[3]][$l]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2));
-                                $result[] = $tree;
-                            }                                            
-                        }
-                    }
-                }
-            }
+            $result = $this->get_panneaux_count_4($data,$keys);
         }  
         else if (5 == $count)
         {
-            for($i = 0; $i < count($data[$keys[0]]); $i++)
-            {
-                for($j = 0; $j < count($data[$keys[1]]); $j++)
-                {
-                    for($k = 0; $k < count($data[$keys[2]]); $k++)
-                    {
-                        for($l = 0; $l < count($data[$keys[3]]); $l++)
-                        {
-                            for($m = 0; $m < count($data[$keys[4]]); $m++)
-                            {
-                                //$str = $data[$keys[0]][$i] . ' - ' .  $data[$keys[1]][$j] . ' - ' .  $data[$keys[2]][$k] . ' - ' . $data[$keys[3]][$l] . ' - ' . $data[$keys[4]][$m];
-                                $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "' AND `" . $keys[2] . "` = '" .  $this->skip_caracters2($data[$keys[2]][$k]) . "' AND `" . $keys[3] . "` = '" . $this->skip_caracters2($data[$keys[3]][$l]) . "' AND `" . $keys[4] . "` = '" . $this->skip_caracters2($data[$keys[4]][$m]) . "'";
-                                $res = $this->data_model->get_panneaux($where); 
-                                $sum = 0;
-                                for ($z =0; $z < count($res); $z++)
-                                {
-                                    $sum += $res[$z]->grp;
-                                }
-                                $count = count($res);
-                                if ($count > 0) 
-                                { 
-                                    $result[] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , $keys[3] => $this->skip_caracters2($data[$keys[3]][$l]) , $keys[4] => $this->skip_caracters2($data[$keys[4]][$m]));
-                                }
-                            }
-                                            
-                        }
-                    }
-                }
-            }
+            $result = $this->get_panneaux_count_5($data,$keys);
         }          
         else if (6 == $count)
         {
-            for($i = 0; $i < count($data[$keys[0]]); $i++)
-            {
-                for($j = 0; $j < count($data[$keys[1]]); $j++)
-                {
-                    for($k = 0; $k < count($data[$keys[2]]); $k++)
-                    {
-                        for($l = 0; $l < count($data[$keys[3]]); $l++)
-                        {
-                            for($m = 0; $m < count($data[$keys[4]]); $m++)
-                            {
-                                for($n = 0; $n < count($data[$keys[5]]); $n++)
-                                {
-                                    //$str = $data[$keys[0]][$i] . ' - ' .  $data[$keys[1]][$j] . ' - ' .  $data[$keys[2]][$k] . ' - ' . $data[$keys[3]][$l] . ' - ' . $data[$keys[4]][$m] . ' - ' . $data[$keys[5]][$n];
-                                    $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "' AND `" . $keys[2] . "` = '" .  $this->skip_caracters2($data[$keys[2]][$k]) . "' AND `" . $keys[3] . "` = '" . $this->skip_caracters2($data[$keys[3]][$l]) .  "' AND `" . $keys[4] . "` = '" . $this->skip_caracters2($data[$keys[4]][$m]) . "' AND `" . $keys[5] . "` = '" . $this->skip_caracters2($data[$keys[5]][$n]) . "'";
-                                    //fwrite($fp, $where." \n");
-
-
-                                    $res = $this->data_model->get_panneaux($where); 
-                                    $sum = 0;
-                                    for ($z =0; $z < count($res); $z++)
-                                    {
-                                        $sum += $res[$z]->grp;
-                                    }
-                                    $count = count($res);
-                                    if ($count > 0) 
-                                    { 
-                                        $result[] = array( $keys[0] => $this->skip_caracters2($data[$keys[0]][$i]) , $keys[1] => $this->skip_caracters2($data[$keys[1]][$j]) , $keys[2] =>  $this->skip_caracters2($data[$keys[2]][$k]) , $keys[3] => $this->skip_caracters2($data[$keys[3]][$l]) , $keys[4] => $this->skip_caracters2($data[$keys[4]][$m]) , $keys[5] => $this->skip_caracters2($data[$keys[5]][$n]));
-                                    }
-                                }
-                            }
-                                            
-                        }
-                    }
-                }
-            }
-        }  
-        //fclose($fp);
+            $result = $this->get_panneaux_count_6($data,$keys);
+        }
         return $result;
     }
     
@@ -856,6 +688,252 @@ class Main extends Controller{
 
     return $browser;
     }
+    
+function get_panneaux_count_1($data,$keys)
+{
+    $this->load->library('tree'); 
+    $result = array();
+    for($i = 0; $i < count($data[$keys[0]]); $i++)
+    {
+        $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "'";
+        $res = $this->data_model->get_panneaux($where);
+        $sum = 0;
+        for ($l =0; $l < count($res); $l++)
+        {
+            $sum += $res[$l]->grp;
+        }
+        $count = count($res);
+        if ($count > 0)
+        {  
+            $tree = new Tree();
+            $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
+            $index1 = $tree->insertRootChild('grp',$sum);
+            $tree->insertChild('nbre',$count,$tree->getRoot()->getChildAt($index1)); 
+            $result[] = $tree;
+        }
+    }
+    return $result;
+}
+
+
+function get_panneaux_count_2($data,$keys)
+{
+    $this->load->library('tree'); 
+    $result = array();
+    $tempRoot = '';
+    for($i = 0; $i < count($data[$keys[0]]); $i++)
+    {
+        if ($data[$keys[0]][$i] != $rootTemp)
+        {
+            $tree = new Tree();
+            $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
+            $tempRoot = $data[$keys[0]][$i];
+        }
+        for($j = 0; $j < count($data[$keys[1]]); $j++)
+        {
+            $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "'";
+            $res = $this->data_model->get_panneaux($where);    
+            $sum = 0;
+            for ($z =0; $z < count($res); $z++)
+            {
+                $sum += $res[$z]->grp;
+            }
+            $count = count($res);
+            if ($count > 0)
+            {
+                $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]));
+                $index2 = $tree->insertChild('nbre',$count,$tree->getRoot()->getChildAt($index1));                        
+                $tree->insertChild('grp',$sum,$tree->getRoot()->getChildAt($index1)->getChildAt($index2));  
+            }
+        }
+        $result[] = $tree;
+    }
+    return $result;
+}
+
+
+function get_panneaux_count_3($data,$keys)
+{
+    $this->load->library('tree'); 
+    $result = array();
+    $tempRoot = '';
+    for($i = 0; $i < count($data[$keys[0]]); $i++)
+    {
+        if ($data[$keys[0]][$i] != $rootTemp)
+        {
+            $tree = new Tree();
+            $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
+            $tempRoot = $data[$keys[0]][$i];
+        }
+        for($j = 0; $j < count($data[$keys[1]]); $j++)
+        {
+            for($k = 0; $k < count($data[$keys[2]]); $k++)
+            {
+                $str = $data[$keys[0]][$i] . ' - ' . $data[$keys[1]][$j] . ' - ' . $data[$keys[2]][$k];
+                $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "' AND `" . $keys[2] . "` = '" .  $this->skip_caracters2($data[$keys[2]][$k]) . "'";
+                $res = $this->data_model->get_panneaux($where);   
+                $sum = 0;
+                for ($z =0; $z < count($res); $z++)
+                {
+                    $sum += $res[$z]->grp;
+                }
+                $count = count($res);
+                if ($count > 0) 
+                {                            
+                    $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]));
+                    $index2 = $tree->insertChild($keys[2],$this->skip_caracters2($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));                        
+                    $index3 = $tree->insertChild('nbre',$count,$tree->getRoot()->getChildAt($index1)->getChildAt($index2));                        
+                    $tree->insertChild('grp',$sum,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3));    
+                }                        
+            }                   
+        }
+        $result[] = $tree;
+    }
+    return $result;
+}
+
+
+
+function get_panneaux_count_4($data,$keys)
+{
+    $this->load->library('tree'); 
+    //require_once(BASEPATH.'application/libraries/Tree.php');
+    $result = array();
+    $tempRoot = '';
+    for($i = 0; $i < count($data[$keys[0]]); $i++)
+    {
+        if ($data[$keys[0]][$i] != $rootTemp)
+        {
+            $tree = new Tree();
+            $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
+            $tempRoot = $data[$keys[0]][$i];
+        }
+        for($j = 0; $j < count($data[$keys[1]]); $j++)
+        {
+            for($k = 0; $k < count($data[$keys[2]]); $k++)
+            {
+                for($l = 0; $l < count($data[$keys[3]]); $l++)
+                {
+                    $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "' AND `" . $keys[2] . "` = '" .  $this->skip_caracters2($data[$keys[2]][$k]) . "' AND `" . $keys[3] . "` = '" . $this->skip_caracters2($data[$keys[3]][$l]) . "'";
+                    $res = $this->data_model->get_panneaux($where); 
+                    $sum = 0;
+                    for ($z =0; $z < count($res); $z++)
+                    {
+                        $sum += $res[$z]->grp;
+                    }
+                    $count = count($res);
+                    if ($count > 0) 
+                    {                                 
+                        $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]));
+                        $index2 = $tree->insertChild($keys[2],$this->skip_caracters2($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));
+                        $index3 = $tree->insertChild($keys[3],$this->skip_caracters2($data[$keys[3]][$l]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2));
+                        $index4 = $tree->insertChild('nbre',$count,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3));                        
+                        $tree->insertChild('grp',$sum,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4));    
+                    }                                            
+                }
+            }                    
+        }
+        $result[] = $tree;
+    }
+    return $result;
+}
+
+
+
+function get_panneaux_count_5($data,$keys)
+{
+    $this->load->library('tree'); 
+    $result = array();
+    $tempRoot = '';
+    for($i = 0; $i < count($data[$keys[0]]); $i++)
+    {
+        if ($data[$keys[0]][$i] != $rootTemp)
+        {
+            $tree = new Tree();
+            $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
+            $tempRoot = $data[$keys[0]][$i];
+        }
+        for($j = 0; $j < count($data[$keys[1]]); $j++)
+        {
+            for($k = 0; $k < count($data[$keys[2]]); $k++)
+            {
+                for($l = 0; $l < count($data[$keys[3]]); $l++)
+                {
+                    for($m = 0; $m < count($data[$keys[4]]); $m++)
+                    {
+                        $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "' AND `" . $keys[2] . "` = '" .  $this->skip_caracters2($data[$keys[2]][$k]) . "' AND `" . $keys[3] . "` = '" . $this->skip_caracters2($data[$keys[3]][$l]) . "' AND `" . $keys[4] . "` = '" . $this->skip_caracters2($data[$keys[4]][$m]) . "'";
+                        $res = $this->data_model->get_panneaux($where); 
+                        $sum = 0;
+                        for ($z =0; $z < count($res); $z++)
+                        {
+                            $sum += $res[$z]->grp;
+                        }
+                        $count = count($res);
+                        if ($count > 0) 
+                        {                                 
+                            $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]));
+                            $index2 = $tree->insertChild($keys[2],$this->skip_caracters2($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));
+                            $index3 = $tree->insertChild($keys[3],$this->skip_caracters2($data[$keys[3]][$l]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2));
+                            $index4 = $tree->insertChild($keys[4],$this->skip_caracters2($data[$keys[4]][$m]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3));
+                            $index5 = $tree->insertChild('nbre',$count,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4));                        
+                            $tree->insertChild('grp',$sum,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5));    
+                        }                          
+                    }                                        
+                }
+            }            
+        }
+        $result[] = $tree;
+    }
+    return $result;
+}
+
+
+
+function get_panneaux_count_6($data,$keys)
+{
+    $this->load->library('tree'); 
+    $result = array();
+    $tempRoot = '';
+    for($i = 0; $i < count($data[$keys[0]]); $i++)
+    {
+        for($j = 0; $j < count($data[$keys[1]]); $j++)
+        {
+            for($k = 0; $k < count($data[$keys[2]]); $k++)
+            {
+                for($l = 0; $l < count($data[$keys[3]]); $l++)
+                {
+                    for($m = 0; $m < count($data[$keys[4]]); $m++)
+                    {
+                        for($n = 0; $n < count($data[$keys[5]]); $n++)
+                        {
+                            $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "' AND `" . $keys[2] . "` = '" .  $this->skip_caracters2($data[$keys[2]][$k]) . "' AND `" . $keys[3] . "` = '" . $this->skip_caracters2($data[$keys[3]][$l]) .  "' AND `" . $keys[4] . "` = '" . $this->skip_caracters2($data[$keys[4]][$m]) . "' AND `" . $keys[5] . "` = '" . $this->skip_caracters2($data[$keys[5]][$n]) . "'";
+                            $res = $this->data_model->get_panneaux($where); 
+                            $sum = 0;
+                            for ($z =0; $z < count($res); $z++)
+                            {
+                                $sum += $res[$z]->grp;
+                            }
+                            $count = count($res);
+                            if ($count > 0) 
+                            {                                 
+                                $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]));
+                                $index2 = $tree->insertChild($keys[2],$this->skip_caracters2($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));
+                                $index3 = $tree->insertChild($keys[3],$this->skip_caracters2($data[$keys[3]][$l]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2));
+                                $index4 = $tree->insertChild($keys[4],$this->skip_caracters2($data[$keys[4]][$m]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3));
+                                $index5 = $tree->insertChild($keys[5],$this->skip_caracters2($data[$keys[5]][$n]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4));
+                                $index6 = $tree->insertChild('nbre',$count,$tree->getRoot()->getChildAt($index5));                        
+                                $tree->insertChild('grp',$sum,$tree->getRoot()->getChildAt($index5)->getChildAt($index6));    
+                            }  
+                        }
+                    }                                        
+                }
+            }
+        }
+        $result[] = $tree;
+    }
+    return $result;
+}
+
 }
 
 ?>

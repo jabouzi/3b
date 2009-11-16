@@ -78,6 +78,11 @@ class Tree
         $this->depth = $newDepth;
     }
     
+    function resetChildsByDepth()
+    {
+        $this->childsByDepth = array();
+    }
+    
     
     function insertRootChild($type,$data)
     {
@@ -120,12 +125,13 @@ class Tree
             $this->childFound = $node->getChild($data,$type);
         }
         else
-        {
+        {            
+            var_dump($node->getData());
             foreach ($node->getChildren() as $child)
-            {
+            {                
+                //var_dump($child->getData());
                 $this->findChild($data,$type,$child);
             }
-
         }
 
     }

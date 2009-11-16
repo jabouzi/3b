@@ -122,7 +122,7 @@ class TreeStructure
         else
         {
             foreach ($node->getChildren() as $child)
-            {
+            {                
                 $this->findChild($data,$type,$child);
             }
 
