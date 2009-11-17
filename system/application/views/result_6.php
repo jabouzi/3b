@@ -37,7 +37,7 @@ $fp = fopen($cachefile, 'w');
         <?$panneau->resetChildsByDepth();?>
         <?$panneau->getNodesByDepth(5,$grandGrandGrandChild); $count = count($panneau->getChildsByDepth());?>
         <td rowspan="<?php echo $count;?>"><?php echo $grandGrandGrandChild->getData();?></td>
-        <?foreach($grandGrandChild->getChildren() as $grandGrandGrandGrandChild):?>
+        <?foreach($grandGrandGrandChild->getChildren() as $grandGrandGrandGrandChild):?>
         <td><?php echo $grandGrandGrandGrandChild->getData();?></td>
         <td><center><?php echo $grandGrandGrandGrandChild->getChildAt(0)->getData();?></center></td>
         <td><center><?php echo number_format($grandGrandGrandGrandChild->getChildAt(0)->getChildAt(0)->getData(),3, ',', ' ');?></center></td>         
