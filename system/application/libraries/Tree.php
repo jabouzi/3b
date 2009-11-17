@@ -66,7 +66,20 @@ class Tree
     function getChildsByDepth()
     {
         return $this->childsByDepth;
-    }    
+    }     
+    
+    function getGrandChildren($node)
+    {
+        $grandChildren = array();
+        foreach($node->getChildren() as $child)
+        {
+            foreach($child->getChildren() as $grandChild)
+            {
+                $grandChildren[] = $grandChild;
+            }
+        }
+        return $grandChildren;
+    }
     
     function incrementCount()
     {
@@ -129,7 +142,6 @@ class Tree
             var_dump($node->getData());
             foreach ($node->getChildren() as $child)
             {                
-                //var_dump($child->getData());
                 $this->findChild($data,$type,$child);
             }
         }

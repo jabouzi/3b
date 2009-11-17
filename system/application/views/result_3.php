@@ -48,3 +48,13 @@ fclose($fp);
 ob_end_flush(); 
 ?>
 </div>
+
+        <!--<td rowspan="<?php //echo $count2?>"><?php //echo $panneau->getRoot()->getData();?></td>
+        <?//foreach($panneau->getRoot()->getChildren() as $child):?>
+        <?//$panneau->resetChildsByDepth();?>
+        <?//$panneau->getNodesByDepth(2,$child); $count = count($panneau->getChildsByDepth());?>
+        <td rowspan="<?php //echo $count?>"><?php //echo $child->getData();?></td>
+        <?//foreach($child->getChildren() as $grandChild):?>
+        <td><?php //echo $grandChild->getData();?></td>
+        <td><center><?php //echo $grandChild->getChildAt(0)->getData();?></center></td>
+        <td><center><?php //echo number_format($grandChild->getChildAt(0)->getChildAt(0)->getData(),3, ',', ' ');?></center></td>-->

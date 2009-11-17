@@ -896,6 +896,12 @@ function get_panneaux_count_6($data,$keys)
     $tempRoot = '';
     for($i = 0; $i < count($data[$keys[0]]); $i++)
     {
+        if ($data[$keys[0]][$i] != $rootTemp)
+        {
+            $tree = new Tree();
+            $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
+            $tempRoot = $data[$keys[0]][$i];
+        }
         for($j = 0; $j < count($data[$keys[1]]); $j++)
         {
             for($k = 0; $k < count($data[$keys[2]]); $k++)
@@ -921,8 +927,8 @@ function get_panneaux_count_6($data,$keys)
                                 $index3 = $tree->insertChild($keys[3],$this->skip_caracters2($data[$keys[3]][$l]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2));
                                 $index4 = $tree->insertChild($keys[4],$this->skip_caracters2($data[$keys[4]][$m]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3));
                                 $index5 = $tree->insertChild($keys[5],$this->skip_caracters2($data[$keys[5]][$n]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4));
-                                $index6 = $tree->insertChild('nbre',$count,$tree->getRoot()->getChildAt($index5));                        
-                                $tree->insertChild('grp',$sum,$tree->getRoot()->getChildAt($index5)->getChildAt($index6));    
+                                $index6 = $tree->insertChild('nbre',$count,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5));                        
+                                $tree->insertChild('grp',$sum,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6));    
                             }  
                         }
                     }                                        
