@@ -17,35 +17,14 @@ $fp = fopen($cachefile, 'w');
             <th style="background-color:red;" class="thres">GRP</th>
         </tr>
         <tr>
-        <?php 
-            $panneau->getNodesByDepth(1,$panneau->getRoot()); $count1 = count($panneau->getChildsByDepth());
-            foreach($panneau->getChildsByDepth() as $p)
-            {
-                var_dump($p->getData());
-            }     
-            echo"------------------------------";       
-            $panneau->resetChildsByDepth();
-            $panneau->getNodesByDepth(2,$panneau->getRoot()); $count2 = count($panneau->getChildsByDepth());
-            foreach($panneau->getChildsByDepth() as $p)
-            {
-                var_dump($p->getData());
-                var_dump($p->getChildren());                
-            }   
-            echo"------------------------------"; 
-            $panneau->resetChildsByDepth();
-            $panneau->getNodesByDepth(3,$panneau->getRoot()); $count3 = count($panneau->getChildsByDepth());
-            foreach($panneau->getChildsByDepth() as $p)
-            {
-                var_dump($p->getData());
-            }   
-            echo"------------------------------"; 
-            var_dump($count1);
-            var_dump($count2);
-            var_dump($count3);
+        <?php            
+            $panneau->getNodesByDepth(3,$panneau->getRoot()); $count = count($panneau->getChildsByDepth());  
         ?>
-        <td rowspan="<?php echo $count1*$count2*$count3;?>"><?php echo $panneau->getRoot()->getData();?></td>
+        <td rowspan="<?php echo $count;?>"><?php echo $panneau->getRoot()->getData();?></td>
         <?foreach($panneau->getRoot()->getChildren() as $child):?>
-        <td rowspan="<?php echo count($child->getChildren())?>"><?php echo $child->getData();?></td>
+        <?$panneau->resetChildsByDepth();?>
+        <?$panneau->getNodesByDepth(3,$child); $count = count($panneau->getChildsByDepth());?>
+        <td rowspan="<?php echo $count;?>"><?php echo $child->getData();?></td>
         <?foreach($child->getChildren() as $grandChild):?>
         <td rowspan="<?php echo count($grandChild->getChildren());?>"><?php echo $grandChild->getData();?></td>
         <?foreach($grandChild->getChildren() as $grandGrandChild):?>
