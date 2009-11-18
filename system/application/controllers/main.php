@@ -227,7 +227,7 @@ class Main extends Controller{
             $this->load->view('header',$data_header);    
             $this->load->view('menu_content',$data_menu);    
             $this->load->view('result_menu',$data_result);    
-            $this->load->view('graphes',$data);  
+            $this->load->view('test',$data);  
         } 
         else
         {
@@ -477,6 +477,9 @@ class Main extends Controller{
     
     function generate_images($x,$y,$count)
     {
+        var_dump($count);
+        var_dump($x);
+        var_dump($y);
         $data = $this->session->userdata['data'][$x];
         $this->load->library('libchart');
   

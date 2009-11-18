@@ -1,5 +1,6 @@
 <?
-
+var_dump($selected);
+/*
 var_dump($panneaux);
 //$this->load->library('tree');
 
@@ -43,5 +44,5 @@ echo "===============================";
 //$panneaux[0]->findChild("123","123",$panneaux[0]->getRoot());
 //var_dump($panneau->getRoot()->getdata());
 
-
+*/
 
