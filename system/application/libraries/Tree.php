@@ -138,8 +138,7 @@ class Tree
             $this->childFound = $node->getChild($data,$type);
         }
         else
-        {            
-            var_dump($node->getData());
+        { 
             foreach ($node->getChildren() as $child)
             {                
                 $this->findChild($data,$type,$child);

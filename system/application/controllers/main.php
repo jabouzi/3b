@@ -200,9 +200,9 @@ class Main extends Controller{
             if (isset($_POST['x'])) $data['selected']['x'] = $_POST['x'];
             else $data['selected']['x'] = $keys[0];
             if (isset($_POST['y'])) $data['selected']['y'] = $_POST['y'];
-            else $data['selected']['y'] = 'nbre'; 
+            else $data['selected']['y'] = 'nbre';             
             
-            $count = $this->get_count_type($data['selected']['y']);
+            $count = $this->get_count_type($data['selected']['x'],$data['selected']['y']);
             $this->generate_images($data['selected']['x'],$data['selected']['y'],$count);
             $data['images'][] = $data['selected']['x'].$this->session->userdata['user_key']."_".$data['selected']['y']."1.png";
             $data['images'][] = $data['selected']['x'].$this->session->userdata['user_key']."_".$data['selected']['y']."2.png";
@@ -224,10 +224,10 @@ class Main extends Controller{
             $checked['2'] = '';
             $checked['3'] = '';
             $data_result['checked'] = $checked;       
-            $this->load->view('header',$data_header);    
+            //$this->load->view('header',$data_header);    
             $this->load->view('menu_content',$data_menu);    
-            $this->load->view('result_menu',$data_result);    
-            $this->load->view('test',$data);  
+            $this->load->view('result_menu',$data_result);   
+            $this->load->view('graphes',$data);  
         } 
         else
         {
@@ -270,14 +270,44 @@ class Main extends Controller{
     /**
      * Retourner le nombre des panneaux
      */
-    function get_count_type($flag)
+    function get_count_type($type1,$type2)
     {
+        $this->load->library('tree'); 
+        //var_dump($type1);
+        //var_dump($this->session->userdata['data']);
+        $key = $this->session->userdata['data']['o_'.$type1];
+        $datas = $this->session->userdata['data'][$type1];
+        var_dump($datas);
         $res = $this->data_model->get_ser_panneaux();
         $panneaux = unserialize($res[0]->liste);
+        //var_dump($panneaux);
+        /*var_dump($panneaux[0]->getRoot()->getData());
+        $panneaux[0]->resetChildsByDepth();
+        $panneaux[0]->getNodesByDepth(4,$panneaux[0]->getRoot()); 
+        var_dump($panneaux[0]->getChildsByDepth());
         $nbres = array();
         $data = array();   
-        $data = array_keys($this->session->userdata['data']);        
-        $rowspan = array();
+        $data = array_keys($this->session->userdata['data']);    */   
+        foreach($panneaux as $panneau)
+        {
+            if ($panneau->getRoot()->hasChildren())
+            {
+                //var_dump($panneau->getDepth());
+                //var_dump($panneau->getRoot()->getData());
+                foreach($datas as $data)
+                {
+                    var_dump($type1);
+                    var_dump($data);
+                    $panneau->findChild($type1,$data,$panneau->getRoot());
+                    //$tree->findChild($type1,"xFirstGrandChild",$tree->getRoot());
+                    var_dump($panneau->getChildFound());
+                    $panneau->resetChildsByDepth();
+                    $panneau->getNodesByDepth(4,$panneau->getRoot());
+                }
+                
+            }
+        } 
+        /*$rowspan = array();
         for ($index = 0; $index < count($data); $index++)
         {
             if ($index == count($data) - 1) $rowspan[$index] = 1;
@@ -319,7 +349,7 @@ class Main extends Controller{
                     if (($j%$count) == $count-1) $index++;
                 }
             }         
-        }
+        }*/
         return $nbres;    
     }
     
@@ -477,9 +507,8 @@ class Main extends Controller{
     
     function generate_images($x,$y,$count)
     {
-        var_dump($count);
-        var_dump($x);
-        var_dump($y);
+        //var_dump($this->session->userdata['data']);
+        //var_dump($x);
         $data = $this->session->userdata['data'][$x];
         $this->load->library('libchart');
   

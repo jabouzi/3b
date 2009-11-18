@@ -6,6 +6,7 @@ $cachefile  = "./system/application/views/result_cached.php";
 $fp = fopen($cachefile, 'w');              
 ?>
 <?php  foreach($panneaux as $panneau):?>
+<? if ($panneau->getRoot()->hasChildren()):?>
     <br>
     <table border=1 class="table" >
         <tr>
@@ -26,6 +27,7 @@ $fp = fopen($cachefile, 'w');
         <?php endforeach;?>
         </tr>
     </table><br>
+<?endif;?>
 <?php endforeach;?>
 </div>
 <?
