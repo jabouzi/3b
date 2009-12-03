@@ -17,8 +17,8 @@ $fp = fopen($cachefile, 'w');
         </tr>
         <tr>
         <td><?php echo $panneau->getRoot()->getData();?></td>
-        <td><?php echo $panneau->getRoot()->getChildAt(0)->getData();?></td>
-        <td><?php echo $panneau->getRoot()->getChildAt(0)->getChildAt(0)->getData();?></td>
+        <td><center><?php echo $panneau->getRoot()->getChildAt(0)->getData();?></center></td>
+        <td><center><?php echo number_format($panneau->getRoot()->getChildAt(0)->getChildAt(0)->getData(),3, ',', ' ');?></center></td>
         </tr>
     </table><br>
 <?php endforeach;?>
