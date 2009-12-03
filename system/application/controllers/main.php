@@ -133,7 +133,7 @@ class Main extends Controller{
                 $post_data['data'] = $_POST;
                 $this->session->set_userdata($post_data);
                 $data['data'] = $_POST;     
-                //var_dump($data['data']);           
+                // var_dump($data['data']);           
                 $keys = array('annonceur','campagne','format','marque','regie','rue');
                 for ($type = 0; $type < count($keys); $type++)
                 {
@@ -277,10 +277,10 @@ class Main extends Controller{
         //var_dump($this->session->userdata['data']);
         $key = $this->session->userdata['data']['o_'.$type1];
         $datas = $this->session->userdata['data'][$type1];
-        var_dump($datas);
+        //var_dump($datas);
         $res = $this->data_model->get_ser_panneaux();
         $panneaux = unserialize($res[0]->liste);
-        //var_dump($panneaux);
+        var_dump($panneaux);
         /*var_dump($panneaux[0]->getRoot()->getData());
         $panneaux[0]->resetChildsByDepth();
         $panneaux[0]->getNodesByDepth(4,$panneaux[0]->getRoot()); 
@@ -296,11 +296,11 @@ class Main extends Controller{
                 //var_dump($panneau->getRoot()->getData());
                 foreach($datas as $data)
                 {
-                    var_dump($type1);
-                    var_dump($data);
+                    //var_dump($type1);
+                    //var_dump($data);
                     $panneau->findChild($type1,$data,$panneau->getRoot());
                     //$tree->findChild($type1,"xFirstGrandChild",$tree->getRoot());
-                    var_dump($panneau->getChildFound());
+                    //var_dump($panneau->getChildFound());
                     $panneau->resetChildsByDepth();
                     $panneau->getNodesByDepth(4,$panneau->getRoot());
                 }
@@ -591,6 +591,13 @@ class Main extends Controller{
         return $temp2;
     }
     
+    function skip_caracters3($str)
+    {
+        $temp1 = str_replace("'", "`", $str);
+        $temp2 = str_replace("*plus", "+", $temp1);
+        return $temp2;
+    }
+    
     function skip_caracter($text)
     {
         $temp1 = str_replace("'", "''", $str);
@@ -738,7 +745,7 @@ function get_panneaux_count_1($data,$keys)
         if ($count > 0)
         {  
             $tree = new Tree();
-            $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
+            $tree->addRoot($keys[0],$this->skip_caracters3($data[$keys[0]][$i]));
             $index1 = $tree->insertRootChild('grp',$sum);
             $tree->insertChild('nbre',$count,$tree->getRoot()->getChildAt($index1)); 
             $result[] = $tree;
@@ -758,7 +765,7 @@ function get_panneaux_count_2($data,$keys)
         if ($data[$keys[0]][$i] != $rootTemp)
         {
             $tree = new Tree();
-            $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
+            $tree->addRoot($keys[0],$this->skip_caracters3($data[$keys[0]][$i]));
             $tempRoot = $data[$keys[0]][$i];
         }
         for($j = 0; $j < count($data[$keys[1]]); $j++)
@@ -773,7 +780,7 @@ function get_panneaux_count_2($data,$keys)
             $count = count($res);
             if ($count > 0)
             {
-                $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]));
+                $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters3($data[$keys[1]][$j]));
                 $index2 = $tree->insertChild('nbre',$count,$tree->getRoot()->getChildAt($index1));                        
                 $tree->insertChild('grp',$sum,$tree->getRoot()->getChildAt($index1)->getChildAt($index2));  
             }
@@ -794,7 +801,7 @@ function get_panneaux_count_3($data,$keys)
         if ($data[$keys[0]][$i] != $rootTemp)
         {
             $tree = new Tree();
-            $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
+            $tree->addRoot($keys[0],$this->skip_caracters3($data[$keys[0]][$i]));
             $tempRoot = $data[$keys[0]][$i];
         }
         for($j = 0; $j < count($data[$keys[1]]); $j++)

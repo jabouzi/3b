@@ -20,8 +20,8 @@ $fp = fopen($cachefile, 'w');
         <td rowspan="<?php $panneau->getNodesByDepth(1,$panneau->getRoot()); echo count($panneau->getChildsByDepth());?>"><?php echo $panneau->getRoot()->getData();?></td>
         <?foreach($panneau->getRoot()->getChildren() as $child):?>
         <td rowspan="1"><?php echo $child->getData();?></td>
-        <td><?php echo $child->getChildAt(0)->getData();?></td>
-        <td><?php echo $child->getChildAt(0)->getChildAt(0)->getData();?></td>
+        <td><center><?php echo $child->getChildAt(0)->getData();?></center></td>
+        <td><center><?php echo number_format($child->getChildAt(0)->getChildAt(0)->getData(),3, ',', ' ');?></center></td>
         </tr>
         <tr>
         <?php endforeach;?>
