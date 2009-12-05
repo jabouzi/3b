@@ -90,10 +90,10 @@ class Tree
         $this->depth = $newDepth;
     }
     
-    /*function resetChildsByDepth()
+    function resetChildsByDepth()
     {
         $this->childsByDepth = false;
-    }*/
+    }
     
     
     function insertRootChild($type,$data)
