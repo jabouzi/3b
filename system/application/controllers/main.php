@@ -493,8 +493,10 @@ class Main extends Controller{
         $chart = new PieChart();
         
         for ($indice = 0; $indice < count($data); $indice++)
-        { 
-            $chart->addPoint(new Point($data[$indice], $count[$data[$indice]]));
+        {   
+            if ($count[$data[$indice]] == 0)
+                $count[$data[$indice]] = 0.05;
+                $chart->addPoint(new Point($data[$indice], $count[$data[$indice]]));
         }
 
         $chart->setTitle("Résultats des " . $x . "s");
