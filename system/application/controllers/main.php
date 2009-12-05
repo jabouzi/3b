@@ -480,13 +480,15 @@ class Main extends Controller{
     
     function generate_images($x,$y,$count)
     {
+        var_dump($count);
         $file = $_SERVER['DOCUMENT_ROOT']."/public/generated/".$x.$this->session->userdata['user_key']."_".$y."1.png";
         //if (!file_exists($file))
         //{                    
             $this->load->library('pChart/pchart');
             $this->load->library('pChart/pdata'); 
                     
-            $keys = array_keys($count);
+            $keys = array_keys($count);            
+            
             // Dataset definition   
             $DataSet = new pData;  
             for ($i = 0; $i < count($keys); $i++)
@@ -530,7 +532,12 @@ class Main extends Controller{
             $Test->Render($_SERVER['DOCUMENT_ROOT']."/public/generated/".$x.$this->session->userdata['user_key']."_".$y."1.png");
             //$Test->Stroke($_SERVER['DOCUMENT_ROOT']."/public/generated/example12.png");
             
-            // Pie Chart
+            // Pie Chart            
+            
+            if (1 == count($count))
+            {
+                $count = array($count[$keys[0]]);
+            }
             
             // Dataset definition 
             $DataSet = new Pdata;
