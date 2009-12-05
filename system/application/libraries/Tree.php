@@ -11,7 +11,6 @@ require_once("Node.php");
 
 class Tree
 {
-    
     private $root;
  
     private $count;
@@ -91,10 +90,10 @@ class Tree
         $this->depth = $newDepth;
     }
     
-    function resetChildsByDepth()
+    /*function resetChildsByDepth()
     {
-        $this->childsByDepth = array();
-    }
+        $this->childsByDepth = false;
+    }*/
     
     
     function insertRootChild($type,$data)
@@ -133,6 +132,7 @@ class Tree
     
     function findChild($data,$type,$node)
     {
+        $this->childFound = false;
         if ($node->getChild($data,$type))
         {
             $this->childFound = $node->getChild($data,$type);
