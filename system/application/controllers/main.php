@@ -534,7 +534,7 @@ class Main extends Controller{
             
             // Dataset definition 
             $DataSet = new Pdata;
-            $DataSet->AddPoint(array(123),"Serie1");
+            $DataSet->AddPoint($count,"Serie1");
             $DataSet->AddPoint(array_keys($count),"Serie2");
             $DataSet->AddAllSeries();
             $DataSet->SetAbsciseLabelSerie("Serie2");
