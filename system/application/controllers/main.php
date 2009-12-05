@@ -481,7 +481,7 @@ class Main extends Controller{
 
         //var_dump($count);
         //var_dump($this->session->userdata['data'][$x]);
-        $data = $this->session->userdata['data'][$x];
+        //$data = $this->session->userdata['data'][$x];
         //$this->load->library('libchart');
         $this->load->library('pChart/pchart');
         $this->load->library('pChart/pdata');
