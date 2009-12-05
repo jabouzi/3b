@@ -480,7 +480,7 @@ class Main extends Controller{
     {
 
         $data = $this->session->userdata['data'][$x];
-        this->load->library('libchart');
+        $this->load->library('libchart');
         $this->load->library('pChart/pchart');
         $this->load->library('pChart/pdata');
   
