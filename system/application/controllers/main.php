@@ -224,7 +224,7 @@ class Main extends Controller{
             $checked['2'] = '';
             $checked['3'] = '';
             $data_result['checked'] = $checked;       
-            //$this->load->view('header',$data_header);    
+            $this->load->view('header',$data_header);    
             $this->load->view('menu_content',$data_menu);    
             $this->load->view('result_menu',$data_result);   
             $this->load->view('graphes',$data);  
@@ -273,84 +273,55 @@ class Main extends Controller{
     function get_count_type($type1,$type2)
     {
         $this->load->library('tree'); 
-        //var_dump($type1);
-        //var_dump($this->session->userdata['data']);
-        $key = $this->session->userdata['data']['o_'.$type1];
-        $datas = $this->session->userdata['data'][$type1];
-        //var_dump($datas);
         $res = $this->data_model->get_ser_panneaux();
-        $panneaux = unserialize($res[0]->liste);
-        var_dump($panneaux);
-        /*var_dump($panneaux[0]->getRoot()->getData());
-        $panneaux[0]->resetChildsByDepth();
-        $panneaux[0]->getNodesByDepth(4,$panneaux[0]->getRoot()); 
-        var_dump($panneaux[0]->getChildsByDepth());
-        $nbres = array();
-        $data = array();   
-        $data = array_keys($this->session->userdata['data']);    */   
-        foreach($panneaux as $panneau)
+        $panneaux = unserialize($res[0]->liste); 
+        if ('nbre' == $type2) 
         {
-            if ($panneau->getRoot()->hasChildren())
+            $depth = -1;
+        }
+        else 
+        {
+            $depth = 0;
+        }
+        
+        $data = array();      
+        if (1 == $this->session->userdata['data']['o_'.$type1])
+        {
+            for($i = 0; $i < count($panneaux); $i++)  
             {
-                //var_dump($panneau->getDepth());
-                //var_dump($panneau->getRoot()->getData());
-                foreach($datas as $data)
+                $panneaux[$i]->getNodesByDepth($panneaux[$i]->getDepth()+$depth,$panneaux[$i]->getRoot());
+                $total = 0;
+                foreach($panneaux[$i]->getChildsByDepth() as $child)
                 {
-                    //var_dump($type1);
-                    //var_dump($data);
-                    $panneau->findChild($type1,$data,$panneau->getRoot());
-                    //$tree->findChild($type1,"xFirstGrandChild",$tree->getRoot());
-                    //var_dump($panneau->getChildFound());
-                    $panneau->resetChildsByDepth();
-                    $panneau->getNodesByDepth(4,$panneau->getRoot());
+                    $total += $child->getData();
                 }
+                $data[$panneaux[$i]->getRoot()->getData()] += $total;
+            }
+        }
+        else
+        {
+            foreach($this->session->userdata['data'][$type1] as $filtre)                     
+            {
+                for($i = 0; $i < count($panneaux); $i++)       
+                {   
+                    $total = 0;                    
+                    $panneaux[$i]->findChild($type1,$filtre,$panneaux[$i]->getRoot());
+                    if ($panneaux[$i]->getChildFound())
+                    {
+                        $panneaux[$i]->getNodesByDepth($panneaux[$i]->getDepth()+$depth,$panneaux[$i]->getChildFound());
+                        $total = 0;
+                        foreach($panneaux[$i]->getChildsByDepth() as $child)
+                        {
+                            $total += $child->getData();
+                        }
+                        $data[$filtre] += $total;
+                    }
+                    
+                }                
+            }                      
+        }
                 
-            }
-        } 
-        /*$rowspan = array();
-        for ($index = 0; $index < count($data); $index++)
-        {
-            if ($index == count($data) - 1) $rowspan[$index] = 1;
-            else
-            {
-               $res = 1;
-               for ($indice = $index + 1; $indice < count($data); $indice++)
-               {
-                   $res *= count($this->session->userdata['data'][$data[$indice]]);
-               }
-               $rowspan[$index] = $res;
-            }
-        }        
-
-        for ($i = 0; $i < count($data); $i++)
-        {
-            $count = $rowspan[$i];
-            $nbres[$data[$i]] = array();
-            $index = 0;
-            if (count($this->session->userdata['data'][$data[$i]]) == 1)
-            {                        
-                for($j = 0; $j < count($panneaux); $j++)
-                {
-                    @$nbres[$data[$i]][0] += $panneaux[$j][$flag];
-                }
-            }
-            else if ($count == 1)
-            {
-                $count = count($this->session->userdata['data'][$data[$i]]);                
-                for($j = 0; $j < count($panneaux); $j++)
-                {
-                    @$nbres[$data[$i]][$j%$count] += $panneaux[$j][$flag];
-                }
-            }
-            else{                
-                for($j = 0; $j < count($panneaux); $j++)
-                {                    
-                    @$nbres[$data[$i]][$index%$count] += $panneaux[$j][$flag];
-                    if (($j%$count) == $count-1) $index++;
-                }
-            }         
-        }*/
-        return $nbres;    
+        return $data;    
     }
     
     function  afficher_pdf()
@@ -507,15 +478,13 @@ class Main extends Controller{
     
     function generate_images($x,$y,$count)
     {
-        //var_dump($this->session->userdata['data']);
-        //var_dump($x);
         $data = $this->session->userdata['data'][$x];
         $this->load->library('libchart');
   
         $chart = new VerticalChart();
         for ($indice = 0; $indice < count($data); $indice++)
         { 
-            $chart->addPoint(new Point($data[$indice], $count[$x][$indice]));
+            $chart->addPoint(new Point($data[$indice], $count[$data[$indice]]));
         }
 
         $chart->setTitle("Résultats des " . $x . "s");
@@ -525,8 +494,7 @@ class Main extends Controller{
         
         for ($indice = 0; $indice < count($data); $indice++)
         { 
-            if ($count[$x][$indice] > 0) 
-                $chart->addPoint(new Point($data[$indice], $count[$x][$indice]));
+            $chart->addPoint(new Point($data[$indice], $count[$data[$indice]]));
         }
 
         $chart->setTitle("Résultats des " . $x . "s");
