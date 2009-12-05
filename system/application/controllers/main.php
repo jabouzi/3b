@@ -480,11 +480,11 @@ class Main extends Controller{
     {
 
         $data = $this->session->userdata['data'][$x];
-//this->load->library('libchart');
+        this->load->library('libchart');
         $this->load->library('pChart/pchart');
         $this->load->library('pChart/pdata');
   
-        /*$chart = new VerticalChart();
+        $chart = new VerticalChart();
         for ($indice = 0; $indice < count($data); $indice++)
         { 
             $chart->addPoint(new Point($data[$indice], $count[$data[$indice]]));
@@ -503,7 +503,7 @@ class Main extends Controller{
         }
 
         $chart->setTitle("Résultats des " . $x . "s");
-        $chart->render("./public/generated/".$x.$this->session->userdata['user_key']."_".$y."2.png");*/
+        $chart->render("./public/generated/".$x.$this->session->userdata['user_key']."_".$y."2.png");
         
         /*$DataSet = new Pdata;
   $DataSet->AddPoint(array(1,4,-3,2,-3,3,2,1,0,7,4),"Serie1");
@@ -541,7 +541,7 @@ class Main extends Controller{
   $Test->Stroke($_SERVER['DOCUMENT_ROOT']."/public/generated/example12.png");*/
   
   // Dataset definition 
-  $DataSet = new Pdata;
+  /*$DataSet = new Pdata;
   $DataSet->AddPoint(array(10,2,3,5,3),"Serie1");
   $DataSet->AddPoint(array("Jan","Feb","Mar","Apr","May"),"Serie2");
   $DataSet->AddAllSeries();
@@ -558,7 +558,7 @@ class Main extends Controller{
   $Test->drawPieLegend(310,15,$DataSet->GetData(),$DataSet->GetDataDescription(),250,250,250);
 
   $Test->Render($_SERVER['DOCUMENT_ROOT']."/public/generated/example10.png");
-  $Test->Stroke($_SERVER['DOCUMENT_ROOT']."/public/generated/example10.png");
+  $Test->Stroke($_SERVER['DOCUMENT_ROOT']."/public/generated/example10.png");*/
 
  
     }
