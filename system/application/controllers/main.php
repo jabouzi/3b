@@ -480,7 +480,7 @@ class Main extends Controller{
     
     function generate_images($x,$y,$count)
     {
-        var_dump($count);
+        //var_dump($count);
         $file = $_SERVER['DOCUMENT_ROOT']."/public/generated/".$x.$this->session->userdata['user_key']."_".$y."1.png";
         //if (!file_exists($file))
         //{                    
@@ -502,8 +502,7 @@ class Main extends Controller{
                 //var_dump($keys[$i] . ' - ' . "Serie".$i);
                 $DataSet->SetSerieName($keys[$i],"Serie".$i);    
             }
-            #  $DataSet->SetYAxisUnit("°C");  
-            #  $DataSet->SetXAxisUnit("h");  
+            $DataSet->SetYAxisName($x);   
                 
             // Bar Chart
             
