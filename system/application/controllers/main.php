@@ -478,10 +478,13 @@ class Main extends Controller{
     
     function generate_images($x,$y,$count)
     {
+
         $data = $this->session->userdata['data'][$x];
         $this->load->library('libchart');
+        $this->load->library('pChart/pchart');
+        $this->load->library('pChart/pdata');
   
-        $chart = new VerticalChart();
+        /*$chart = new VerticalChart();
         for ($indice = 0; $indice < count($data); $indice++)
         { 
             $chart->addPoint(new Point($data[$indice], $count[$data[$indice]]));
@@ -500,7 +503,64 @@ class Main extends Controller{
         }
 
         $chart->setTitle("Résultats des " . $x . "s");
-        $chart->render("./public/generated/".$x.$this->session->userdata['user_key']."_".$y."2.png");
+        $chart->render("./public/generated/".$x.$this->session->userdata['user_key']."_".$y."2.png");*/
+        
+        /*$DataSet = new Pdata;
+  $DataSet->AddPoint(array(1,4,-3,2,-3,3,2,1,0,7,4),"Serie1");
+  $DataSet->AddPoint(array(3,3,-4,1,-2,2,1,0,-1,6,3),"Serie2");
+  $DataSet->AddPoint(array(4,1,2,-1,-4,-2,3,2,1,2,2),"Serie3");
+  $DataSet->AddAllSeries();
+  $DataSet->SetAbsciseLabelSerie();
+  $DataSet->SetSerieName("January","Serie1");
+  $DataSet->SetSerieName("February","Serie2");
+  $DataSet->SetSerieName("March","Serie3");
+
+  // Initialise the graph
+  $Test = new Pchart(700,230);
+  $Test->setFontProperties("Fonts/tahoma.ttf",8);
+  $Test->setGraphArea(50,30,680,200);
+  $Test->drawFilledRoundedRectangle(7,7,693,223,5,240,240,240);
+  $Test->drawRoundedRectangle(5,5,695,225,5,230,230,230);
+  $Test->drawGraphArea(255,255,255,TRUE);
+  $Test->drawScale($DataSet->GetData(),$DataSet->GetDataDescription(),SCALE_NORMAL,150,150,150,TRUE,0,2,TRUE);   
+  $Test->drawGrid(4,TRUE,230,230,230,50);
+
+  // Draw the 0 line
+  $Test->setFontProperties("Fonts/tahoma.ttf",6);
+  $Test->drawTreshold(0,143,55,72,TRUE,TRUE);
+
+  // Draw the bar graph
+  $Test->drawBarGraph($DataSet->GetData(),$DataSet->GetDataDescription(),TRUE);
+
+  // Finish the graph
+  $Test->setFontProperties("Fonts/tahoma.ttf",8);
+  $Test->drawLegend(596,150,$DataSet->GetDataDescription(),255,255,255);
+  $Test->setFontProperties("Fonts/tahoma.ttf",10);
+  $Test->drawTitle(50,22,"Example 12",50,50,50,585);
+  $Test->Render($_SERVER['DOCUMENT_ROOT']."/public/generated/example12.png");
+  $Test->Stroke($_SERVER['DOCUMENT_ROOT']."/public/generated/example12.png");*/
+  
+  // Dataset definition 
+  $DataSet = new Pdata;
+  $DataSet->AddPoint(array(10,2,3,5,3),"Serie1");
+  $DataSet->AddPoint(array("Jan","Feb","Mar","Apr","May"),"Serie2");
+  $DataSet->AddAllSeries();
+  $DataSet->SetAbsciseLabelSerie("Serie2");
+
+  // Initialise the graph
+  $Test = new Pchart(380,200);
+  $Test->drawFilledRoundedRectangle(7,7,373,193,5,240,240,240);
+  $Test->drawRoundedRectangle(5,5,375,195,5,230,230,230);
+
+  // Draw the pie chart
+  $Test->setFontProperties($_SERVER['DOCUMENT_ROOT']."/system/application/libraries/Fonts/tahoma.ttf",8);
+  $Test->drawPieGraph($DataSet->GetData(),$DataSet->GetDataDescription(),150,90,110,PIE_PERCENTAGE,TRUE,50,20,5);
+  $Test->drawPieLegend(310,15,$DataSet->GetData(),$DataSet->GetDataDescription(),250,250,250);
+
+  $Test->Render($_SERVER['DOCUMENT_ROOT']."/public/generated/example10.png");
+  $Test->Stroke($_SERVER['DOCUMENT_ROOT']."/public/generated/example10.png");
+
+ 
     }
     
     function get_panneaux_count($data,$keys)
