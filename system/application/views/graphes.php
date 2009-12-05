@@ -14,6 +14,7 @@
 <input type="submit" value="Afficher"/>
 <div>
 	<img alt="Vertical bars chart" src="<?=base_url();?>public/generated/<?php echo $images[0];?>" style="border: 1px solid gray;"/>
+    <br/>
 	<img alt="Vertical bars chart" src="<?=base_url();?>public/generated/<?php echo $images[1];?>" style="border: 1px solid gray;"/>
 </div>
 </div>

@@ -289,23 +289,26 @@ class Main extends Controller{
         {
             for($i = 0; $i < count($panneaux); $i++)  
             {
-                $panneaux[$i]->getNodesByDepth($panneaux[$i]->getDepth()+$depth,$panneaux[$i]->getRoot());
-                $total = 0;
-                foreach($panneaux[$i]->getChildsByDepth() as $child)
-                {
-                    $total += $child->getData();
+                if ($panneaux[$i] != NULL){
+                    $panneaux[$i]->getNodesByDepth($panneaux[$i]->getDepth()+$depth,$panneaux[$i]->getRoot());
+                    $total = 0;
+                    foreach($panneaux[$i]->getChildsByDepth() as $child)
+                    {
+                        $total += $child->getData();
+                    }
+                    $data[$panneaux[$i]->getRoot()->getData()] += $total;
                 }
-                $data[$panneaux[$i]->getRoot()->getData()] += $total;
             }
         }
         else
         {
             foreach($this->session->userdata['data'][$type1] as $filtre)                     
             {
+                //var_dump($filtre);
                 for($i = 0; $i < count($panneaux); $i++)       
-                {   
+                {
                     $total = 0;                    
-                    $panneaux[$i]->findChild($type1,$filtre,$panneaux[$i]->getRoot());
+                    $panneaux[$i]->findChild($type1,$this->skip_caracters3($filtre),$panneaux[$i]->getRoot());
                     if ($panneaux[$i]->getChildFound())
                     {
                         $panneaux[$i]->getNodesByDepth($panneaux[$i]->getDepth()+$depth,$panneaux[$i]->getChildFound());
@@ -320,7 +323,6 @@ class Main extends Controller{
                 }                
             }                      
         }
-                
         return $data;    
     }
     
@@ -478,91 +480,77 @@ class Main extends Controller{
     
     function generate_images($x,$y,$count)
     {
-
-        //var_dump($count);
-        //var_dump($this->session->userdata['data'][$x]);
-        //$data = $this->session->userdata['data'][$x];
-        //$this->load->library('libchart');
-        $this->load->library('pChart/pchart');
-        $this->load->library('pChart/pdata');
-  
-        /*$chart = new VerticalChart();
-        for ($indice = 0; $indice < count($data); $indice++)
-        { 
-            $chart->addPoint(new Point($data[$indice], $count[$data[$indice]]));
-        }
-
-        $chart->setTitle("Résultats des " . $x . "s");
-        $chart->render("./public/generated/".$x.$this->session->userdata['user_key']."_".$y."1.png");
+        $file = $_SERVER['DOCUMENT_ROOT']."/public/generated/".$x.$this->session->userdata['user_key']."_".$y."1.png";
+        //if (!file_exists($file))
+        //{                    
+            $this->load->library('pChart/pchart');
+            $this->load->library('pChart/pdata'); 
+                    
+            $keys = array_keys($count);
+            // Dataset definition   
+            $DataSet = new pData;  
+            for ($i = 0; $i < count($keys); $i++)
+            {
+                $DataSet->AddPoint(array($count[$keys[$i]]),"Serie".$i);    
+            }
+                $DataSet->AddAllSeries();  
+                $DataSet->SetAbsciseLabelSerie();  
+            for ($i = 0; $i < count($keys); $i++)
+            {
+                //var_dump($keys[$i] . ' - ' . "Serie".$i);
+                $DataSet->SetSerieName($keys[$i],"Serie".$i);    
+            }
+            #  $DataSet->SetYAxisUnit("°C");  
+            #  $DataSet->SetXAxisUnit("h");  
+                
+            // Bar Chart
             
-        $chart = new PieChart();
-        
-        for ($indice = 0; $indice < count($data); $indice++)
-        {   
-            if ($count[$data[$indice]] == 0)
-                $count[$data[$indice]] = 0.05;
-                $chart->addPoint(new Point($data[$indice], $count[$data[$indice]]));
-        }
-
-        $chart->setTitle("Résultats des " . $x . "s");
-        $chart->render("./public/generated/".$x.$this->session->userdata['user_key']."_".$y."2.png");*/
-        
-  $DataSet = new Pdata;
-  $DataSet->AddPoint($count,"Serie1");
-  //$DataSet->AddPoint(array(3,3,-4,1,-2,2,1,0,-1,6,3),"Serie2");
-  //$DataSet->AddPoint(array(4,1,2,-1,-4,-2,3,2,1,2,2),"Serie3");
-  $DataSet->AddAllSeries();
-  $DataSet->SetAbsciseLabelSerie();
-  $DataSet->SetSerieName(array_keys($count),"Serie1");
-  //$DataSet->SetSerieName("February","Serie2");
- // $DataSet->SetSerieName("March","Serie3");
-
-  // Initialise the graph
-  $Test = new Pchart(700,230);
-  $Test->setFontProperties($_SERVER['DOCUMENT_ROOT']."/system/application/libraries/Fonts/tahoma.ttf",6);
-  $Test->setGraphArea(50,30,680,200);
-  $Test->drawFilledRoundedRectangle(7,7,693,223,5,240,240,240);
-  $Test->drawRoundedRectangle(5,5,695,225,5,230,230,230);
-  $Test->drawGraphArea(255,255,255,TRUE);
-  $Test->drawScale($DataSet->GetData(),$DataSet->GetDataDescription(),SCALE_NORMAL,150,150,150,TRUE,0,2,TRUE);   
-  $Test->drawGrid(4,TRUE,230,230,230,50);
-
-  // Draw the 0 line
-  $Test->setFontProperties($_SERVER['DOCUMENT_ROOT']."/system/application/libraries/Fonts/tahoma.ttf",6);
-  $Test->drawTreshold(0,143,55,72,TRUE,TRUE);
-
-  // Draw the bar graph
-  $Test->drawBarGraph($DataSet->GetData(),$DataSet->GetDataDescription(),TRUE);
-
-  // Finish the graph
-  $Test->setFontProperties($_SERVER['DOCUMENT_ROOT']."/system/application/libraries/Fonts/tahoma.ttf",8);
-  $Test->drawLegend(596,150,$DataSet->GetDataDescription(),255,255,255);
-  $Test->setFontProperties("Fonts/tahoma.ttf",10);
-  $Test->drawTitle(50,22,"Example 12",50,50,50,585);
-  $Test->Render($_SERVER['DOCUMENT_ROOT']."/public/generated/".$x.$this->session->userdata['user_key']."_".$y."1.png");
-  //$Test->Stroke($_SERVER['DOCUMENT_ROOT']."/public/generated/example12.png");
-  
-  // Dataset definition 
-  $DataSet = new Pdata;
-  $DataSet->AddPoint($count,"Serie1");
-  $DataSet->AddPoint(array_keys($count),"Serie2");
-  $DataSet->AddAllSeries();
-  $DataSet->SetAbsciseLabelSerie("Serie2");
-
-  // Initialise the graph
-  $Test = new Pchart(450,200);
-  $Test->drawFilledRoundedRectangle(7,7,373,193,5,240,240,240);
-  $Test->drawRoundedRectangle(5,5,375,195,5,230,230,230);
-
-  // Draw the pie chart
-  $Test->setFontProperties($_SERVER['DOCUMENT_ROOT']."/system/application/libraries/Fonts/tahoma.ttf",8);
-  $Test->drawPieGraph($DataSet->GetData(),$DataSet->GetDataDescription(),150,90,110,PIE_PERCENTAGE,TRUE,50,20,5);
-  $Test->drawPieLegend(310,15,$DataSet->GetData(),$DataSet->GetDataDescription(),250,250,250);
-
-  $Test->Render($_SERVER['DOCUMENT_ROOT']."/public/generated/".$x.$this->session->userdata['user_key']."_".$y."2.png");
-  //$Test->Stroke($_SERVER['DOCUMENT_ROOT']."/public/generated/".$x.$this->session->userdata['user_key']."_".$y."2.png");
-
- 
+            // Initialise the graph
+            $Test = new Pchart(800,230);
+            $Test->setFontProperties($_SERVER['DOCUMENT_ROOT']."/system/application/libraries/Fonts/tahoma.ttf",8);
+            $Test->setGraphArea(50,30,680,200);
+            $Test->drawFilledRoundedRectangle(7,7,693,223,5,240,240,240);
+            $Test->drawRoundedRectangle(5,5,695,225,5,230,230,230);
+            $Test->drawGraphArea(255,255,255,TRUE);
+            $Test->drawScale($DataSet->GetData(),$DataSet->GetDataDescription(),SCALE_NORMAL,150,150,150,TRUE,0,2,TRUE);   
+            $Test->drawGrid(4,TRUE,230,230,230,50);
+             
+            // Draw the 0 line
+            $Test->setFontProperties($_SERVER['DOCUMENT_ROOT']."/system/application/libraries/Fonts/tahoma.ttf",6);
+            $Test->drawTreshold(0,143,55,72,TRUE,TRUE);
+            
+            // Draw the bar graph
+            $Test->drawBarGraph($DataSet->GetData(),$DataSet->GetDataDescription(),TRUE);
+            
+            // Finish the graph
+            $Test->setFontProperties($_SERVER['DOCUMENT_ROOT']."/system/application/libraries/Fonts/tahoma.ttf",8);
+            $Test->drawLegend(600,5,$DataSet->GetDataDescription(),255,255,255);
+            $Test->setFontProperties("Fonts/tahoma.ttf",10);
+            $Test->drawTitle(50,22,"Example 12",50,50,50,585);
+            $Test->Render($_SERVER['DOCUMENT_ROOT']."/public/generated/".$x.$this->session->userdata['user_key']."_".$y."1.png");
+            //$Test->Stroke($_SERVER['DOCUMENT_ROOT']."/public/generated/example12.png");
+            
+            // Pie Chart
+            
+            // Dataset definition 
+            $DataSet = new Pdata;
+            $DataSet->AddPoint(array(123),"Serie1");
+            $DataSet->AddPoint(array_keys($count),"Serie2");
+            $DataSet->AddAllSeries();
+            $DataSet->SetAbsciseLabelSerie("Serie2");
+            
+            // Initialise the graph
+            $Test = new Pchart(510,200);
+            $Test->drawFilledRoundedRectangle(7,7,373,193,5,240,240,240);
+            $Test->drawRoundedRectangle(5,5,375,195,5,230,230,230);
+            
+            // Draw the pie chart
+            $Test->setFontProperties($_SERVER['DOCUMENT_ROOT']."/system/application/libraries/Fonts/tahoma.ttf",8);
+            $Test->drawPieGraph($DataSet->GetData(),$DataSet->GetDataDescription(),150,90,110,PIE_PERCENTAGE,TRUE,50,20,5);
+            $Test->drawPieLegend(310,5,$DataSet->GetData(),$DataSet->GetDataDescription(),250,250,250);
+            
+            $Test->Render($_SERVER['DOCUMENT_ROOT']."/public/generated/".$x.$this->session->userdata['user_key']."_".$y."2.png");
+        //} */
     }
     
     function get_panneaux_count($data,$keys)
@@ -778,8 +766,8 @@ function get_panneaux_count_1($data,$keys)
         {  
             $tree = new Tree();
             $tree->addRoot($keys[0],$this->skip_caracters3($data[$keys[0]][$i]));
-            $index1 = $tree->insertRootChild('grp',$sum);
-            $tree->insertChild('nbre',$count,$tree->getRoot()->getChildAt($index1)); 
+            $index1 = $tree->insertRootChild('nbre',$count);
+            $tree->insertChild('grp',$sum,$tree->getRoot()->getChildAt($index1)); 
             $result[] = $tree;
         }
     }
@@ -851,8 +839,8 @@ function get_panneaux_count_3($data,$keys)
                 $count = count($res);
                 if ($count > 0) 
                 {                            
-                    $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]));
-                    $index2 = $tree->insertChild($keys[2],$this->skip_caracters2($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));                        
+                    $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters3($data[$keys[1]][$j]));
+                    $index2 = $tree->insertChild($keys[2],$this->skip_caracters3($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));                        
                     $index3 = $tree->insertChild('nbre',$count,$tree->getRoot()->getChildAt($index1)->getChildAt($index2));                        
                     $tree->insertChild('grp',$sum,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3));    
                 }                        
@@ -876,7 +864,7 @@ function get_panneaux_count_4($data,$keys)
         if ($data[$keys[0]][$i] != $rootTemp)
         {
             $tree = new Tree();
-            $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
+            $tree->addRoot($keys[0],$this->skip_caracters3($data[$keys[0]][$i]));
             $tempRoot = $data[$keys[0]][$i];
         }
         for($j = 0; $j < count($data[$keys[1]]); $j++)
@@ -895,9 +883,9 @@ function get_panneaux_count_4($data,$keys)
                     $count = count($res);
                     if ($count > 0) 
                     {                                 
-                        $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]));
-                        $index2 = $tree->insertChild($keys[2],$this->skip_caracters2($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));
-                        $index3 = $tree->insertChild($keys[3],$this->skip_caracters2($data[$keys[3]][$l]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2));
+                        $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters3($data[$keys[1]][$j]));
+                        $index2 = $tree->insertChild($keys[2],$this->skip_caracters3($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));
+                        $index3 = $tree->insertChild($keys[3],$this->skip_caracters3($data[$keys[3]][$l]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2));
                         $index4 = $tree->insertChild('nbre',$count,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3));                        
                         $tree->insertChild('grp',$sum,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4));    
                     }                                            
@@ -921,7 +909,7 @@ function get_panneaux_count_5($data,$keys)
         if ($data[$keys[0]][$i] != $rootTemp)
         {
             $tree = new Tree();
-            $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
+            $tree->addRoot($keys[0],$this->skip_caracters3($data[$keys[0]][$i]));
             $tempRoot = $data[$keys[0]][$i];
         }
         for($j = 0; $j < count($data[$keys[1]]); $j++)
@@ -942,10 +930,10 @@ function get_panneaux_count_5($data,$keys)
                         $count = count($res);
                         if ($count > 0) 
                         {                                 
-                            $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]));
-                            $index2 = $tree->insertChild($keys[2],$this->skip_caracters2($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));
-                            $index3 = $tree->insertChild($keys[3],$this->skip_caracters2($data[$keys[3]][$l]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2));
-                            $index4 = $tree->insertChild($keys[4],$this->skip_caracters2($data[$keys[4]][$m]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3));
+                            $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters3($data[$keys[1]][$j]));
+                            $index2 = $tree->insertChild($keys[2],$this->skip_caracters3($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));
+                            $index3 = $tree->insertChild($keys[3],$this->skip_caracters3($data[$keys[3]][$l]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2));
+                            $index4 = $tree->insertChild($keys[4],$this->skip_caracters3($data[$keys[4]][$m]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3));
                             $index5 = $tree->insertChild('nbre',$count,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4));                        
                             $tree->insertChild('grp',$sum,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5));    
                         }                          
@@ -970,7 +958,7 @@ function get_panneaux_count_6($data,$keys)
         if ($data[$keys[0]][$i] != $rootTemp)
         {
             $tree = new Tree();
-            $tree->addRoot($keys[0],$this->skip_caracters2($data[$keys[0]][$i]));
+            $tree->addRoot($keys[0],$this->skip_caracters3($data[$keys[0]][$i]));
             $tempRoot = $data[$keys[0]][$i];
         }
         for($j = 0; $j < count($data[$keys[1]]); $j++)
@@ -983,7 +971,7 @@ function get_panneaux_count_6($data,$keys)
                     {
                         for($n = 0; $n < count($data[$keys[5]]); $n++)
                         {
-                            $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "' AND `" . $keys[2] . "` = '" .  $this->skip_caracters2($data[$keys[2]][$k]) . "' AND `" . $keys[3] . "` = '" . $this->skip_caracters2($data[$keys[3]][$l]) .  "' AND `" . $keys[4] . "` = '" . $this->skip_caracters2($data[$keys[4]][$m]) . "' AND `" . $keys[5] . "` = '" . $this->skip_caracters2($data[$keys[5]][$n]) . "'";
+                            $where = "`" . $keys[0] . "` = '" . $this->skip_caracters3($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "' AND `" . $keys[2] . "` = '" .  $this->skip_caracters2($data[$keys[2]][$k]) . "' AND `" . $keys[3] . "` = '" . $this->skip_caracters2($data[$keys[3]][$l]) .  "' AND `" . $keys[4] . "` = '" . $this->skip_caracters2($data[$keys[4]][$m]) . "' AND `" . $keys[5] . "` = '" . $this->skip_caracters2($data[$keys[5]][$n]) . "'";
                             $res = $this->data_model->get_panneaux($where); 
                             $sum = 0;
                             for ($z =0; $z < count($res); $z++)
@@ -993,11 +981,11 @@ function get_panneaux_count_6($data,$keys)
                             $count = count($res);
                             if ($count > 0) 
                             {                                 
-                                $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters2($data[$keys[1]][$j]));
-                                $index2 = $tree->insertChild($keys[2],$this->skip_caracters2($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));
-                                $index3 = $tree->insertChild($keys[3],$this->skip_caracters2($data[$keys[3]][$l]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2));
-                                $index4 = $tree->insertChild($keys[4],$this->skip_caracters2($data[$keys[4]][$m]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3));
-                                $index5 = $tree->insertChild($keys[5],$this->skip_caracters2($data[$keys[5]][$n]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4));
+                                $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters3($data[$keys[1]][$j]));
+                                $index2 = $tree->insertChild($keys[2],$this->skip_caracters3($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));
+                                $index3 = $tree->insertChild($keys[3],$this->skip_caracters3($data[$keys[3]][$l]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2));
+                                $index4 = $tree->insertChild($keys[4],$this->skip_caracters3($data[$keys[4]][$m]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3));
+                                $index5 = $tree->insertChild($keys[5],$this->skip_caracters3($data[$keys[5]][$n]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4));
                                 $index6 = $tree->insertChild('nbre',$count,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5));                        
                                 $tree->insertChild('grp',$sum,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6));    
                             }  
