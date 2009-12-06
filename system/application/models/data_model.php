@@ -15,7 +15,7 @@ class data_model extends Model {
         $this->load->library('session');
     }
     
-   /*
+    /*
      * Retrourner les 10 dernieres données
      * */
     function get_last_ten_entries()
@@ -24,7 +24,7 @@ class data_model extends Model {
         return $query->result();
     }
 
-   /*
+    /*
      * Ajouter des données à la base de données
      * */
     function insert_entry($entries)
@@ -78,7 +78,7 @@ class data_model extends Model {
         }        
     }
 
-   /*
+    /*
      * Retourner les valeurs d'une donné spécifique
      * */
     function get($row)
@@ -89,7 +89,7 @@ class data_model extends Model {
         return $query->result();
     }        
     
-   /*
+    /*
      * Retourner les résultats d'une séléction (filtre)
      * */
     function get_results($data)
@@ -105,7 +105,7 @@ class data_model extends Model {
         return $query->result();
     }
     
-   /*
+    /*
      * Vérifier le login
      * */
     function check_login($username,$password)
@@ -117,7 +117,7 @@ class data_model extends Model {
         return $query->result();
     }
     
-   /*
+    /*
      * Retourner les infos d'un usager
      * */
     function get_data($id)
@@ -129,7 +129,7 @@ class data_model extends Model {
         return $query->result();
     }
     
-   /*
+    /*
      * Retourner les infos supplémentaires d'un usager
      * */    
     function get_right_data($id)
@@ -141,7 +141,7 @@ class data_model extends Model {
         return $query->result();
     }    
 
-   /*
+    /*
      * Retourner les usagers
      * */    
     function get_names($type)
@@ -153,7 +153,7 @@ class data_model extends Model {
         return $query->result();
     }    
     
-   /*
+    /*
      * Sauvegarder les changements des données
      * */
     function save_data($data)
@@ -164,7 +164,7 @@ class data_model extends Model {
         $this->db->update('3b_users', $data);
     }
     
-   /*
+    /*
      * Sauvegarder les changements des données supplémentaires
      * */
     function save_notes_data($data)
@@ -175,7 +175,7 @@ class data_model extends Model {
         $this->db->update('3b_users', $data);
     }
     
-   /*
+    /*
      * Retourner le mot de passe
      * */
     function get_password($nom,$email)
@@ -187,7 +187,7 @@ class data_model extends Model {
         return $query->result();
     }
     
-   /*
+    /*
      * Sauvegarder le mot de passe
      * */
     function save_password($nom,$email,$data)
@@ -198,7 +198,7 @@ class data_model extends Model {
         $this->db->update('3b_users', $data);
     }
     
-   /*
+    /*
      * Sauvegarder ou ajouter un usager
      * */
     function save_user($data,$type)
@@ -208,7 +208,7 @@ class data_model extends Model {
         $this->db->insert('3b_users', $data);
     }
 
-   /*
+    /*
      * Vérifier l'exitance d'un email
      * */    
     function check_email($email)
@@ -220,7 +220,7 @@ class data_model extends Model {
         return $query->result();
     }
     
-   /*
+    /*
      * Vérifier l'exitance d'un nom
      * */
     function check_nom($nom)
@@ -232,19 +232,94 @@ class data_model extends Model {
         return $query->result();
     }
     
-   /*
+    /*
+     * Retourner les panneaux filtrés
+     * */
+    function create_panneaux_list()
+    {
+        $query = "DROP TABLE IF EXISTS panneaux_list_" . $this->session->userdata['user_key'];
+        $this->db->query($query); 
+        $query = " CREATE TABLE IF NOT EXISTS panneaux_list_" . $this->session->userdata['user_key'] . " (
+                `id` int(11) NOT NULL AUTO_INCREMENT,
+                `id_face` int(5) DEFAULT NULL,
+                `x` varchar(30) DEFAULT NULL,
+                `y` varchar(30) DEFAULT NULL,
+                `rue` varchar(300),
+                `format` varchar(20) DEFAULT NULL,
+                `type` varchar(20) DEFAULT NULL, 
+                PRIMARY KEY (`id`)
+                )";                
+        $this->db->query($query);
+        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(id_face)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(type)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(rue)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(format)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(x)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(y)";
+        $this->db->query($query);
+    }
+    
+    /*
      * Retourner les panneaux filtrés
      * */
     function get_panneaux($where)
     {
-        $this->db->distinct();
-        $this->db->select('id_face,x,y,type,format,grp');
+        //$this->db->distinct();
+        $this->db->select('id_face, x, y, rue, format, type');
         $this->db->where($where);
         $query = $this->db->get('filtres_' . $this->session->userdata['user_key']);
         return $query->result();
     }
     
-   /*
+    /*
+     * Retourner les panneaux filtrés
+     * */
+    function set_panneaux($panneaux)
+    {
+        for ($i = 0; $i < count($panneaux); $i++)
+        {
+            foreach ($panneaux[$i] as $panneau)
+            {
+                $this->db->insert('panneaux_list_' . $this->session->userdata['user_key'], $panneau);
+            }
+        }
+        //$this->db->distinct();
+        /*$this->db->select('id_face');
+        $this->db->where($where);
+        $query = $this->db->get('filtres_' . $this->session->userdata['user_key']);
+        return $query->result();*/
+    }
+    
+    /*
+     * Retourner les panneaux filtrés
+     * */
+    function get_nbre_panneaux($where)
+    {
+        $this->db->distinct();
+        $this->db->select('id_face');
+        $this->db->where($where);
+        $this->db->from('filtres_' . $this->session->userdata['user_key']);
+        return  $this->db->count_all_results();
+    }
+    
+    /*
+     * Retourner les panneaux filtrés
+     * */
+    function get_grp_panneaux($where)
+    {
+        $this->db->distinct();
+        $this->db->select_sum('grp');
+        $this->db->where($where);
+        $query = $this->db->get('filtres_' . $this->session->userdata['user_key']);
+        return $query->result();
+    }
+    
+    /*
      * Créer une vue 
      * */
     function create_view($familles,$dates)
@@ -262,14 +337,52 @@ class data_model extends Model {
             $where = " WHERE annee = '" . $dates['year'] . "'";
         }
         $where .=  " AND famille IN ('" . implode("', '", $familles) . "')";
-        $query  = " CREATE VIEW filtres_" . $this->session->userdata['user_key'] . " AS ";
-        $query .= " SELECT annonceur, regie, marque, campagne, id_face, type, rue, format, grp, x, y";
+        $query  = " CREATE TABLE filtres_" . $this->session->userdata['user_key'] . "(
+                    `id` int(11) NOT NULL AUTO_INCREMENT,
+                    `id_face` int(5) DEFAULT NULL,
+                    `x` varchar(30) DEFAULT NULL,
+                    `y` varchar(30) DEFAULT NULL,
+                    `rue` varchar(300),
+                    `regie` varchar(50) DEFAULT NULL,
+                    `format` varchar(20) DEFAULT NULL,
+                    `type` varchar(20) DEFAULT NULL,
+                    `grp` varchar(10) DEFAULT NULL,
+                    `campagne` varchar(100),
+                    `marque` varchar(100) DEFAULT NULL,
+                    `annonceur` varchar(100) DEFAULT NULL,
+                     PRIMARY KEY (`id`)    
+                    );";
+        $this->db->query($query);       
+        $query = " INSERT INTO filtres_" . $this->session->userdata['user_key'] . "(annonceur, regie, marque, campagne, id_face, type, rue, format, grp, x, y) 
+                  SELECT annonceur, regie, marque, campagne, id_face, type, rue, format, grp, x, y";
         $query .= " FROM 3b_entries";
         $query .= $where;
-        return $this->db->query($query);        
+        $this->db->query($query);        
+        $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(annonceur)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX (regie)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(marque)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(campagne)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(id_face)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(type)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(rue)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(format)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(grp)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(x)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(y)";
+        $this->db->query($query);
     }
     
-   /*
+    /*
      * Initialiser
      * */
     function init_data($rowName)
@@ -280,7 +393,7 @@ class data_model extends Model {
         return $query->result();
     }
     
-   /*
+    /*
      * Retourner les informations filtrées
      * */
     function get_filtred($rowName,$rowData)
@@ -302,7 +415,7 @@ class data_model extends Model {
         }
     }
     
-   /*
+    /*
      * Créer une table panneaux pour sauvegarder la liste des panneaux
      * */
     function create_panneaux()
@@ -314,7 +427,7 @@ class data_model extends Model {
         return $this->db->query($sql);
     }
     
-   /*
+    /*
      * Initialiser la table panneaux
      * */
     function init_panneaux()
@@ -323,7 +436,7 @@ class data_model extends Model {
         $this->db->insert('panneaux_' . $this->session->userdata['user_key'],$data);
     }
     
-   /*
+    /*
      * Sauvegarder des données dans la table panneaux
      * */
     function save_panneaux($panneaux)
@@ -332,7 +445,7 @@ class data_model extends Model {
         return $this->db->query("UPDATE panneaux_" . $this->session->userdata['user_key'] . " set liste = " . "'" . $panneaux . "'" . $where);
     }
     
-   /*
+    /*
      * Retourner la liste des panneaux serialisée
      * */
     function get_ser_panneaux()
@@ -347,17 +460,17 @@ class data_model extends Model {
     function get_panneaux_list()
     {  
         $this->db->distinct();
-        $this->db->select('rue, x, y');
-        $query = $this->db->get("filtres_" . $this->session->userdata['user_key']);
+        //$this->db->select('rue, x, y');
+        $query = $this->db->get("panneaux_list" . $this->session->userdata['user_key']);
         return $query->result();
     }
     
-   /*
+    /*
      * Deteruire la vue
      * */
     function drop_view()
     {
-        return $this->db->query("DROP VIEW IF EXISTS filtres_" . $this->session->userdata['user_key']);
+        return $this->db->query("DROP TABLE IF EXISTS filtres_" . $this->session->userdata['user_key']);
     }
 
 }
