@@ -1,6 +1,6 @@
 <?
 
-$myFile = "/var/www/3b/httpdocs/system/xml/panneaux.xml";
+$myFile = "/var/www/3b/httpdocs/system/xml/panneaux_".$this->session->userdata['user_key'].".xml";
 $fh = fopen($myFile, 'w');
 $stringData = "<markers>\n";
 fwrite($fh, $stringData);
