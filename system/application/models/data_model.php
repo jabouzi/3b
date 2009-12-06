@@ -247,6 +247,10 @@ class data_model extends Model {
                 `rue` varchar(300),
                 `format` varchar(20) DEFAULT NULL,
                 `type` varchar(20) DEFAULT NULL, 
+                `regie` varchar(50) DEFAULT NULL,
+                `campagne` varchar(100),
+                `marque` varchar(100) DEFAULT NULL,
+                `annonceur` varchar(100) DEFAULT NULL,
                 PRIMARY KEY (`id`)
                 )";                
         $this->db->query($query);
@@ -262,6 +266,14 @@ class data_model extends Model {
         $this->db->query($query);
         $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(y)";
         $this->db->query($query);
+        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(regie)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(campagne)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(marque)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(annonceur)";
+        $this->db->query($query);
     }
     
     /*
@@ -269,8 +281,8 @@ class data_model extends Model {
      * */
     function get_panneaux($where)
     {
-        //$this->db->distinct();
-        $this->db->select('id_face, x, y, rue, format, type');
+        $this->db->distinct();
+        $this->db->select('id_face, x, y, rue, format, type, regie, campagne, marque, annonceur');
         $this->db->where($where);
         $query = $this->db->get('filtres_' . $this->session->userdata['user_key']);
         return $query->result();
@@ -342,16 +354,16 @@ class data_model extends Model {
                     `id_face` int(5) DEFAULT NULL,
                     `x` varchar(30) DEFAULT NULL,
                     `y` varchar(30) DEFAULT NULL,
-                    `rue` varchar(300),
-                    `regie` varchar(50) DEFAULT NULL,
+                    `rue` varchar(300),                    
                     `format` varchar(20) DEFAULT NULL,
                     `type` varchar(20) DEFAULT NULL,
                     `grp` varchar(10) DEFAULT NULL,
+                    `regie` varchar(50) DEFAULT NULL,
                     `campagne` varchar(100),
                     `marque` varchar(100) DEFAULT NULL,
                     `annonceur` varchar(100) DEFAULT NULL,
                      PRIMARY KEY (`id`)    
-                    );";
+                    )";      
         $this->db->query($query);       
         $query = " INSERT INTO filtres_" . $this->session->userdata['user_key'] . "(annonceur, regie, marque, campagne, id_face, type, rue, format, grp, x, y) 
                   SELECT annonceur, regie, marque, campagne, id_face, type, rue, format, grp, x, y";
@@ -461,7 +473,7 @@ class data_model extends Model {
     {  
         $this->db->distinct();
         //$this->db->select('rue, x, y');
-        $query = $this->db->get("panneaux_list" . $this->session->userdata['user_key']);
+        $query = $this->db->get("panneaux_list_" . $this->session->userdata['user_key']);
         return $query->result();
     }
     

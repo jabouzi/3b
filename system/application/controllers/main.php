@@ -83,7 +83,6 @@ class Main extends Controller{
                 $this->session->set_userdata($init);
                 $this->session->set_userdata($dates);
             }  
-
             $data['annonceur'] = $this->format_data($this->data_model->init_data('annonceur'),'annonceur');
             $data['campagne'] = $this->format_data($this->data_model->init_data('campagne'),'campagne');
             $data['marque'] = $this->format_data($this->data_model->init_data('marque'),'marque');
