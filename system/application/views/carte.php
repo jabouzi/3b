@@ -1,11 +1,13 @@
 <?
 
-$myFile = "/var/www/3b/httpdocs/system/xml/panneaux_".$this->session->userdata['user_key'].".xml";
+$myFile = $_SERVER['DOCUMENT_ROOT']."/public/xml/panneaux_".$this->session->userdata['user_key'].".xml";
 $fh = fopen($myFile, 'w');
 $stringData = "<markers>\n";
 fwrite($fh, $stringData);
 foreach ($panneaux as $panneau)
 {
+    //$label = $panneau->annonceur."<br/>".$panneau->marque."<br/>".$panneau->compagne."<br/>".$panneau->regie."<br/>".
+    //$panneau->format."<br/>".$panneau->type;
     $stringData = '<marker lat="' . $panneau->y/110846 . '" lng="' . $panneau->x/59570 . '" html="' . $panneau->rue . '" label="' .  $panneau->rue. '"/>'."\n";
     fwrite($fh, $stringData);
 }
@@ -94,7 +96,7 @@ fclose($fh);
 
 
       // Read the data from example.xml
-      GDownloadUrl("/system/xml/panneaux.xml", function(doc) {
+      GDownloadUrl("/public/xml/panneaux_<?=$this->session->userdata['user_key']?>.xml", function(doc) {
         var xmlDoc = GXml.parse(doc);
         var markers = xmlDoc.documentElement.getElementsByTagName("marker");
           
