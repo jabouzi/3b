@@ -14,11 +14,19 @@ $fp = fopen($cachefile, 'w');
             <?php endfor;?>
             <th style="background-color:red;" class="thres">Nbre Panneaux</th>
             <th style="background-color:red;" class="thres">GRP</th>
+            <th style="background-color:red;" class="thres">Couts grp</th>
+            <th style="background-color:red;" class="thres">Couts grp moyen</th>
+            <th style="background-color:red;" class="thres">Audience</th>
+            <th style="background-color:red;" class="thres">Visiblit&eacute;</th>
         </tr>
         <tr>
         <td><?php echo $panneau->getRoot()->getData();?></td>
         <td><center><?php echo $panneau->getRoot()->getChildAt(0)->getData();?></center></td>
         <td><center><?php echo number_format($panneau->getRoot()->getChildAt(0)->getChildAt(0)->getData(),3, ',', ' ');?></center></td>
+        <td><center><?php echo number_format($panneau->getRoot()->getChildAt(0)->getChildAt(0)->getChildAt(0)->getData(),3, ',', ' ');?></center></td>
+        <td><center><?php echo number_format($panneau->getRoot()->getChildAt(0)->getChildAt(0)->getChildAt(0)->getChildAt(0)->getData(),3, ',', ' ');?></center></td>
+        <td><center><?php echo number_format($panneau->getRoot()->getChildAt(0)->getChildAt(0)->getChildAt(0)->getChildAt(0)->getChildAt(0)->getData(),3, ',', ' ');?></center></td>
+        <td><center><?php echo number_format($panneau->getRoot()->getChildAt(0)->getChildAt(0)->getChildAt(0)->getChildAt(0)->getChildAt(0)->getChildAt(0)->getData(),3, ',', ' ');?></center></td>
         </tr>
     </table><br>
 <?php endforeach;?>
