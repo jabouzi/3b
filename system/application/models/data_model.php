@@ -281,9 +281,9 @@ class data_model extends Model {
      * */
     function get_panneaux($where)
     {
-        $this->db->distinct();
         $this->db->select('id_face, x, y, rue, format, type, regie, campagne, marque, annonceur');
         $this->db->where($where);
+        $this->db->distinct();
         $query = $this->db->get('filtres_' . $this->session->userdata['user_key']);
         return $query->result();
     }
@@ -301,19 +301,25 @@ class data_model extends Model {
                 $this->db->insert('panneaux_list_' . $this->session->userdata['user_key'], $panneau);
             }
         }
-        //$this->db->distinct();
-        /*$this->db->select('id_face');
-        $this->db->where($where);
-        $query = $this->db->get('filtres_' . $this->session->userdata['user_key']);
-        return $query->result();*/
     }
     
     /*
      * Retourner les panneaux filtrés
      * */
-    function get_nbre_panneaux($where)
+    function get_nbre_fixe_panneaux($where)
     {
-        $this->db->distinct();
+        $where .= " AND `type` = 'FIXE' ";
+        $this->db->select('type');
+        $this->db->where($where);
+        $this->db->from('filtres_' . $this->session->userdata['user_key']);
+        return  $this->db->count_all_results();
+    }
+    
+    /*
+     * Retourner les panneaux filtrés
+     * */
+    function get_nbre_face_panneaux($where)
+    {
         $this->db->select('id_face');
         $this->db->where($where);
         $this->db->from('filtres_' . $this->session->userdata['user_key']);
@@ -323,13 +329,48 @@ class data_model extends Model {
     /*
      * Retourner les panneaux filtrés
      * */
+    function get_nbre_panneaux($where)
+    {        
+        /*$this->db->select('x,y');
+        $this->db->where($where);
+        $this->db->distinct();
+        $this->db->from('filtres_' . $this->session->userdata['user_key']);
+        return  $this->db->count_all_results();*/
+        $query = $this->db->query("SELECT DISTINCT * FROM " . 'filtres_' . $this->session->userdata['user_key'] . " WHERE " . $where . " GROUP BY x, y ");
+        //var_dump("SELECT * FROM " . 'filtres_' . $this->session->userdata['user_key'] . " WHERE " . $where . " GROUP BY x, y ");
+        return count($query->result());
+    }
+    
+    /*
+     * Retourner les panneaux filtrés
+     * */
     function get_grp_panneaux($where)
     {
-        $this->db->distinct();
         $this->db->select_sum('grp');
+        //$this->db->distinct();
         $this->db->where($where);
         $query = $this->db->get('filtres_' . $this->session->userdata['user_key']);
         return $query->result();
+    }
+    
+    /*
+     * Retourner les panneaux filtrés
+     * */
+    function get_tarif_panneaux($where)
+    {
+        $this->db->select_sum('tarif');
+        //$this->db->distinct();
+        $this->db->where($where);
+        $query = $this->db->get('filtres_' . $this->session->userdata['user_key']);
+        return $query->result();
+    }
+    
+    /*
+     * Retourner les panneaux filtrés
+     * */
+    function get_total_panneaux($where)
+    {
+        return $this->db->count_all('filtres_' . $this->session->userdata['user_key']);
     }
     
     /*
@@ -355,14 +396,15 @@ class data_model extends Model {
                     `id_face` int(5) DEFAULT NULL,
                     `x` varchar(30) DEFAULT NULL,
                     `y` varchar(30) DEFAULT NULL,
-                    `rue` varchar(300),                    
+                    `rue` varchar(300) DEFAULT NULL,                    
                     `format` varchar(20) DEFAULT NULL,
                     `type` varchar(20) DEFAULT NULL,
                     `grp` varchar(10) DEFAULT NULL,
                     `regie` varchar(50) DEFAULT NULL,
-                    `campagne` varchar(100),
+                    `campagne` varchar(100) DEFAULT NULL,
                     `marque` varchar(100) DEFAULT NULL,
                     `annonceur` varchar(100) DEFAULT NULL,
+                    `tarif` int(5) DEFAULT NULL,
                      PRIMARY KEY (`id`)    
                     )";      
         $this->db->query($query);       
@@ -392,6 +434,8 @@ class data_model extends Model {
         $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(x)";
         $this->db->query($query);
         $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(y)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(tarif)";
         $this->db->query($query);
     }
     
@@ -473,7 +517,7 @@ class data_model extends Model {
     function get_panneaux_list()
     {  
         $this->db->distinct();
-        //$this->db->select('rue, x, y');
+        $this->db->select(' `x` , `y` , `rue` , `format` , `type` , `regie` , `campagne` , `marque` , `annonceur`');
         $query = $this->db->get("panneaux_list_" . $this->session->userdata['user_key']);
         return $query->result();
     }

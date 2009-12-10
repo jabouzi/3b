@@ -764,6 +764,14 @@ function get_panneaux_count_1($data,$keys)
         $nbre = $this->data_model->get_nbre_panneaux($where);
         $res = $this->data_model->get_grp_panneaux($where);       
         $grp = $res[0]->grp;
+        $res = $this->data_model->get_tarif_panneaux($where);
+        $tarif = $res[0]->tarif;
+        $cout_grp = $tarif / $grp;
+        $cout_grp_moyen = $grp / $nbre;
+        $nbre_face = $this->data_model->get_nbre_face_panneaux($where);
+        $nbre_fixe = $this->data_model->get_nbre_fixe_panneaux($where);
+        $audience = $nbre_fixe / $nbre_face;
+        $visiblite = $nbre /$nbre_face;
         if ($nbre > 0)
         { 
             $pann[] = $this->data_model->get_panneaux($where);
@@ -798,13 +806,23 @@ function get_panneaux_count_2($data,$keys)
             $nbre = $this->data_model->get_nbre_panneaux($where);
             $res = $this->data_model->get_grp_panneaux($where);       
             $grp = $res[0]->grp;
+            $res = $this->data_model->get_tarif_panneaux($where);
+            $tarif = $res[0]->tarif;
+            $cout_grp = $tarif / $grp;
+            $cout_grp_moyen = $grp / $nbre;
+            $nbre_face = $this->data_model->get_nbre_face_panneaux($where);
+            $nbre_fixe = $this->data_model->get_nbre_fixe_panneaux($where);
+            $audience = $nbre_fixe / $nbre_face;
+            $visiblite = $nbre /$nbre_face;
             if ($nbre > 0)
             {
+                $pann[] = $this->data_model->get_panneaux($where);
                 $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters3($data[$keys[1]][$j]));
                 $index2 = $tree->insertChild('nbre',$nbre,$tree->getRoot()->getChildAt($index1));                        
                 $tree->insertChild('grp',$grp,$tree->getRoot()->getChildAt($index1)->getChildAt($index2));  
             }
         }
+        $this->data_model->set_panneaux($pann);
         $result[] = $tree;
     }
     return $result;
@@ -833,8 +851,17 @@ function get_panneaux_count_3($data,$keys)
                 $nbre = $this->data_model->get_nbre_panneaux($where);
                 $res = $this->data_model->get_grp_panneaux($where);       
                 $grp = $res[0]->grp;
+                $res = $this->data_model->get_tarif_panneaux($where);
+                $tarif = $res[0]->tarif;
+                $cout_grp = $tarif / $grp;
+                $cout_grp_moyen = $grp / $nbre;
+                $nbre_face = $this->data_model->get_nbre_face_panneaux($where);
+                $nbre_fixe = $this->data_model->get_nbre_fixe_panneaux($where);
+                $audience = $nbre_fixe / $nbre_face;
+                $visiblite = $nbre /$nbre_face;
                 if ($nbre > 0) 
-                {                            
+                {                      
+                    $pann[] = $this->data_model->get_panneaux($where);      
                     $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters3($data[$keys[1]][$j]));
                     $index2 = $tree->insertChild($keys[2],$this->skip_caracters3($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));                        
                     $index3 = $tree->insertChild('nbre',$nbre,$tree->getRoot()->getChildAt($index1)->getChildAt($index2));                        
@@ -842,6 +869,7 @@ function get_panneaux_count_3($data,$keys)
                 }                        
             }                   
         }
+        $this->data_model->set_panneaux($pann);
         $result[] = $tree;
     }
     return $result;
@@ -873,8 +901,17 @@ function get_panneaux_count_4($data,$keys)
                     $nbre = $this->data_model->get_nbre_panneaux($where);
                     $res = $this->data_model->get_grp_panneaux($where);       
                     $grp = $res[0]->grp;
+                    $res = $this->data_model->get_tarif_panneaux($where);
+                    $tarif = $res[0]->tarif;
+                    $cout_grp = $tarif / $grp;
+                    $cout_grp_moyen = $grp / $nbre;
+                    $nbre_face = $this->data_model->get_nbre_face_panneaux($where);
+                    $nbre_fixe = $this->data_model->get_nbre_fixe_panneaux($where);
+                    $audience = $nbre_fixe / $nbre_face;
+                    $visiblite = $nbre /$nbre_face;
                     if ($nbre > 0) 
-                    {                                 
+                    {                
+                        $pann[] = $this->data_model->get_panneaux($where);                 
                         $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters3($data[$keys[1]][$j]));
                         $index2 = $tree->insertChild($keys[2],$this->skip_caracters3($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));
                         $index3 = $tree->insertChild($keys[3],$this->skip_caracters3($data[$keys[3]][$l]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2));
@@ -884,6 +921,7 @@ function get_panneaux_count_4($data,$keys)
                 }
             }                    
         }
+        $this->data_model->set_panneaux($pann);
         $result[] = $tree;
     }
     return $result;
@@ -916,8 +954,17 @@ function get_panneaux_count_5($data,$keys)
                         $nbre = $this->data_model->get_nbre_panneaux($where);
                         $res = $this->data_model->get_grp_panneaux($where);       
                         $grp = $res[0]->grp;
+                        $res = $this->data_model->get_tarif_panneaux($where);
+                        $tarif = $res[0]->tarif;
+                        $cout_grp = $tarif / $grp;
+                        $cout_grp_moyen = $grp / $nbre;
+                        $nbre_face = $this->data_model->get_nbre_face_panneaux($where);
+                        $nbre_fixe = $this->data_model->get_nbre_fixe_panneaux($where);
+                        $audience = $nbre_fixe / $nbre_face;
+                        $visiblite = $nbre /$nbre_face;
                         if ($nbre > 0) 
-                        {                                 
+                        {               
+                            $pann[] = $this->data_model->get_panneaux($where);                  
                             $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters3($data[$keys[1]][$j]));
                             $index2 = $tree->insertChild($keys[2],$this->skip_caracters3($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));
                             $index3 = $tree->insertChild($keys[3],$this->skip_caracters3($data[$keys[3]][$l]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2));
@@ -929,6 +976,7 @@ function get_panneaux_count_5($data,$keys)
                 }
             }            
         }
+        $this->data_model->set_panneaux($pann);
         $result[] = $tree;
     }
     return $result;
@@ -963,8 +1011,17 @@ function get_panneaux_count_6($data,$keys)
                             $nbre = $this->data_model->get_nbre_panneaux($where);
                             $res = $this->data_model->get_grp_panneaux($where);       
                             $grp = $res[0]->grp;
+                            $res = $this->data_model->get_tarif_panneaux($where);
+                            $tarif = $res[0]->tarif;
+                            $cout_grp = $tarif / $grp;
+                            $cout_grp_moyen = $grp / $nbre;
+                            $nbre_face = $this->data_model->get_nbre_face_panneaux($where);
+                            $nbre_fixe = $this->data_model->get_nbre_fixe_panneaux($where);
+                            $audience = $nbre_fixe / $nbre_face;
+                            $visiblite = $nbre /$nbre_face;
                             if ($nbre > 0) 
-                            {                                 
+                            {                
+                                $pann[] = $this->data_model->get_panneaux($where);                 
                                 $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters3($data[$keys[1]][$j]));
                                 $index2 = $tree->insertChild($keys[2],$this->skip_caracters3($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));
                                 $index3 = $tree->insertChild($keys[3],$this->skip_caracters3($data[$keys[3]][$l]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2));
@@ -978,6 +1035,7 @@ function get_panneaux_count_6($data,$keys)
                 }
             }
         }
+        $this->data_model->set_panneaux($pann);
         $result[] = $tree;
     }
     return $result;
