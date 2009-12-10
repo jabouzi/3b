@@ -761,7 +761,6 @@ function get_panneaux_count_1($data,$keys)
     for($i = 0; $i < count($data[$keys[0]]); $i++)
     {
         $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "'"; 
-        //$panneaux['liste_panneaux'] = $res;
         $nbre = $this->data_model->get_nbre_panneaux($where);
         $res = $this->data_model->get_grp_panneaux($where);       
         $grp = $res[0]->grp;

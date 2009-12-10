@@ -293,6 +293,7 @@ class data_model extends Model {
      * */
     function set_panneaux($panneaux)
     {
+        $this->db->delete('panneaux_list_' . $this->session->userdata['user_key']);
         for ($i = 0; $i < count($panneaux); $i++)
         {
             foreach ($panneaux[$i] as $panneau)
