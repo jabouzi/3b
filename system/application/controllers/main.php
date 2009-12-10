@@ -778,7 +778,11 @@ function get_panneaux_count_1($data,$keys)
             $tree = new Tree();
             $tree->addRoot($keys[0],$this->skip_caracters3($data[$keys[0]][$i]));
             $index1 = $tree->insertRootChild('nbre',$nbre);
-            $tree->insertChild('grp',$grp,$tree->getRoot()->getChildAt($index1)); 
+            $index2 = $tree->insertChild('grp',$grp,$tree->getRoot()->getChildAt($index1)); 
+            $index3 = $tree->insertChild('cout_grp',$cout_grp,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)); 
+            $index4 = $tree->insertChild('cout_grp_moyen',$cout_grp_moyen,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)); 
+            $index5 = $tree->insertChild('audience',$audience,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)); 
+            $tree->insertChild('visiblite',$visiblite,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)); 
             $result[] = $tree;
         }
     }

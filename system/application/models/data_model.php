@@ -331,12 +331,12 @@ class data_model extends Model {
      * */
     function get_nbre_panneaux($where)
     {        
-        /*$this->db->select('x,y');
-        $this->db->where($where);
-        $this->db->distinct();
-        $this->db->from('filtres_' . $this->session->userdata['user_key']);
-        return  $this->db->count_all_results();*/
-        $query = $this->db->query("SELECT DISTINCT * FROM " . 'filtres_' . $this->session->userdata['user_key'] . " WHERE " . $where . " GROUP BY x, y ");
+        //$this->db->select('id_face');
+        //$this->db->where($where);
+        //$this->db->from('filtres_' . $this->session->userdata['user_key']);
+        //$this->db->group_by("x, y");
+        //return  $this->db->count_all_results();
+        $query = $this->db->query("SELECT * FROM " . 'filtres_' . $this->session->userdata['user_key'] . " WHERE " . $where . " GROUP BY x, y ");
         //var_dump("SELECT * FROM " . 'filtres_' . $this->session->userdata['user_key'] . " WHERE " . $where . " GROUP BY x, y ");
         return count($query->result());
     }
@@ -516,9 +516,13 @@ class data_model extends Model {
     
     function get_panneaux_list()
     {  
-        $this->db->distinct();
-        $this->db->select(' `x` , `y` , `rue` , `format` , `type` , `regie` , `campagne` , `marque` , `annonceur`');
+        //$this->db->distinct();
+        /*$this->db->select(' `x` , `y` , `rue` , `format` , `type` , `regie` , `campagne` , `marque` , `annonceur`');
+        $this->db->group_by("x, y"); 
         $query = $this->db->get("panneaux_list_" . $this->session->userdata['user_key']);
+        return $query->result();*/
+        $query = $this->db->query("SELECT * FROM " . 'panneaux_list_' . $this->session->userdata['user_key'] . " GROUP BY x, y ");
+        //var_dump("SELECT * FROM " . 'filtres_' . $this->session->userdata['user_key'] . " WHERE " . $where . " GROUP BY x, y ");
         return $query->result();
     }
     
