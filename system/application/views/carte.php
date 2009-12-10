@@ -1,14 +1,13 @@
 <?
-
 $myFile = $_SERVER['DOCUMENT_ROOT']."/public/xml/panneaux_".$this->session->userdata['user_key'].".xml";
-$fh = fopen($myFile, 'w');
+$fh = fopen($myFile, 'w') or die("impossible");
 $stringData = "<markers>\n";
 fwrite($fh, $stringData);
 foreach ($panneaux as $panneau)
 {
-    //$label = $panneau->annonceur."<br/>".$panneau->marque."<br/>".$panneau->compagne."<br/>".$panneau->regie."<br/>".
-    //$panneau->format."<br/>".$panneau->type;
-    $stringData = '<marker lat="' . $panneau->y/110846 . '" lng="' . $panneau->x/59570 . '" html="' . $panneau->rue . '" label="' .  $panneau->rue. '"/>'."\n";
+    $stringData = '<marker lat="' . $panneau->y/110846 . '" lng="' . $panneau->x/59570 . 
+    '" annonceur="' . $panneau->annonceur . '" regie="' . $panneau->regie . '" campagne="' . $panneau->campagne .
+    '" format="' . $panneau->format . '" type="' . $panneau->type .'" label="' .  $panneau->rue. '"/>'."\n";
     fwrite($fh, $stringData);
 }
 $stringData = "</markers>\n";
@@ -19,7 +18,7 @@ fclose($fh);
 
 
 <script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAADK2Z-2Uhvnv0BtjasvfxpBSNJ1y2eHRySvVhP67t6CiMNJhwBRTB2so0vyy6KfasHgt7xNHSCYrZNQ"></script>
-<!--<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAADK2Z-2Uhvnv0BtjasvfxpBRbAO6zYxs1_Jl0WZMeQTtKB0rqbhRx55X8dUDKTq33UfpBmtjKpdJzGg"></script>-->
+<!--<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAwmk5rn1cwkvdKOYUjq5-0BQFvZdgKRPIgaJRXB6kUsLd8Cj1dxSuiAxJZbkU7rq0R0MyAbJYnIZ61w"></script>-->
 
 
 <table style="border-style: solid;border-color: rgb( 100, 100, 255);">
@@ -105,7 +104,7 @@ fclose($fh);
           var lat = parseFloat(markers[i].getAttribute("lat"));
           var lng = parseFloat(markers[i].getAttribute("lng"));
           var point = new GLatLng(lat,lng);
-          var html = markers[i].getAttribute("html");
+          var html = "Annonceur : "+markers[i].getAttribute("annonceur")+"<br/>Regie : "+markers[i].getAttribute("regie")+"<br/>Type : "+markers[i].getAttribute("type")+"<br/>Format : "+markers[i].getAttribute("format")+"<br/>Campagne : "+markers[i].getAttribute("campagne");
           var label = markers[i].getAttribute("label");
           // create the marker
           var marker = createMarker(point,label,html);
@@ -119,13 +118,9 @@ fclose($fh);
 
 
     else {
-      alert("Sorry, the Google Maps API is not compatible with this browser");
+      alert("La clé de google map api n'est pas valide.");
     }
 
-    // This Javascript is based on code provided by the
-    // Community Church Javascript Team
-    // http://www.bisphamchurch.org.uk/   
-    // http://econym.org.uk/gmap/
 
     //]]>
     </script>
