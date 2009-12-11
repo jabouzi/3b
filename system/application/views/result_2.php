@@ -15,6 +15,10 @@ $fp = fopen($cachefile, 'w');
             <?php endfor;?>
             <th style="background-color:red;" class="thres">Nbre Panneaux</th>
             <th style="background-color:red;" class="thres">GRP</th>
+            <th style="background-color:red;" class="thres">Couts grp</th>
+            <th style="background-color:red;" class="thres">Couts grp moyen</th>
+            <th style="background-color:red;" class="thres">Audience</th>
+            <th style="background-color:red;" class="thres">Visiblit&eacute;</th>
         </tr>
         <tr>
         <td rowspan="<?php $panneau->getNodesByDepth(1,$panneau->getRoot()); echo count($panneau->getChildsByDepth());?>"><?php echo $panneau->getRoot()->getData();?></td>
@@ -22,6 +26,10 @@ $fp = fopen($cachefile, 'w');
         <td rowspan="1"><?php echo $child->getData();?></td>
         <td><center><?php echo $child->getChildAt(0)->getData();?></center></td>
         <td><center><?php echo number_format($child->getChildAt(0)->getChildAt(0)->getData(),3, ',', ' ');?></center></td>
+        <td><center><?php echo number_format($child->getChildAt(0)->getChildAt(0)->getChildAt(0)->getData(),3, ',', ' ');?></center></td>
+        <td><center><?php echo number_format($child->getChildAt(0)->getChildAt(0)->getChildAt(0)->getChildAt(0)->getData(),3, ',', ' ');?></center></td>
+        <td><center><?php echo number_format($child->getChildAt(0)->getChildAt(0)->getChildAt(0)->getChildAt(0)->getChildAt(0)->getData(),3, ',', ' ');?></center></td>
+        <td><center><?php echo number_format($child->getChildAt(0)->getChildAt(0)->getChildAt(0)->getChildAt(0)->getChildAt(0)->getChildAt(0)->getData(),3, ',', ' ');?></center></td>
         </tr>
         <tr>
         <?php endforeach;?>
