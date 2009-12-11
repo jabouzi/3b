@@ -823,7 +823,12 @@ function get_panneaux_count_2($data,$keys)
                 $pann[] = $this->data_model->get_panneaux($where);
                 $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters3($data[$keys[1]][$j]));
                 $index2 = $tree->insertChild('nbre',$nbre,$tree->getRoot()->getChildAt($index1));                        
-                $tree->insertChild('grp',$grp,$tree->getRoot()->getChildAt($index1)->getChildAt($index2));  
+                $index3 = $tree->insertChild('grp',$grp,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)); 
+                $index4 = $tree->insertChild('cout_grp',$cout_grp,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)); 
+                $index5 = $tree->insertChild('cout_grp_moyen',$cout_grp_moyen,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)); 
+                $index6 = $tree->insertChild('audience',$audience,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)); 
+                $tree->insertChild('visiblite',$visiblite,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6)); 
+             
             }
         }
         $this->data_model->set_panneaux($pann);
@@ -850,7 +855,6 @@ function get_panneaux_count_3($data,$keys)
         {
             for($k = 0; $k < count($data[$keys[2]]); $k++)
             {
-                $str = $data[$keys[0]][$i] . ' - ' . $data[$keys[1]][$j] . ' - ' . $data[$keys[2]][$k];
                 $where = "`" . $keys[0] . "` = '" . $this->skip_caracters2($data[$keys[0]][$i]) . "' AND `" . $keys[1] . "` = '" . $this->skip_caracters2($data[$keys[1]][$j]) . "' AND `" . $keys[2] . "` = '" .  $this->skip_caracters2($data[$keys[2]][$k]) . "'";
                 $nbre = $this->data_model->get_nbre_panneaux($where);
                 $res = $this->data_model->get_grp_panneaux($where);       
@@ -869,7 +873,11 @@ function get_panneaux_count_3($data,$keys)
                     $index1 = $tree->insertRootChild($keys[1],$this->skip_caracters3($data[$keys[1]][$j]));
                     $index2 = $tree->insertChild($keys[2],$this->skip_caracters3($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));                        
                     $index3 = $tree->insertChild('nbre',$nbre,$tree->getRoot()->getChildAt($index1)->getChildAt($index2));                        
-                    $tree->insertChild('grp',$grp,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3));    
+                    $index4 = $tree->insertChild('grp',$grp,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3));    
+                    $index5 = $tree->insertChild('cout_grp',$cout_grp,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)); 
+                    $index6 = $tree->insertChild('cout_grp_moyen',$cout_grp_moyen,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)); 
+                    $index7 = $tree->insertChild('audience',$audience,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6)); 
+                    $tree->insertChild('visiblite',$visiblite,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6)->getChildAt($index7)); 
                 }                        
             }                   
         }
@@ -920,7 +928,11 @@ function get_panneaux_count_4($data,$keys)
                         $index2 = $tree->insertChild($keys[2],$this->skip_caracters3($data[$keys[2]][$k]),$tree->getRoot()->getChildAt($index1));
                         $index3 = $tree->insertChild($keys[3],$this->skip_caracters3($data[$keys[3]][$l]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2));
                         $index4 = $tree->insertChild('nbre',$nbre,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3));                        
-                        $tree->insertChild('grp',$grp,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4));    
+                        $index5 = $tree->insertChild('grp',$grp,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4));    
+                        $index6 = $tree->insertChild('cout_grp',$cout_grp,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)); 
+                        $index7 = $tree->insertChild('cout_grp_moyen',$cout_grp_moyen,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6)); 
+                        $index8 = $tree->insertChild('audience',$audience,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6)->getChildAt($index7)); 
+                        $tree->insertChild('visiblite',$visiblite,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6)->getChildAt($index7)->getChildAt($index8)); 
                     }                                            
                 }
             }                    
@@ -974,7 +986,11 @@ function get_panneaux_count_5($data,$keys)
                             $index3 = $tree->insertChild($keys[3],$this->skip_caracters3($data[$keys[3]][$l]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2));
                             $index4 = $tree->insertChild($keys[4],$this->skip_caracters3($data[$keys[4]][$m]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3));
                             $index5 = $tree->insertChild('nbre',$nbre,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4));                        
-                            $tree->insertChild('grp',$grp,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5));    
+                            $index6 = $tree->insertChild('grp',$grp,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5));    
+                            $index7 = $tree->insertChild('cout_grp',$cout_grp,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6)); 
+                            $index8 = $tree->insertChild('cout_grp_moyen',$cout_grp_moyen,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6)->getChildAt($index7)); 
+                            $index9 = $tree->insertChild('audience',$audience,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6)->getChildAt($index7)->getChildAt($index8)); 
+                            $tree->insertChild('visiblite',$visiblite,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6)->getChildAt($index7)->getChildAt($index8)->getChildAt($index9)); 
                         }                          
                     }                                        
                 }
@@ -1032,7 +1048,11 @@ function get_panneaux_count_6($data,$keys)
                                 $index4 = $tree->insertChild($keys[4],$this->skip_caracters3($data[$keys[4]][$m]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3));
                                 $index5 = $tree->insertChild($keys[5],$this->skip_caracters3($data[$keys[5]][$n]),$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4));
                                 $index6 = $tree->insertChild('nbre',$nbre,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5));                        
-                                $tree->insertChild('grp',$grp,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6));    
+                                $index7 = $tree->insertChild('grp',$grp,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6));    
+                                $index8 = $tree->insertChild('cout_grp',$cout_grp,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6)->getChildAt($index7)); 
+                                $index9 = $tree->insertChild('cout_grp_moyen',$cout_grp_moyen,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6)->getChildAt($index7)->getChildAt($index8)); 
+                                $index10 = $tree->insertChild('audience',$audience,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6)->getChildAt($index7)->getChildAt($index8)->getChildAt($index9)); 
+                                $tree->insertChild('visiblite',$visiblite,$tree->getRoot()->getChildAt($index1)->getChildAt($index2)->getChildAt($index3)->getChildAt($index4)->getChildAt($index5)->getChildAt($index6)->getChildAt($index7)->getChildAt($index8)->getChildAt($index9)->getChildAt($index10)); 
                             }  
                         }
                     }                                        
