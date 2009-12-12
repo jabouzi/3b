@@ -439,11 +439,11 @@ class Main extends Controller{
         
         
         /*==================================*/    
-        $count1 = $this->get_count_type('nbre');
-        $count2 = $this->get_count_type('grp');
         
         for ($index = 0; $index < count($data['keys']); $index++)
         { 
+            $count1 = $this->get_count_type($data['keys'][$index],'nbre');
+            $count2 = $this->get_count_type($data['keys'][$index],'grp');
             $this->generate_images($data['keys'][$index],'nbre',$count1);
             $this->generate_images($data['keys'][$index],'grp',$count2); 
         }
