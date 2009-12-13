@@ -13,16 +13,7 @@ class data_model extends Model {
         // Call the Model constructor
         parent::Model();
         $this->load->library('session');
-    }
-    
-    /*
-     * Retrourner les 10 dernieres données
-     * */
-    function get_last_ten_entries()
-    {
-        $query = $this->db->get('3b_entries', 10);
-        return $query->result();
-    }
+    }    
 
     /*
      * Ajouter des données à la base de données
@@ -242,15 +233,19 @@ class data_model extends Model {
         $query = " CREATE TABLE IF NOT EXISTS panneaux_list_" . $this->session->userdata['user_key'] . " (
                 `id` int(11) NOT NULL AUTO_INCREMENT,
                 `id_face` int(5) DEFAULT NULL,
-                `x` varchar(30) DEFAULT NULL,
-                `y` varchar(30) DEFAULT NULL,
+                `latitude` varchar(30) DEFAULT NULL,
+                `longitude` varchar(30) DEFAULT NULL,
                 `rue` varchar(300),
+                `ville` varchar(300),
+                `latitude_ville` varchar(30) DEFAULT NULL,
+                `longitude_ville` varchar(30) DEFAULT NULL,
                 `format` varchar(20) DEFAULT NULL,
                 `type` varchar(20) DEFAULT NULL, 
                 `regie` varchar(50) DEFAULT NULL,
                 `campagne` varchar(100),
                 `marque` varchar(100) DEFAULT NULL,
                 `annonceur` varchar(100) DEFAULT NULL,
+                `visuel` varchar(100) DEFAULT NULL,
                 PRIMARY KEY (`id`)
                 )";                
         $this->db->query($query);
@@ -260,11 +255,17 @@ class data_model extends Model {
         $this->db->query($query);
         $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(rue)";
         $this->db->query($query);
+        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(ville)";
+        $this->db->query($query);
         $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(format)";
         $this->db->query($query);
-        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(x)";
+        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(latitude)";
         $this->db->query($query);
-        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(y)";
+        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(longitude)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(latitude_ville)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(longitude_ville)";
         $this->db->query($query);
         $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(regie)";
         $this->db->query($query);
@@ -274,6 +275,8 @@ class data_model extends Model {
         $this->db->query($query);
         $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(annonceur)";
         $this->db->query($query);
+        $query = "ALTER TABLE `panneaux_list_" . $this->session->userdata['user_key'] . "` ADD INDEX(visuel)";
+        $this->db->query($query);
     }
     
     /*
@@ -281,10 +284,10 @@ class data_model extends Model {
      * */
     function get_panneaux($where)
     {
-        $this->db->select('id_face, x, y, rue, format, type, regie, campagne, marque, annonceur');
-        $this->db->where($where);
-        $this->db->distinct();
-        $query = $this->db->get('filtres_' . $this->session->userdata['user_key']);
+        $sql = "SELECT id_face, rue, format, type, regie, campagne, marque, annonceur, visuel, latitude, longitude, ville, longitude_ville, latitude_ville  FROM " .
+                'filtres_' . $this->session->userdata['user_key'] .", coordonnees_panneaux, coordonnees_villes WHERE
+                id_face =  coordonnees_panneaux.id AND id_ville = coordonnees_villes.id AND" . $where;
+        $query = $this->db->query($sql);
         return $query->result();
     }
     
@@ -293,6 +296,7 @@ class data_model extends Model {
      * */
     function set_panneaux($panneaux)
     {
+        //var_dump($panneaux);
         $this->db->delete('panneaux_list_' . $this->session->userdata['user_key']);
         for ($i = 0; $i < count($panneaux); $i++)
         {
@@ -331,13 +335,7 @@ class data_model extends Model {
      * */
     function get_nbre_panneaux($where)
     {        
-        //$this->db->select('id_face');
-        //$this->db->where($where);
-        //$this->db->from('filtres_' . $this->session->userdata['user_key']);
-        //$this->db->group_by("x, y");
-        //return  $this->db->count_all_results();
-        $query = $this->db->query("SELECT * FROM " . 'filtres_' . $this->session->userdata['user_key'] . " WHERE " . $where . " GROUP BY x, y ");
-        //var_dump("SELECT * FROM " . 'filtres_' . $this->session->userdata['user_key'] . " WHERE " . $where . " GROUP BY x, y ");
+        $query = $this->db->query("SELECT * FROM " . 'filtres_' . $this->session->userdata['user_key'] . ", coordonnees_panneaux WHERE id_face = coordonnees_panneaux.id AND" . $where . " GROUP BY latitude, longitude ");
         return count($query->result());
     }
     
@@ -359,7 +357,6 @@ class data_model extends Model {
     function get_tarif_panneaux($where)
     {
         $this->db->select_sum('tarif');
-        //$this->db->distinct();
         $this->db->where($where);
         $query = $this->db->get('filtres_' . $this->session->userdata['user_key']);
         return $query->result();
@@ -394,9 +391,8 @@ class data_model extends Model {
         $query  = " CREATE TABLE filtres_" . $this->session->userdata['user_key'] . "(
                     `id` int(11) NOT NULL AUTO_INCREMENT,
                     `id_face` int(5) DEFAULT NULL,
-                    `x` varchar(30) DEFAULT NULL,
-                    `y` varchar(30) DEFAULT NULL,
-                    `rue` varchar(300) DEFAULT NULL,                    
+                    `rue` varchar(300) DEFAULT NULL, 
+                    `id_ville` int(3) DEFAULT NULL,                
                     `format` varchar(20) DEFAULT NULL,
                     `type` varchar(20) DEFAULT NULL,
                     `grp` varchar(10) DEFAULT NULL,
@@ -405,11 +401,12 @@ class data_model extends Model {
                     `marque` varchar(100) DEFAULT NULL,
                     `annonceur` varchar(100) DEFAULT NULL,
                     `tarif` int(5) DEFAULT NULL,
+                    `visuel` varchar(100) DEFAULT NULL,
                      PRIMARY KEY (`id`)    
                     )";      
         $this->db->query($query);       
-        $query = " INSERT INTO filtres_" . $this->session->userdata['user_key'] . "(annonceur, regie, marque, campagne, id_face, type, rue, format, grp, x, y) 
-                  SELECT annonceur, regie, marque, campagne, id_face, type, rue, format, grp, x, y";
+        $query = " INSERT INTO filtres_" . $this->session->userdata['user_key'] . "(annonceur, regie, marque, campagne, id_face, type, rue, id_ville, format, grp, tarif, visuel) 
+                  SELECT annonceur, regie, marque, campagne, id_face, type, adresse, id_ville,format, grp, tarif, visuel";
         $query .= " FROM 3b_entries";
         $query .= $where;
         $this->db->query($query);        
@@ -423,6 +420,8 @@ class data_model extends Model {
         $this->db->query($query);
         $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(id_face)";
         $this->db->query($query);
+        $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(id_ville)";
+        $this->db->query($query);
         $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(type)";
         $this->db->query($query);
         $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(rue)";
@@ -431,11 +430,9 @@ class data_model extends Model {
         $this->db->query($query);
         $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(grp)";
         $this->db->query($query);
-        $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(x)";
-        $this->db->query($query);
-        $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(y)";
-        $this->db->query($query);
         $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(tarif)";
+        $this->db->query($query);
+        $query = "ALTER TABLE `filtres_" . $this->session->userdata['user_key'] . "` ADD INDEX(visuel)";
         $this->db->query($query);
     }
     
@@ -516,13 +513,14 @@ class data_model extends Model {
     
     function get_panneaux_list()
     {  
-        //$this->db->distinct();
-        /*$this->db->select(' `x` , `y` , `rue` , `format` , `type` , `regie` , `campagne` , `marque` , `annonceur`');
-        $this->db->group_by("x, y"); 
-        $query = $this->db->get("panneaux_list_" . $this->session->userdata['user_key']);
-        return $query->result();*/
-        $query = $this->db->query("SELECT * FROM " . 'panneaux_list_' . $this->session->userdata['user_key'] . " GROUP BY x, y ");
-        //var_dump("SELECT * FROM " . 'filtres_' . $this->session->userdata['user_key'] . " WHERE " . $where . " GROUP BY x, y ");
+        $query = $this->db->query("SELECT * FROM " . 'panneaux_list_' . $this->session->userdata['user_key'] . " GROUP BY latitude, longitude ");
+        return $query->result();
+    }
+    
+    function get_villes_list()
+    {
+        $sql = "SELECT ville, latitude_ville, longitude_ville FROM " . 'panneaux_list_' . $this->session->userdata['user_key'] . " GROUP BY latitude_ville, longitude_ville ";
+        $query = $this->db->query($sql);
         return $query->result();
     }
     

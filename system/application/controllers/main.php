@@ -236,7 +236,8 @@ class Main extends Controller{
     
     function afficher_carte()
     {
-        $res = $this->data_model->get_panneaux_list();
+        $panneaux_list = $this->data_model->get_panneaux_list();
+        $villes_list = $this->data_model->get_villes_list();
         //var_dump($res);
         if (isset($this->session->userdata['nom']))
         {
@@ -254,7 +255,8 @@ class Main extends Controller{
             $checked['2'] = '';
             $checked['3'] = 'checked=ckecked';
             $data_result['checked'] = $checked;   
-            $data['panneaux'] = $res;
+            $data['panneaux'] = $panneaux_list;
+            $data['villes'] = $villes_list;
             $this->load->view('header',$data_header);
             $this->load->view('menu_content',$data_menu);
             $this->load->view('result_menu',$data_result);
@@ -274,11 +276,28 @@ class Main extends Controller{
         $this->load->library('tree'); 
         $res = $this->data_model->get_ser_panneaux();
         $panneaux = unserialize($res[0]->liste); 
+        
         if ('nbre' == $type2) 
+        {
+            $depth = -5;
+        }
+        else if ('grp' == $type2) 
+        {
+            $depth = -4;
+        }
+        else if ('coutsGrp' == $type2) 
+        {
+            $depth = -3;
+        }
+        else if ('CoutsGrpMoyen' == $type2) 
+        {
+            $depth = -2;
+        }
+        else if ('audience' == $type2) 
         {
             $depth = -1;
         }
-        else 
+        else if ('visiblite' == $type2) 
         {
             $depth = 0;
         }

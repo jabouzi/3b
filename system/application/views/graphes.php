@@ -10,6 +10,10 @@
 <select name="y">
   <option value="nbre" <?php if ($selected['y'] == 'nbre') echo 'selected="true"'; ?>>Nombre de faces</option>
   <option value="grp" <?php if ($selected['y'] == 'grp') echo 'selected="true"'; ?>>GRP</option>
+  <option value="coutsGrp" <?php if ($selected['y'] == 'coutsGrp') echo 'selected="true"'; ?>>Couts GRP</option>
+  <option value="CoutsGrpMoyen" <?php if ($selected['y'] == 'CoutsGrpMoyen') echo 'selected="true"'; ?>>Couts grp moyen</option>
+  <option value="audience" <?php if ($selected['y'] == 'audience') echo 'selected="true"'; ?>>Audience</option>
+  <option value="visiblite" <?php if ($selected['y'] == 'visiblite') echo 'selected="true"'; ?>>Visiblit&eacute;</option>
 </select>
 <input type="submit" value="Afficher"/>
 <div>
