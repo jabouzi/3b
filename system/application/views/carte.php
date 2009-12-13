@@ -5,9 +5,24 @@ $stringData = "<markers>\n";
 fwrite($fh, $stringData);
 foreach ($panneaux as $panneau)
 {
-    $stringData = '<marker lat="' . $panneau->y/110846 . '" lng="' . $panneau->x/59570 . 
+    $stringData = '<marker lat="' . $panneau->latitude . '" lng="' . $panneau->longitude . 
     '" annonceur="' . $panneau->annonceur . '" regie="' . $panneau->regie . '" campagne="' . $panneau->campagne .
-    '" format="' . $panneau->format . '" type="' . $panneau->type .'" label="' .  $panneau->rue. '"/>'."\n";
+    '" format="' . $panneau->format . '" type="' . $panneau->type .'" rue="' .  $panneau->rue .
+    '" ville="' .  $panneau->ville . '" latv="' .  $panneau->latitude_ville . '" lngv="' .  $panneau->longitude_ville . 
+    '" img="' .  $panneau->visuel . '"/>'."\n";
+    fwrite($fh, $stringData);
+}
+$stringData = "</markers>\n";
+fwrite($fh, $stringData);
+fclose($fh);
+
+$myFile = $_SERVER['DOCUMENT_ROOT']."/public/xml/villes_".$this->session->userdata['user_key'].".xml";
+$fh = fopen($myFile, 'w') or die("impossible");
+$stringData = "<markers>\n";
+fwrite($fh, $stringData);
+foreach ($villes as $ville)
+{
+    $stringData = '<marker ville="' .  $ville->ville . '" latv="' .  $ville->latitude_ville . '" lngv="' .  $ville->longitude_ville . '"/>'."\n";
     fwrite($fh, $stringData);
 }
 $stringData = "</markers>\n";
@@ -55,7 +70,7 @@ fclose($fh);
 	  
 	  
       // A function to create the marker and set up the event window
-      function createMarker(point,name,html) {
+      function createMarker(point,html) {
 		var icon = new GIcon();
 		icon.image = "http://maps.google.com/mapfiles/kml/pal2/icon13.png";
         icon.iconSize = new GSize(25,25);
@@ -66,10 +81,14 @@ fclose($fh);
           marker.openInfoWindowHtml(html);
         });
         // save the info we need to use later for the side_bar
-        gmarkers.push(marker);
-        // add a line to the side_bar html
-        side_bar_html += '<a href="javascript:myclick(' + (gmarkers.length-1) + ')">' + name + '<\/a><br>';
+        gmarkers.push(marker);        
          return marker;
+      }
+      
+      function createSidebar(ville,latv,lngv)
+      {
+          // add a line to the side_bar html
+        side_bar_html += '<a href="javascript:map.setCenter(new GLatLng( ' + latv + ',' + lngv + '), 12);">'+ville+'<\/a><br>';
       }
 
 
@@ -104,21 +123,38 @@ fclose($fh);
           var lat = parseFloat(markers[i].getAttribute("lat"));
           var lng = parseFloat(markers[i].getAttribute("lng"));
           var point = new GLatLng(lat,lng);
-          var html = "Annonceur : "+markers[i].getAttribute("annonceur")+"<br/>Regie : "+markers[i].getAttribute("regie")+"<br/>Type : "+markers[i].getAttribute("type")+"<br/>Format : "+markers[i].getAttribute("format")+"<br/>Campagne : "+markers[i].getAttribute("campagne");
-          var label = markers[i].getAttribute("label");
+          var html = "Annonceur : "+markers[i].getAttribute("annonceur")+"<br/>Regie : "+markers[i].getAttribute("regie")+"<br/>Type : "+markers[i].getAttribute("type")+"<br/>Format : "+markers[i].getAttribute("format")+"<br/>Campagne : "+markers[i].getAttribute("campagne")+"<br/>Adresse : "+markers[i].getAttribute("rue")+'<br/><img src="/public/campagne/'+markers[i].getAttribute("img")+'.jpg" width=150 height=150>';
+          //alert('<img src="/public/campagne/'+markers[i].getAttribute("img")+'.png">');
           // create the marker
-          var marker = createMarker(point,label,html);
+          var marker = createMarker(point,html);
           map.addOverlay(marker);
+        }
+      });
+      
+      
+      GDownloadUrl("/public/xml/villes_<?=$this->session->userdata['user_key']?>.xml", function(doc) {
+        var xmlDoc = GXml.parse(doc);
+        var markers = xmlDoc.documentElement.getElementsByTagName("marker");
+          
+        for (var i = 0; i < markers.length; i++) {          // obtain the attribues of each marker
+          
+          var ville = markers[i].getAttribute("ville");
+          var latv = parseFloat(markers[i].getAttribute("latv"));
+          var lngv = parseFloat(markers[i].getAttribute("lngv"));          
+          createSidebar(ville,latv,lngv);  
         }
         // put the assembled side_bar_html contents into the side_bar div
         document.getElementById("side_bar").innerHTML = side_bar_html;
       });
+      
+      
+      
     }
 
 
 
     else {
-      alert("La clé de google map api n'est pas valide.");
+      alert("La cl&eacute; de google map api n'est pas valide.");
     }
 
 
