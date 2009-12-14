@@ -13,7 +13,7 @@
 <body>
 <div id="cadre3">
    <div id="col_gauche">
-     <img src="<?=base_url();?>public/images/panneau-coordonnégif.gif" width="243" height="557" />   
+     <img src="<?=base_url();?>public/images/panneau-coordonnegif.gif" width="243" height="557" />   
    </div>
    <div id="col_droite">
      <div id="header3">
