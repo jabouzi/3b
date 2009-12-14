@@ -1,36 +1,45 @@
 <?php $year=date('Y');$year0 = $year - 10;?>
 <?php $months = array("Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Ao&ucirc;t", "Septembre", "Octobre", "Novembre", "Decembre");?>
-<div id="centercontent">
-<div class="centercontentleft3"><h4>Ann&eacute;e</h4>
-		<div id="divannonceur" class="data3">
-        <!--<select class="select" id="annee">-->
-        <?php for($index = $year; $index >= $year0; $index--):?>
-          <!--<option><?php //echo $index;?></option>-->  
-          <p><input type="radio" value="<?php echo $index;?>" name="annee" id="annee" /><?php echo $index;?></p>
-        <?php endfor;?>
-        <!--</select>-->
-		</div>
-		<button id="selectannonceur"  onclick="ajouter(1)">Ajouter</button>
-	</div>	
-	<div class="centercontentleft3"><h4>Mois</h4>
-		<div id="divcampagne" class="data3">
-        <!--<select class="select" id="mois">>-->
-        <?php for($index = 0; $index < count($months); $index++):?>
-          <!--<option><?php //echo $months[$index];?></option>>-->  
-          <p><input type="radio" value="<?php echo $months[$index];?>" name="mois" id="mois" /><?php echo $months[$index];?></p>
-        <?php endfor;?>
-        <!--</select>>-->		
-		</div>
-		<button id="selectcampagne" onclick="ajouter(2)">Ajouter</button>
-	</div>
-<div id="Container" class="container">
-      <div class="centercontentleft2"><h4>Libre</h4>
-	  <div id="cal1Container"></div>	
-      <button id="selectcampagne" onclick="ajouter(3)">Ajouter</button>
-      </div>      
-</div>     
+<div id="content">
+    <div style="float:left;width:900px; height:600px">    
+        <div id="bloc_filtre">
+    
+            <div id="bloc_filtre_left">
+                <div class="centercontent2"><h4>Ann&eacute;e</h4>
+                    <div id="divannonceur" class="data3">
+                    <?php for($index = $year; $index >= $year0; $index--):?>
+                      <p><input type="radio" value="<?php echo $index;?>" name="annee" id="annee" /><?php echo $index;?></p>
+                    <?php endfor;?>
+                    </div>                    
+                </div>
+                <button id="selectannonceur"  onclick="ajouter(1)">Ajouter</button>
+            </div>
+            
+            <div id="bloc_filtre_right2">
+                <div class="centercontent2"><h4>Mois</h4>
+                    <div id="divcampagne" class="data3">
+                    <?php for($index = 0; $index < count($months); $index++):?>
+                      <p><input type="radio" value="<?php echo $months[$index];?>" name="mois" id="mois" /><?php echo $months[$index];?></p>
+                    <?php endfor;?>
+                    </div>                    
+                </div>
+                <button id="selectcampagne" onclick="ajouter(2)">Ajouter</button>
+            </div>
+            
+            <!--<div id="bloc_filtre_right3">
+                <div id="Container" class="centercontent2">
+                      <div class="centercontentleft"><h4>Libre</h4>
+                        <div id="cal1Container"></div>                        
+                      </div>      
+                </div>
+                <button id="selectcampagne" onclick="ajouter(3)">Ajouter</button>
+            </div>-->
+
+        </div>
+    </div>
 </div>
-</div>
+
+
 
 
 

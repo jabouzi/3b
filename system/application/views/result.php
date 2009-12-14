@@ -25,7 +25,7 @@ $fp = fopen($cachefile, 'w');
     $index = 0;
 ?>
 <?php  foreach($arr as $item0):?>
-    <br><table border=1 class="table" >
+    <br><table border=1 class="tableau" >
     <tr>
     <?php for($key = 0; $key < count($keys); $key++):?>
     <th style="background-color:#7F7F7F;" class="th"><?php echo $keys[$key];?></th>
