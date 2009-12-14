@@ -36,12 +36,12 @@ fclose($fh);
 <!--<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAwmk5rn1cwkvdKOYUjq5-0BQFvZdgKRPIgaJRXB6kUsLd8Cj1dxSuiAxJZbkU7rq0R0MyAbJYnIZ61w"></script>-->
 
 
-<table style="border-style: solid;border-color: rgb( 100, 100, 255);">
+<table class="tcarte">
       <tr>
         <td>
-           <div id="map" style="width: 550px; height: 600px"></div>
+           <div id="map" style="width: 600px; height: 600px"></div>
         </td>
-        <td width = 250 valign="top" style="text-decoration: underline; color: #4444ff;">
+        <td class="carte" valign="top">
            <div id="side_bar"  style="overflow:auto; height:600px;"></div>
         </td>
       </tr>

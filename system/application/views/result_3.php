@@ -8,17 +8,17 @@ $fp = fopen($cachefile, 'w');
 <?php  foreach($panneaux as $panneau):?>
 <? if ($panneau->getRoot()->hasChildren()):?>
     <br>
-    <table border=1 class="table" >
+    <table  cellspacing="0" cellpadding="0" border="0" class="tableau" >
         <tr>
             <?php for($key = 0; $key < count($keys); $key++):?>
-            <th style="background-color:#7F7F7F;" class="th"><?php echo $keys[$key];?></th>
+            <th style="background-color:#E1E1E1;"><?php echo $keys[$key];?></th>
             <?php endfor;?>
-            <th style="background-color:red;" class="thres">Nbre Panneaux</th>
-            <th style="background-color:red;" class="thres">GRP</th>
-            <th style="background-color:red;" class="thres">Couts grp</th>
-            <th style="background-color:red;" class="thres">Couts grp moyen</th>
-            <th style="background-color:red;" class="thres">Audience</th>
-            <th style="background-color:red;" class="thres">Visiblit&eacute;</th>            
+            <th style="background-color:#CCDAE7;">Nbre Panneaux</th>
+            <th style="background-color:#CCDAE7;">GRP</th>
+            <th style="background-color:#CCDAE7;">Couts grp</th>
+            <th style="background-color:#CCDAE7;">Couts grp moyen</th>
+            <th style="background-color:#CCDAE7;">Audience</th>
+            <th style="background-color:#CCDAE7;">Visiblit&eacute;</th>
         </tr>
         <tr>
         <?php 

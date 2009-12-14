@@ -11,42 +11,43 @@
 </head>
 
 <body>
-<div id="cadre0">
-  <div id="cadre1">
-    <div id="header">
-       <div class="logo"><img src="<?=base_url();?>public/images/logo.gif" width="157" height="157" alt="" /></div>
-       <div class="slogan"><img src="<?=base_url();?>public/images/slogan.png" width="428" height="31" alt=""/></div>    
-    </div>
-    <div class="error_message" align="center">
-    <?php echo validation_errors(); ?>      
-    <?php if (isset($message)) echo $message;?>
-    </div> 
-    <div id="conteneur">
-       <div class="deb"></div>
-       <div class="connexion">
+<div id="cadre3">
+   <div id="col_gauche">
+     <img src="<?=base_url();?>public/images/panneau-coordonnégif.gif" width="243" height="557" />   
+   </div>
+   <div id="col_droite">
+     <div id="header3">
+           <div class="logo"><img src="<?=base_url();?>public/images/logo2.gif" alt="" width="193" height="65" border="0" /></div>
+     </div>
+     <div id="bloc1">
          <?php echo form_open('login'); ?>
-           <label>Nom Utilisateur :</label>
-           <input type="text" id="username" name="username" value="<?php echo set_value('username'); ?>"/>
-           <span>Minimum 5 caractères</span>
-           <br /><br />
-           <label>Mot De Passe :</label>
-           <input type="password" id="password" name="password" value="<?php echo set_value('password'); ?>" />
-           <span>Minimum 6 caractères</span><br />
-           <button id="btn" type="submit">
-              <b>Valider</b>
-           </button>
+               <label>Nom Utilisateur</label>
+               <input type="text" id="username" name="username" value="<?php echo set_value('username'); ?>"/>
+               <span>Minimum 5 caractères</span>
+               <br /><br />
+               <label>Mot De Passe</label>
+               <input type="password" id="password" name="password" value="<?php echo set_value('password'); ?>" />
+               <span>Minimum 6 caractères</span><br />
+               <button id="btn" class="valider" type="submit"><b>Valider</b></button>
          </form>
-         <div class="parametre">
-           <span><a href="/login/register">Créer un compte</a></span><br />
-           <span><a href="/login/forget_password">Mot de passe oublié?</a></span>
-         </div>
-       </div>
-       <div class="fin"></div>
-    </div>
-    <div id="footer">
-      
-    </div>
-  </div>
+     </div>
+     <div id="bloc2">
+       <H1>Présentation société:</H1> 
+<p class="presentation">texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte
+texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte
+texte texte texte texte texte</p>
+     </div>
+     <div id="bloc3">
+       <H2>Présentation produits:</H2> 
+<p>texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte
+texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte
+texte texte texte texte texte</p>
+     </div>
+    
+   </div>
 </div>
 </body>
 </html>
+
+
+

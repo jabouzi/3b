@@ -1,13 +1,11 @@
-<div id="topmenu">
-<div id="small">
-<a class="<?php echo $selected['0'];?>" href="/main/index">Affichage</a>  |  
-<a class="<?php echo $selected['1'];?>" href="#">Presse</a> | 
-<a class="<?php echo $selected['2'];?>" href="#">Internet</a> | 
-<a class="<?php echo $selected['3'];?>" href="#">Radio</a> | 
-<a class="<?php echo $selected['4'];?>" href="#">TV</a> 
-<a class="title" href="#"><?php echo $this->session->userdata['nom'];?> - </a>
-<a class="logout" href="/login/change_password">Changer mot de passe</a> | <a class="logout" href="/login/logout">Quitter</a>
+<div id="menu">
+     <div class="lien_first <?php echo $selected['0'];?>"><a href="/main/index"><span>Affichage</span></a></div>
+     <div class="lien <?php echo $selected['1'];?>"><a href="#"><span>Presse</span></a></div>
+     <div class="lien <?php echo $selected['2'];?>"><a href="#"><span>Internet</span></a></div>
+     <div class="lien <?php echo $selected['3'];?>"><a href="#"><span>Radio</span></a></div>
+     <div class="lien_last <?php echo $selected['4'];?>"><a href="#"><span>TV</span></a></div>
 </div>
-</div>
+
 <div id="messageAdmin" class="messageAdmin" style="display:none"></div>
-<div id="content">
+
+<div id="container">

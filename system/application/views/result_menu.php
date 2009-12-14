@@ -4,6 +4,6 @@
 <input type="radio" name="selection_type" id="tableau" value="1" <?php echo $checked[0];?>onclick="pige()"/><b>Tableau</b>
 <input type="radio" name="selection_type" id="tableau" value="1" <?php echo $checked[1];?>onclick="graphes()"/><b>Graphes</b>
 <input type="radio" name="selection_type" id="tableau" value="1" <?php echo $checked[3];?>onclick="carte()"/><b>Carte</b>
-<input style="font-weight:bold;font-size:15px;" type="button" name="selection_type" id="tableau" value="Rapport" <?php echo $checked[2];?>onclick="pdf()"/>
+<input class="btn_afficher" type="button" name="selection_type" id="tableau" value="Rapport" <?php echo $checked[2];?>onclick="pdf()"/>
 </p>
 

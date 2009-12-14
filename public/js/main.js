@@ -19,42 +19,42 @@ var order = 0;
  * */
 function add(type)
 {    
-	if (document.getElementById(type))
-	{
-		var div = document.getElementById(type);					
-	}
-	else
-	{
+    if (document.getElementById(type))
+    {
+        var div = document.getElementById(type);                    
+    }
+    else
+    {
         order++;
-		var parent = document.getElementById('right');
-		parent.innerHTML += '<div id="'+type+'"><h3>'+type+'</h3></div>';
-        document.getElementById('o_'+type).value = order;	
-        var div = document.getElementById(type);		
-	}
-	if ('annonceur' == type) {
-		printData(annonceurs,div,'1');
-		removeElements(annonceurs,1,'1');	
-	}	
-	else if ('campagne' == type) {
-		printData(campagnes,div,'2');		
-		removeElements(campagnes,1,'2');	
-	}
-	else if ('marque' == type) {
-		printData(marques,div,'3');		
-		removeElements(marques,1,'3');	
-	}
-	else if ('regie' == type) {
-		printData(regies,div,'4');		
-		removeElements(regies,1,'4');	
-	}
-	else if ('rue' == type) {
-		printData(rues,div,'5');		
-		removeElements(rues,1,'5');	
-	}
-	else {
-		printData(formats,div,'6');
-		removeElements(formats,1,'6');
-	}    
+        var parent = document.getElementById('right');
+        parent.innerHTML += '<div id="'+type+'"><h3>'+type+'</h3></div>';
+        document.getElementById('o_'+type).value = order;    
+        var div = document.getElementById(type);        
+    }
+    if ('annonceur' == type) {
+        printData(annonceurs,div,'1');
+        removeElements(annonceurs,1,'1');    
+    }    
+    else if ('campagne' == type) {
+        printData(campagnes,div,'2');        
+        removeElements(campagnes,1,'2');    
+    }
+    else if ('marque' == type) {
+        printData(marques,div,'3');        
+        removeElements(marques,1,'3');    
+    }
+    else if ('regie' == type) {
+        printData(regies,div,'4');        
+        removeElements(regies,1,'4');    
+    }
+    else if ('rue' == type) {
+        printData(rues,div,'5');        
+        removeElements(rues,1,'5');    
+    }
+    else {
+        printData(formats,div,'6');
+        removeElements(formats,1,'6');
+    }    
     filter(1);
 }
 
@@ -63,8 +63,8 @@ function add(type)
  * 
  * */
 function filter(flag)
-{	
-	var data = new Array(4);
+{    
+    var data = new Array(4);
     data['annonceur'] = new Array();
     data['campagne'] = new Array();
     data['marque'] = new Array();
@@ -73,7 +73,7 @@ function filter(flag)
     data['format'] = new Array();
     var types = ['annonceur','campagne','marque','regie','rue','format'];
     for (var i = 0; i < types.length; i++)
-	{
+    {
         var childs = document.getElementById('h_'+types[i]).childNodes;                   
         for (var child = 0; child < childs.length; child++)
         {
@@ -82,12 +82,12 @@ function filter(flag)
     }
 
     var postData=getObjPostValues(data); 
-    getFiltredContent(postData,'annonceur',flag);	
-    getFiltredContent(postData,'marque',flag);	
-    getFiltredContent(postData,'campagne',flag);	
-    getFiltredContent(postData,'regie',flag);	
-    getFiltredContent(postData,'rue',flag);	
-    getFiltredContent(postData,'format',flag);	
+    getFiltredContent(postData,'annonceur',flag);    
+    getFiltredContent(postData,'marque',flag);    
+    getFiltredContent(postData,'campagne',flag);    
+    getFiltredContent(postData,'regie',flag);    
+    getFiltredContent(postData,'rue',flag);    
+    getFiltredContent(postData,'format',flag);    
 }
 
 /*
@@ -106,7 +106,7 @@ var getFiltredContent = function(postData,type,flag){
  * 
  * */
 var cancel = function(){ 
-    document.getElementById('right').innerHTML = ""; 	
+    document.getElementById('right').innerHTML = "";     
     YAHOO.util.Connect.asyncRequest('POST', '/main/refresh', callback2);    
 };
 
@@ -119,11 +119,11 @@ function inArray(elem,arr,index)
   var ok = false;
   for (var i = 0; i < arr.length; i++)
   {
-	  if (elem == 'p'+index+arr[i])
-	  {
-		  ok = true;
-		  break;
-	  }
+      if (elem == 'p'+index+arr[i])
+      {
+          ok = true;
+          break;
+      }
   }
   return ok; 
 }
@@ -141,21 +141,21 @@ var updateDivs = function(index,arr,flag)
         img = div.getElementsByTagName('img');
         input = div.getElementsByTagName('input');
         for(var i=0; i < input.length; i++) 
-        {	
-    	    input[i].checked = '';           	
+        {    
+            input[i].checked = '';               
         }
         for(var i=0; i < img.length; i++) 
-        {	
-            document.getElementById(img[i].id).src=imgFalse;            	
+        {    
+            document.getElementById(img[i].id).src=imgFalse;                
         }
         for(var i=0; i < ps.length; i++) 
         {
             if (!inArray(ps[i].id,arr,index))
-            {		                    
+            {                            
                     var elem = document.getElementById(ps[i].id);
                     elem.src = imgFalse; 
                     elem.style.display = 'none';
-            }		
+            }        
         }
     }
     else 
@@ -163,7 +163,7 @@ var updateDivs = function(index,arr,flag)
         imgs = div.getElementsByTagName('p');
 
         for(var i=0; i < imgs.length; i++) 
-        {		
+        {        
             var elem = document.getElementById(imgs[i].id);                    
             elem.style.display = 'none';  
             elem.src = imgFalse;
@@ -194,19 +194,19 @@ var updateDivs = function(index,arr,flag)
  * 
  * */
 var handleSuccess = function(o) {
- 	var arr = o.responseText.split('@');
- 	if ('annonceur' == arr[0])
- 		updateDivs('1',arr,1);
- 	else if ('campagne' == arr[0])
- 	 	updateDivs('2',arr,1);
- 	else if ('marque' == arr[0])
- 		updateDivs('3',arr,1);
- 	else if ('regie' == arr[0])
- 		updateDivs('4',arr,1);
- 	else if ('rue' == arr[0])
- 		updateDivs('5',arr,1);
- 	else 
- 		updateDivs('6',arr,1);
+     var arr = o.responseText.split('@');
+     if ('annonceur' == arr[0])
+         updateDivs('1',arr,1);
+     else if ('campagne' == arr[0])
+          updateDivs('2',arr,1);
+     else if ('marque' == arr[0])
+         updateDivs('3',arr,1);
+     else if ('regie' == arr[0])
+         updateDivs('4',arr,1);
+     else if ('rue' == arr[0])
+         updateDivs('5',arr,1);
+     else 
+         updateDivs('6',arr,1);
 };
 
 /*
@@ -214,19 +214,19 @@ var handleSuccess = function(o) {
  * 
  * */
 var handleSuccess3 = function(o) {
- 	var arr = o.responseText.split('@');
- 	if ('annonceur' == arr[0])
- 		updateDivs('1',arr,2);
- 	else if ('campagne' == arr[0])
- 	 	updateDivs('2',arr,2);
- 	else if ('marque' == arr[0])
- 		updateDivs('3',arr,2);
- 	else if ('regie' == arr[0])
- 		updateDivs('4',arr,2);
- 	else if ('rue' == arr[0])
- 		updateDivs('5',arr,2);
- 	else 
- 		updateDivs('6',arr,2);
+     var arr = o.responseText.split('@');
+     if ('annonceur' == arr[0])
+         updateDivs('1',arr,2);
+     else if ('campagne' == arr[0])
+          updateDivs('2',arr,2);
+     else if ('marque' == arr[0])
+         updateDivs('3',arr,2);
+     else if ('regie' == arr[0])
+         updateDivs('4',arr,2);
+     else if ('rue' == arr[0])
+         updateDivs('5',arr,2);
+     else 
+         updateDivs('6',arr,2);
 };
 
 /*
@@ -234,7 +234,7 @@ var handleSuccess3 = function(o) {
  * 
  * */
 var handleSuccess2 = function(o) {
- 	document.getElementById('content').innerHTML = o.responseText;
+     document.getElementById('content').innerHTML = o.responseText;
     init(); 
 };
 
@@ -275,8 +275,8 @@ var handleFailure = function(o) {
 
 //global variables that can be used by ALL the function son this page.
 var inputs;
-var imgFalse = '../../public/css/images/false.png';
-var imgTrue = '../../public/css/images/true.png';
+var imgFalse = '../../public/images/false.gif';
+var imgTrue = '../../public/images/true.gif';
 
 //this function runs when the page is loaded, put all your other onload stuff in here too.
 function init() {
@@ -284,85 +284,85 @@ function init() {
 }
 
 function replaceChecks() {
-	
-	//get all the input fields on the page
-	inputs = document.getElementsByTagName('input');
+    
+    //get all the input fields on the page
+    inputs = document.getElementsByTagName('input');
 
-	//cycle trough the input fields
-	for(var i=0; i < inputs.length; i++) {
+    //cycle trough the input fields
+    for(var i=0; i < inputs.length; i++) {
 
-		//check if the input is a checkbox
-		if(inputs[i].getAttribute('type') == 'checkbox') {
-			
-			//create a new image
-			var img = document.createElement('img');
-			
-			//check if the checkbox is checked
-			/*if(inputs[i].checked) {
-				img.src = imgTrue;
-			} else {*/
-				img.src = imgFalse;
-			//}
+        //check if the input is a checkbox
+        if(inputs[i].getAttribute('type') == 'checkbox') {
+            
+            //create a new image
+            var img = document.createElement('img');
+            
+            //check if the checkbox is checked
+            /*if(inputs[i].checked) {
+                img.src = imgTrue;
+            } else {*/
+                img.src = imgFalse;
+            //}
 
-			//set image ID and onclick action
-			img.id = 'checkImage'+inputs[i].id;
-			//set image 
-			img.onclick = new Function('checkChange('+i+')');
-			//place image in front of the checkbox
-			inputs[i].parentNode.insertBefore(img, inputs[i]);
-			
-			//hide the checkbox
-			inputs[i].style.display='none';
-		}
-	}
+            //set image ID and onclick action
+            img.id = 'checkImage'+inputs[i].id;
+            //set image 
+            img.onclick = new Function('checkChange('+i+')');
+            //place image in front of the checkbox
+            inputs[i].parentNode.insertBefore(img, inputs[i]);
+            
+            //hide the checkbox
+            inputs[i].style.display='none';
+        }
+    }
 }
 
 //change the checkbox status and the replacement image
 function checkChange(i) {
 
-	if(inputs[i].checked) {
-	    if ('annonceur' == getId(inputs[i])){
-	        delete annonceurs[inputs[i].id];			
+    if(inputs[i].checked) {
+        if ('annonceur' == getId(inputs[i])){
+            delete annonceurs[inputs[i].id];            
         }        
         else if('campagne' == getId(inputs[i])){
-	        delete campagnes[inputs[i].id];
+            delete campagnes[inputs[i].id];
         }
         else if('marque' == getId(inputs[i])){
-	        delete marques[inputs[i].id];
+            delete marques[inputs[i].id];
         }
         else if('regie' == getId(inputs[i])){
-	        delete regies[inputs[i].id];
+            delete regies[inputs[i].id];
         }
         else if('rue' == getId(inputs[i])){
-	        delete rues[inputs[i].id];
+            delete rues[inputs[i].id];
         }
         else{
-	        delete formats[inputs[i].id];
+            delete formats[inputs[i].id];
         }
-		inputs[i].checked = '';
-		document.getElementById('checkImage'+inputs[i].id).src=imgFalse;
-	} else {
-	    if ('annonceur' == getId(inputs[i])){
-	        annonceurs[inputs[i].id] = inputs[i].id;		
+        inputs[i].checked = '';
+        document.getElementById('checkImage'+inputs[i].id).src=imgFalse;
+    } else {
+        if ('annonceur' == getId(inputs[i])){
+            annonceurs[inputs[i].id] = inputs[i].id;        
         }        
         else if('campagne' == getId(inputs[i])){
-	        campagnes[inputs[i].id] = inputs[i].id;
+            campagnes[inputs[i].id] = inputs[i].id;
         }
         else if('marque' == getId(inputs[i])){
-	        marques[inputs[i].id] = inputs[i].id;
+            marques[inputs[i].id] = inputs[i].id;
         }
         else if('regie' == getId(inputs[i])){
-	        regies[inputs[i].id] = inputs[i].id;
-        }	    
+            regies[inputs[i].id] = inputs[i].id;
+        }        
         else if('rue' == getId(inputs[i])){
-	        rues[inputs[i].id] = inputs[i].id;
-        }	    
+            rues[inputs[i].id] = inputs[i].id;
+        }        
         else{
-	        formats[inputs[i].id] = inputs[i].id;
-        }	    
-		inputs[i].checked = 'checked';
-		document.getElementById('checkImage'+inputs[i].id).src=imgTrue;
-	}
+            formats[inputs[i].id] = inputs[i].id;
+        }        
+        inputs[i].checked = 'checked';
+        document.getElementById('checkImage'+inputs[i].id).src=imgTrue;
+    }
 }
 
 var size = function(obj) {
@@ -389,18 +389,18 @@ function getValue(elem)
 function getValues(obj)
 {
     for (var i in obj)
-	{
-		alert('obj[\''+i+'\'] is ' + obj[i])
-	}
+    {
+        alert('obj[\''+i+'\'] is ' + obj[i])
+    }
 }
 
 function printData(obj,div,index)
 {
-	indice = index+10;
+    indice = index+10;
     hidden_div = document.getElementById("h_"+div.id);
-	for (var data in obj)
-	{
-		div.innerHTML += '<p id="'+indice+getValue(data)+'"><a href="javascript:restore('+index+','+"'"+getValue(data).replace(/'/g,"\\'")+"'"+')"><img src= "../../public/css/images/remove.gif" alt="" border="0"/></a> '+getValue(data)+'</p>';	
+    for (var data in obj)
+    {
+        div.innerHTML += '<p id="'+indice+getValue(data)+'"><a href="javascript:restore('+index+','+"'"+getValue(data).replace(/'/g,"\\'")+"'"+')"><img src= "../../public/images/supp.gif" alt="" border="0"  width="16" height="17" class="supp"/></a> '+getValue(data)+'</p>';    
         hidden_div.innerHTML += '<input type="hidden" name="'+div.id+'[]" id="'+indice+getValue(data)+'" value="'+getValue(data)+'" />';
     }
 }
@@ -426,47 +426,47 @@ function getObjPostValues(arr)
 }
 
 function removeElements(obj,flag,index){
-	for (var i in obj)
-	{
-		var elem = document.getElementById('p'+index+getValue(obj[i]));
-		elem.style.display = 'none';
-		document.getElementById(obj[i]).checked = '';
-		document.getElementById('checkImage'+obj[i]).src=imgFalse;
-		if (flag == 1)
-			delete obj[inputs[i].id];
-	}
+    for (var i in obj)
+    {
+        var elem = document.getElementById('p'+index+getValue(obj[i]));
+        elem.style.display = 'none';
+        document.getElementById(obj[i]).checked = '';
+        document.getElementById('checkImage'+obj[i]).src=imgFalse;
+        if (flag == 1)
+            delete obj[inputs[i].id];
+    }
 }
 
 function restore(index,data)
 {
-	var types = ['annonceur','campagne','marque','regie','rue','format'];
-	if (types[parseInt(index)-1] == 'annonceur')
-    {		
-		delete annonceurs['annonceur_'+data];
+    var types = ['annonceur','campagne','marque','regie','rue','format'];
+    if (types[parseInt(index)-1] == 'annonceur')
+    {        
+        delete annonceurs['annonceur_'+data];
     }
-	if (types[parseInt(index)-1] == 'campagne')	
-    {	
-		delete campagnes['campagne_'+data];
+    if (types[parseInt(index)-1] == 'campagne')    
+    {    
+        delete campagnes['campagne_'+data];
     }
-	if (types[parseInt(index)-1] == 'marque')
-    {		
-		delete marques['marque_'+data];
+    if (types[parseInt(index)-1] == 'marque')
+    {        
+        delete marques['marque_'+data];
     }
-	if (types[parseInt(index)-1] == 'regie')	
-    {	
-		delete regies['regie_'+data];
+    if (types[parseInt(index)-1] == 'regie')    
+    {    
+        delete regies['regie_'+data];
     }
-	if (types[parseInt(index)-1] == 'rue')	
-    {	
-		delete regies['rue_'+data];
+    if (types[parseInt(index)-1] == 'rue')    
+    {    
+        delete regies['rue_'+data];
     }
-	if (types[parseInt(index)-1] == 'format')	
-    {	
-		delete regies['format_'+data];
+    if (types[parseInt(index)-1] == 'format')    
+    {    
+        delete regies['format_'+data];
     }
-	var parent = document.getElementById(types[parseInt(index)-1]);
-  	var child = document.getElementById(index.toString()+'10'+data);
-  	child.parentNode.removeChild(child);	
+    var parent = document.getElementById(types[parseInt(index)-1]);
+      var child = document.getElementById(index.toString()+'10'+data);
+      child.parentNode.removeChild(child);    
     document.getElementById("h_"+types[parseInt(index)-1]).removeChild(document.getElementById(index.toString()+'10'+data));
     filter(2);  
     if (document.getElementById('annonceur'))
@@ -502,7 +502,7 @@ function restore(index,data)
     
     if (document.getElementById('right').innerHTML == '')
     {
-        cancel();
+       YAHOO.util.Connect.asyncRequest('POST', '/main/refresh', callback2);  
     }
 }
 

@@ -173,7 +173,6 @@ class Login extends Controller{
 	function check_login($username,$password)
 	{	
 		$result = $this->data_model->check_login($username,$password);
-		$return = "";
 		if (count($result) > 0){
 			$this->session->set_userdata($result[0]);					
 			return $result;

@@ -1,13 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
-<title>3B</title>
-<link rel="stylesheet" type="text/css" href="<?=base_url();?>public/css/stylesheet.css" media="screen, projection, tv " />
+<title>3B: Services au monde de la publicit&eacute; </title>
+<link rel="stylesheet" type="text/css" href="<?=base_url();?>public/css/3B.css" />
 <?php if (!empty($stylesheet)):?>
 <?php foreach($stylesheet as $css) : ?>
-<link rel="stylesheet" type="text/css" href="<?=base_url();?>public/<?=$css?>" media="screen, projection, tv " />
+<link rel="stylesheet" type="text/css" href="<?=base_url();?>public/<?=$css?>" />
 <?php endforeach;?>
 <?php endif;?>
 <?php if (!empty($javascript)):?>
@@ -19,10 +19,14 @@
 
 <body>
 
-<!-- start top menu and blog title-->
-
-<div id="blogtitle">
-		<div id="small"><a class="selected" href="#"><img src="<?=base_url();?>public/css/images/logo3b_small.png" /></a> Services au monde de la publicit&eacute; <small style="color:red;"><b><i>(version beta)</i></b></small></div>
-        
-</div>	
-
+<div id="cadre3">
+    <div id="header3">
+        <div class="logo"><img src="<?=base_url();?>public/images/logo.gif" alt="" width="481" height="65" border="0" />
+        </div>
+        <div id="profil">
+          <a href="#" class="motdepasse"><?php echo $this->session->userdata['nom'];?></a> 
+          <a href="#" class="motdepasse">Modifier Mot de passe</a>  
+          <a href="/login/logout" class="outlog">D&eacute;connecter</a>
+          <a href="/login/logout"><img src="<?=base_url();?>public/images/btn_fermer.gif" width="17" height="17" alt=""/></a>
+        </div>
+    </div>
