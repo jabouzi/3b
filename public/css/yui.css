@@ -1,0 +1,162 @@
+/* Yahoo ui css */
+
+.yui-panel button{
+	float: right;
+	font-size:20px;
+}
+.yui-calendar{
+	font-size:24px;
+}
+.yui-panel .hd{
+	background-color: grey;
+	padding : 8px;
+	font-size:20px;
+}
+.foot{
+	padding-bottom:1px;
+	background-color:#EEEEEE;
+}
+
+.yui-calcontainer.multi .groupcal{
+    border:0px;
+}
+.yui-calcontainer{
+    border:0px;
+}
+.yui-panel .container-close {
+	/*background : transparent url(build/container/assets/close.png) no-repeat scroll 0 0;	*/
+	cursor:pointer;
+	height:27px;
+	margin:0;
+	overflow:hidden;
+	padding:0;
+	position:absolute;
+	right:8px;
+	text-decoration:none;
+	text-indent:-10000em;	
+	visibility:inherit;
+	width:27px;
+	z-index:6;
+}
+
+.yui-calendar.calweekdaycell{
+    color:#000;
+}
+
+.yui-calendar .calnavright {
+	background:transparent url(../yui/build/calendar/assets/calrt.gif) no-repeat scroll 0 0;
+	bottom:0;
+	cursor:pointer;
+	height:27px;
+	overflow:hidden;
+	position:absolute;
+	right:4px;
+	text-indent:-10000em;
+	top:5px;
+	width:20px;
+	z-index:1;
+}
+.yui-calendar .calnavleft {
+	background:transparent url(../yui/build/calendar/assets/callt.gif) no-repeat scroll 0 0;
+	bottom:0;
+	cursor:pointer;
+	height:27px;
+	left:4px;
+	overflow:hidden;
+	position:absolute;
+	text-indent:-10000em;
+	top:5px;
+	width:20px;
+	z-index:1;
+}
+
+
+
+#centercontent a, a:link{
+color:red;
+}
+
+#centercontent{
+    margin-top:50px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom:180px;
+}
+
+#dates{
+    margin-left:30px;
+    font-size:20px;
+    margin-bottom:150px;
+}
+/*.date_selected{
+    -moz-border-radius-bottomleft:3px;
+    -moz-border-radius-bottomright:3px;
+    -moz-border-radius-topleft:3px;
+    -moz-border-radius-topright:3px;
+    -webkit-border-radius-bottomleft:3px;
+    -webkit-border-radius-bottomright:3px;
+    -webkit-border-radius-topleft:3px;
+    -webkit-border-radius-topright:3px;
+    height:200px;
+    width:150px;
+    border:solid 2px #ccc;
+    padding-left:8px;
+    background-color:#ECE5E5
+}*/
+
+#date_selected{
+height:200px;
+padding-left:10px;
+padding-right:10px;
+color:#000;
+}
+
+.date_selected {
+-moz-border-radius-bottomleft:6px;
+-moz-border-radius-bottomright:6px;
+-moz-border-radius-topleft:6px;
+-moz-border-radius-topright:6px;
+-webkit-border-radius-bottomleft:6px;
+-webkit-border-radius-bottomright:6px;
+-webkit-border-radius-topleft:6px;
+-webkit-border-radius-topright:6px;
+float:left; 
+width:400px; 
+height:337px; 
+text-align:left;
+border:solid 4px #ccc; 
+margin: 4px 10px 0px 60px; 
+font-size:1.1em; 
+background-color:#E0E0E0;
+}
+
+#rightcontent2 {
+position: absolute;
+right:10px;
+top:0px;
+width:500px;
+height:350px; 
+font-size:1.1em;
+/*background-image:url("images/strips_onside.jpg");*/
+/*background-repeat:repeat-y;*/
+margin-top: 104px; 
+margin-bottom:250px;
+padding-left: 10px;
+padding-right: 8px;
+padding-top: 8px;
+}
+
+.buttoncontent2 {float:left; width:90%; height:70px; background-color:#fff; text-align:left; 
+ margin-top: 40px; margin-left: 30px; margin-bottom:135px; font-size:1.5em; color:#666666;}
+ 
+.buttoncontent2 input{  	
+	font-size:17px;
+  	font-weight: bold;
+    margin-right:5px;
+}
+
+th{
+color:#000;
+}
+
+
