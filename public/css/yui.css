@@ -5,7 +5,7 @@
 	font-size:20px;
 }
 .yui-calendar{
-	font-size:24px;
+	font-size:18px;
 }
 .yui-panel .hd{
 	background-color: grey;
@@ -72,9 +72,9 @@
 
 
 
-#centercontent a, a:link{
+/*#centercontent a, a:link{
 color:red;
-}
+}*/
 
 #centercontent{
     margin-top:50px;
@@ -105,7 +105,6 @@ color:red;
 }*/
 
 #date_selected{
-height:200px;
 padding-left:10px;
 padding-right:10px;
 color:#000;
@@ -146,14 +145,7 @@ padding-right: 8px;
 padding-top: 8px;
 }
 
-.buttoncontent2 {float:left; width:90%; height:70px; background-color:#fff; text-align:left; 
- margin-top: 40px; margin-left: 30px; margin-bottom:135px; font-size:1.5em; color:#666666;}
- 
-.buttoncontent2 input{  	
-	font-size:17px;
-  	font-weight: bold;
-    margin-right:5px;
-}
+.buttoncontent2 {float:left; height:30px;  text-align:left; }
 
 th{
 color:#000;

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -23,27 +23,29 @@
          <?php echo form_open('login'); ?>
                <label>Nom Utilisateur</label>
                <input type="text" id="username" name="username" value="<?php echo set_value('username'); ?>"/>
-               <span>Minimum 5 caractères</span>
+               <span>Minimum 5 caract&egrave;res</span>
                <br /><br />
                <label>Mot De Passe</label>
                <input type="password" id="password" name="password" value="<?php echo set_value('password'); ?>" />
-               <span>Minimum 6 caractères</span><br />
+               <span>Minimum 6 caract&egrave;res</span><br />
                <button id="btn" class="valider" type="submit"><b>Valider</b></button>
          </form>
      </div>
      <div id="bloc2">
-       <H1>Présentation société:</H1> 
+       <H1>Pr&eacute;sentation soci&eacute;t&eacute;:</H1> 
 <p class="presentation">texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte
 texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte
 texte texte texte texte texte</p>
      </div>
      <div id="bloc3">
-       <H2>Présentation produits:</H2> 
+       <H2>Pr&eacute;sentation produits:</H2> 
 <p>texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte
 texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte
 texte texte texte texte texte</p>
      </div>
-    
+    <p class="copyright" align="center">Developp&eacute; par GFplus canada<br>
+&copy; copyright 2009 3BMetrie
+</p>
    </div>
 </div>
 </body>
