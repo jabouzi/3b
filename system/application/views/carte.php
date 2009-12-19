@@ -32,9 +32,9 @@ fclose($fh);
 ?>
 
 
-<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAADK2Z-2Uhvnv0BtjasvfxpBSNJ1y2eHRySvVhP67t6CiMNJhwBRTB2so0vyy6KfasHgt7xNHSCYrZNQ"></script>
-<!--<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAwmk5rn1cwkvdKOYUjq5-0BQFvZdgKRPIgaJRXB6kUsLd8Cj1dxSuiAxJZbkU7rq0R0MyAbJYnIZ61w"></script>-->
-
+<!--<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAADK2Z-2Uhvnv0BtjasvfxpBSNJ1y2eHRySvVhP67t6CiMNJhwBRTB2so0vyy6KfasHgt7xNHSCYrZNQ"></script>-->
+<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAwmk5rn1cwkvdKOYUjq5-0BQFvZdgKRPIgaJRXB6kUsLd8Cj1dxSuiAxJZbkU7rq0R0MyAbJYnIZ61w"></script>
+<br/>
 
 <table class="tcarte">
       <tr>

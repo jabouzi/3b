@@ -15,11 +15,12 @@
   <option value="audience" <?php if ($selected['y'] == 'audience') echo 'selected="true"'; ?>>Audience</option>
   <option value="visiblite" <?php if ($selected['y'] == 'visiblite') echo 'selected="true"'; ?>>Visiblit&eacute;</option>
 </select>
-<input type="submit" class="btn_afficher" value="Afficher"/>
+<input type="submit" class="btn_afficher afficher" value="Afficher"/>
+
 <div>
-	<img alt="Vertical bars chart" src="<?=base_url();?>public/generated/<?php echo $images[0];?>" style="border: 1px solid gray;"/>
-    <br/>
-	<img alt="Vertical bars chart" src="<?=base_url();?>public/generated/<?php echo $images[1];?>" style="border: 1px solid gray;"/>
+	<img alt="Vertical bars chart" src="<?=base_url();?>public/generated/<?php echo $images[0];?>" style="border: 1px solid #365984;"/>
+    <br/> <br/>
+	<img alt="Vertical bars chart" src="<?=base_url();?>public/generated/<?php echo $images[1];?>" style="border: 1px solid #365984;"/>
 </div>
 </div>
 

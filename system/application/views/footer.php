@@ -1,5 +1,8 @@
         <div id="footer">
-          <div >pied de page</div>
+          <div><br/>Developp&eacute; par GFplus canada<br>
+&copy; copyright 2009 3BMetrie
+</div>
+<br/>
         </div>
     </div>
 </div>

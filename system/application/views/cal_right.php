@@ -1,7 +1,10 @@
 
-<div id="rightcontent2">
+<div id="rightcontent">
     <div class="rightcontent" id='selection'>
-        <div class="resume"><h4>S&eacute;l&eacute;ctions</h4>
+       
+<div class="resume">R&eacute;sum&eacute; de la s&eacute;l&eacute;ction</div>
+	   <div class="liste">
+
             <div id="date_selected">
                 <div id="d1"></div>
                 <div id="d2"></div>
@@ -16,7 +19,17 @@
 <p><input type="hidden" name="year" id="year" value=""></p>
 <p><input type="hidden" name="month" id="month" value=""></p>
 <p><input type="hidden" name="flag" id="flag" value="on"></p>
-<div class="buttoncontent2"><input id="btn"type="submit" value="Valider" /></div>
+<div class="buttoncontent2">
+
+<input id="btn" class="btn_valider" type="submit" value="Valider" onclick="cancel()"/>
+<input  id="btn" type="button" value="R&eacute;initialiser" onclick="cancel()" class="btn_renitialiser"/>
+
+
+
+
+
+
+</div>
 </form>
 
 

@@ -10,7 +10,10 @@
                         <?php endforeach;?>
                     </div>
                 </div>
-                <button id="btn"  onclick="add('annonceur')">Ajouter</button>
+                
+                <button id="btn" class="btn_ajouter" onclick="add('annonceur')">
+<b>Ajouter</b>
+</button>
             </div>
             <div id="bloc_filtre_right">
                 <div class="centercontent"><h4>&nbsp;&nbsp;Campagne</h4>
@@ -41,34 +44,34 @@
             </div>
             <div class="onglet_body_indoor" id="contenu_body_indoor">
               <div id="bloc_onglet_left">
-                <div class="centercontent"><h4>R&eacute;gie</h4>
+                <div class="centercontent"><h4>&nbsp;&nbsp;R&eacute;gie</h4>
                     <div id="divregie" class="data">
                         <?php foreach($regie as $item):?>
                         <p id="p4<?php echo $item;?>"><input type="checkbox" value="<?php echo $item;?>" name="regie_<?php echo $item;?>" id="regie_<?php echo $item;?>"/><?php echo $item;?></p>
                         <?php endforeach;?>
                     </div>
                 </div>
-                <button id="btn" onclick="add('regie')">Ajouter</button>
+                <button id="btn" class="btn_ajouter" onclick="add('regie')">Ajouter</button>
             </div>
             <div id="bloc_onglet_right">
-                <div class="centercontent"><h4>R&eacute;gion</h4>
+                <div class="centercontent"><h4>&nbsp;&nbsp;R&eacute;gion</h4>
                     <div id="divrue" class="data">
                         <?php foreach($rue as $item):?>
                         <p id="p5<?php echo $item;?>"><input type="checkbox" value="<?php echo $item;?>" name="rue_<?php echo $item;?>" id="rue_<?php echo $item;?>"/><?php echo $item;?></p>
                         <?php endforeach;?>
                     </div>
                 </div>
-                <button id="btn" onclick="add('rue')">Ajouter</button>
+                <button id="btn" class="btn_ajouter" onclick="add('rue')">Ajouter</button>
             </div>
             <div id="bloc_onglet_right2">
-                <div class="centercontent"><h4>Format</h4>
+                <div class="centercontent"><h4>&nbsp;&nbsp;Format</h4>
                     <div id="divformat" class="data">
                         <?php foreach($format as $item):?>
                         <p id="p6<?php echo $item;?>"><input type="checkbox" value="<?php echo $item;?>" name="format_<?php echo $item;?>" id="format_<?php echo $item;?>"/><?php echo $item;?></p>
                         <?php endforeach;?>
                     </div>
                 </div>
-                <button id="btn" onclick="add('format')">Ajouter</button>
+                <button id="btn" class="btn_ajouter" onclick="add('format')">Ajouter</button>
             </div>
         </div>
         
