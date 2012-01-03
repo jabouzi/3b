@@ -21,7 +21,7 @@
 
 <div id="cadre3">
     <div id="header3">
-        <div class="logo"><img src="<?=base_url();?>public/images/logo.gif" alt="" width="481" height="65" border="0" />
+        <div class="logo"><img src="<?=base_url();?>public/images/logo.gif" alt=""  height="44" border="0" />
         </div>
         <div id="profil">
           <a href="#" class="motdepasse"><?php echo $this->session->userdata['nom'];?></a> 
